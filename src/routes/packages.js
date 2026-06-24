@@ -29,28 +29,24 @@ router.post('/', async (req, res) => {
 
     const trackingUrl = `${req.protocol}://${req.get('host')}/track.html?token=${pkg.token}`;
 
+    // Respond immediately — don't make the customer wait for email/WhatsApp
+    res.status(201).json({ message: '✅ Package request submitted', token: pkg.token });
+
+    // Fire off notifications in the background — they don't block the response above
     const templateData = {
       title: pkg.title, name: pkg.name, packageType: pkg.packageType,
       tierLabel: pkg.tierLabel, price: pkg.price, trackingUrl
     };
 
-    try {
-      const emailHtml = buildPackageEmailHtml(templateData);
-      const emailRecipient = process.env.ADMIN_TEST_EMAIL || pkg.email;
-      await sendEmail(emailRecipient, '🐴 Your Mervat Academy Package Request', emailHtml);
-    } catch (emailErr) {
-      console.log('⚠️ Email notification error (package still saved):', emailErr.message);
-    }
+    const emailHtml = buildPackageEmailHtml(templateData);
+    const emailRecipient = process.env.ADMIN_TEST_EMAIL || pkg.email;
+    sendEmail(emailRecipient, '🐴 Your Mervat Academy Package Request', emailHtml)
+      .catch(emailErr => console.log('⚠️ Email notification error (package still saved):', emailErr.message));
 
-    try {
-      const waText = buildPackageWhatsAppText(templateData);
-      const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
-      await sendWhatsApp(waRecipient, waText);
-    } catch (waErr) {
-      console.log('⚠️ WhatsApp notification error (package still saved):', waErr.message);
-    }
-
-    res.status(201).json({ message: '✅ Package request submitted', token: pkg.token });
+    const waText = buildPackageWhatsAppText(templateData);
+    const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
+    sendWhatsApp(waRecipient, waText)
+      .catch(waErr => console.log('⚠️ WhatsApp notification error (package still saved):', waErr.message));
   } catch (err) {
     res.status(500).json({ message: '❌ Error submitting package request', error: err.message });
   }
