@@ -21,6 +21,8 @@ async function sendEmail(to, subject, html) {
     const errorText = await response.text();
     throw new Error(`Brevo API error (${response.status}): ${errorText}`);
   }
+
+  console.log(`✅ Email sent to ${to}`);
 }
 
 async function sendReminderEmail(booking) {
