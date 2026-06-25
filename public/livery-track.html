@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Livery - Mervat Academy</title>
+  <link rel="stylesheet" href="track.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet"/>
+</head>
+<body>
+  <div class="track-container">
+    <div class="track-brand">
+      <span class="horse-badge"><span class="running-horse">🐎</span></span>
+      Mervat Academy
+    </div>
+
+    <div class="track-card" id="liveryCard">
+      <p class="loading-text" id="loadingText">Loading your livery details...</p>
+    </div>
+
+    <div class="track-card" id="logCard" style="display:none; margin-top:18px; text-align:left;">
+      <h3 style="font-family:'Playfair Display',serif; color:#2c1a0e; margin-bottom:10px; text-align:center;">📋 Daily Care Log</h3>
+      <div id="dayLogGrid" style="display:grid; grid-template-columns: repeat(3, 1fr); gap:8px; max-height:340px; overflow-y:auto;"></div>
+    </div>
+
+    <div class="track-card" id="renewalCard" style="display:none; margin-top:18px;">
+      <p class="refund-note" id="renewalNote"></p>
+      <button class="btn-refund-request" id="renewalButton" onclick="requestRenewal()">Request Renewal</button>
+    </div>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get('token');
+
+    async function loadLivery() {
+      const card = document.getElementById('liveryCard');
+      if (!token) {
+        card.innerHTML = '<p class="error-text">No tracking token provided.</p>';
+        return;
+      }
+      try {
+        const res = await fetch(`/api/livery/track/${token}`);
+        if (!res.ok) {
+          card.innerHTML = '<p class="error-text">Livery booking not found.</p>';
+          return;
+        }
+        const booking = await res.json();
+        renderLivery(booking);
+      } catch (err) {
+        card.innerHTML = '<p class="error-text">Something went wrong loading your livery details.</p>';
+      }
+    }
+
+    function renderLivery(booking) {
+      const card = document.getElementById('liveryCard');
+      let statusBannerClass = 'pending-banner';
+      let statusText = '⏳ Pending Approval';
+      if (booking.approvalStatus === 'Approved') { statusBannerClass = 'approved-banner'; statusText = '✅ Approved & Active'; }
+      if (booking.approvalStatus === 'Rejected') { statusBannerClass = 'rejected-banner'; statusText = '❌ Not Approved'; }
+
+      let html = `
+        <h2>Full Livery</h2>
+        <p class="package-name">🐴 ${escapeHtml(booking.horseName)}</p>
+        <div class="status-banner ${statusBannerClass}">${statusText}</div>
+        <p style="color:#555; margin-bottom:6px;">💰 AED ${booking.price} / month</p>
+      `;
+
+      if (booking.approvalStatus === 'Approved') {
+        html += `<p style="color:#555; margin-bottom:6px;">📅 Started: ${new Date(booking.startDate).toLocaleDateString()}</p>`;
+        html += `<p style="color:#555; margin-bottom:6px;">📅 Expires: ${new Date(booking.endDate).toLocaleDateString()}</p>`;
+        if (booking.daysRemaining !== null) {
+          const urgent = booking.daysRemaining <= 7;
+          html += `<p style="font-weight:700; font-size:1.1rem; color:${urgent ? '#a71d2a' : '#1e7e34'}; margin:14px 0;">${booking.daysRemaining} day(s) remaining</p>`;
+          if (urgent) {
+            html += `<p style="color:#a71d2a; font-size:0.85rem;">⚠️ Your livery is expiring soon. Please renew to keep your slot.</p>`;
+          }
+        }
+      }
+
+      if (booking.approvalStatus === 'Rejected') {
+        html += `<p style="color:#888; font-size:0.9rem; margin-top:10px;">Please contact us directly for more information.</p>`;
+      }
+
+      card.innerHTML = html;
+
+      if (booking.approvalStatus === 'Approved' && booking.dailyLog && booking.dailyLog.length) {
+        document.getElementById('logCard').style.display = 'block';
+        document.getElementById('dayLogGrid').innerHTML = booking.dailyLog.map(d => `
+          <div style="border:1px solid ${d.note ? '#9fd8ab' : '#eee'}; background:${d.note ? '#f4fbf5' : '#fafafa'}; border-radius:8px; padding:8px; font-size:0.78rem;">
+            <strong>Day ${d.dayNumber}</strong>
+            ${d.date ? `<div style="color:#999; font-size:0.7rem;">${d.date}</div>` : ''}
+            <div style="margin-top:4px; color:#555;">${d.note ? escapeHtml(d.note) : '<em style="color:#bbb;">No entry yet</em>'}</div>
+          </div>
+        `).join('');
+      }
+
+      if (booking.approvalStatus === 'Approved' && booking.daysRemaining !== null && booking.daysRemaining <= 7) {
+        document.getElementById('renewalCard').style.display = 'block';
+        if (booking.renewalRequested) {
+          document.getElementById('renewalNote').textContent = '✅ Your renewal request has been submitted. Our team will follow up shortly.';
+          document.getElementById('renewalButton').style.display = 'none';
+        } else {
+          document.getElementById('renewalNote').textContent = 'Your livery is expiring soon. Request a renewal to keep your slot.';
+        }
+      }
+    }
+
+    async function requestRenewal() {
+      try {
+        const res = await fetch(`/api/livery/track/${token}`);
+        const booking = await res.json();
+        await fetch(`/api/livery/${booking._id}/request-renewal`, { method: 'POST' });
+        loadLivery();
+      } catch (err) {
+        alert('Could not submit renewal request. Please contact us directly.');
+      }
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text || '';
+      return div.innerHTML;
+    }
+
+    loadLivery();
+  </script>
+</body>
+</html>

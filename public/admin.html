@@ -33,6 +33,7 @@
       <button class="tab-btn" id="tabCustomers" onclick="switchView('customers')">👥 Customers</button>
       <button class="tab-btn" id="tabReports" onclick="switchView('reports')">📊 Reports</button>
       <button class="tab-btn" id="tabPackages" onclick="switchView('packages')">📦 Packages</button>
+      <button class="tab-btn" id="tabLivery" onclick="switchView('livery')">🏠 Livery</button>
     </div>
 
     <!-- ===== BOOKINGS VIEW ===== -->
@@ -160,6 +161,12 @@
         <span class="count-text" id="packageCountText"></span>
       </div>
       <div id="packagesContainer"></div>
+    </div>
+
+    <!-- ===== LIVERY VIEW ===== -->
+    <div id="liveryView" style="display:none;">
+      <h3 class="table-title">Livery Slots <span class="count-text" id="liverySlotCountText"></span></h3>
+      <div class="livery-slots-grid" id="liverySlotsGrid"></div>
     </div>
   </div>
 

@@ -262,6 +262,51 @@ tr:hover { background: #fef9f3; }
 .approval-approved { background: #d4edda; color: #1e7e34; }
 .approval-rejected { background: #f8d7da; color: #a71d2a; }
 
+.livery-slots-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 16px;
+  margin-top: 10px;
+}
+.livery-slot-card {
+  background: white;
+  border-radius: 14px;
+  padding: 18px 14px;
+  border: 2px solid #ece3d4;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.livery-slot-card:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+.livery-slot-card.slot-empty { border-color: #ddd; opacity: 0.7; }
+.livery-slot-card.slot-pending { border-color: #ffe39a; background: #fffbf0; }
+.livery-slot-card.slot-approved { border-color: #9fd8ab; background: #f4fbf5; }
+.livery-slot-number { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: #2c1a0e; margin-bottom: 6px; }
+.livery-slot-name { font-size: 0.85rem; font-weight: 600; color: #2c1a0e; }
+.livery-slot-horse { font-size: 0.78rem; color: #a07840; }
+.livery-slot-days { font-size: 0.72rem; color: #888; margin-top: 4px; }
+
+.livery-day-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+  margin-top: 14px;
+  max-height: 360px;
+  overflow-y: auto;
+}
+.livery-day-cell {
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 6px;
+  font-size: 0.7rem;
+  cursor: pointer;
+  text-align: center;
+  background: #fafafa;
+}
+.livery-day-cell.has-note { background: #f4fbf5; border-color: #9fd8ab; }
+.livery-day-cell:hover { border-color: #c8a96e; }
+
+
 .package-progress-row {
   display: flex; align-items: center; gap: 14px; margin: 14px 0;
 }
@@ -315,6 +360,9 @@ tr:hover { background: #fef9f3; }
 
   .filter-bar { flex-direction: column; align-items: stretch; }
   .filter-bar input, .filter-bar select { width: 100%; }
+
+  .livery-slots-grid { grid-template-columns: repeat(2, 1fr); }
+  .livery-day-grid { grid-template-columns: repeat(3, 1fr); }
 }
 .cancel-request-banner {
   background: #fff3cd; border: 1px solid #f0d98a; border-radius: 12px;

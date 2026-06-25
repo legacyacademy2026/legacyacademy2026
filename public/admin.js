@@ -48,10 +48,12 @@ async function switchView(view) {
   document.getElementById('customersView').style.display = view === 'customers' ? 'block' : 'none';
   document.getElementById('reportsView').style.display = view === 'reports' ? 'block' : 'none';
   document.getElementById('packagesView').style.display = view === 'packages' ? 'block' : 'none';
+  document.getElementById('liveryView').style.display = view === 'livery' ? 'block' : 'none';
   document.getElementById('tabBookings').classList.toggle('active', view === 'bookings');
   document.getElementById('tabCustomers').classList.toggle('active', view === 'customers');
   document.getElementById('tabReports').classList.toggle('active', view === 'reports');
   document.getElementById('tabPackages').classList.toggle('active', view === 'packages');
+  document.getElementById('tabLivery').classList.toggle('active', view === 'livery');
 
   if (view === 'customers') await loadCustomers();
   if (view === 'reports') {
@@ -63,6 +65,7 @@ async function switchView(view) {
     generateCustomerReport();
   }
   if (view === 'packages') await loadPackages();
+  if (view === 'livery') await loadLivery();
 }
 
 function todayStr() {
@@ -991,5 +994,172 @@ async function updateSessionStatus(bookingId, status, packageId) {
     loadSessionsForPackage(packageId);
   } catch (err) {
     alert('Could not update session status.');
+  }
+}
+// ===================== LIVERY =====================
+let allLiveryCache = [];
+
+async function loadLivery() {
+  try {
+    const res = await fetch('/api/livery');
+    allLiveryCache = await res.json();
+    renderLiverySlots();
+  } catch (err) {
+    alert('Could not load livery bookings.');
+  }
+}
+
+function daysRemainingFor(booking) {
+  if (booking.approvalStatus !== 'Approved' || !booking.endDate) return null;
+  const ms = new Date(booking.endDate) - new Date();
+  return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)));
+}
+
+function renderLiverySlots() {
+  const grid = document.getElementById('liverySlotsGrid');
+  const totalSlots = 10;
+
+  // Active bookings (Pending or Approved, active=true) keyed by slot number
+  const bySlot = {};
+  allLiveryCache.forEach(b => {
+    if (b.active && (b.approvalStatus === 'Pending' || b.approvalStatus === 'Approved')) {
+      bySlot[b.slotNumber] = b;
+    }
+  });
+
+  const occupiedCount = Object.keys(bySlot).length;
+  document.getElementById('liverySlotCountText').textContent = `${occupiedCount} of ${totalSlots} slots occupied`;
+
+  let html = '';
+  for (let i = 1; i <= totalSlots; i++) {
+    const booking = bySlot[i];
+    if (!booking) {
+      html += `
+        <div class="livery-slot-card slot-empty">
+          <div class="livery-slot-number">Slot ${i}</div>
+          <div class="livery-slot-name" style="color:#aaa;">Empty</div>
+        </div>`;
+    } else {
+      const statusClass = booking.approvalStatus === 'Approved' ? 'slot-approved' : 'slot-pending';
+      const remaining = daysRemainingFor(booking);
+      html += `
+        <div class="livery-slot-card ${statusClass}" onclick="openLiveryModal('${booking._id}')">
+          <div class="livery-slot-number">Slot ${i}</div>
+          <div class="livery-slot-name">${escapeHtml(booking.name)}</div>
+          <div class="livery-slot-horse">🐴 ${escapeHtml(booking.horseName)}</div>
+          ${booking.approvalStatus === 'Pending' ? '<div class="livery-slot-days">⏳ Pending approval</div>' : ''}
+          ${remaining !== null ? `<div class="livery-slot-days">${remaining} day(s) left</div>` : ''}
+          ${booking.renewalRequested ? '<div class="livery-slot-days" style="color:#a07840;">🔁 Renewal requested</div>' : ''}
+        </div>`;
+    }
+  }
+  grid.innerHTML = html;
+}
+
+function openLiveryModal(id) {
+  const booking = allLiveryCache.find(b => b._id === id);
+  if (!booking) return;
+
+  const remaining = daysRemainingFor(booking);
+  let actionButtons = '';
+  if (booking.approvalStatus === 'Pending') {
+    actionButtons += `<button class="btn-small btn-approve" onclick="approveLivery('${booking._id}')">✅ Approve</button>`;
+    actionButtons += `<button class="btn-small btn-reject" onclick="rejectLivery('${booking._id}')">❌ Reject</button>`;
+  }
+  if (booking.approvalStatus === 'Approved') {
+    actionButtons += `<button class="btn-small" style="background:#e8e0d5;color:#555;" onclick="endLivery('${booking._id}')">🔚 End &amp; Free Slot</button>`;
+  }
+
+  let dayGridHtml = '';
+  if (booking.approvalStatus === 'Approved' && booking.dailyLog && booking.dailyLog.length) {
+    dayGridHtml = `
+      <h4 style="margin-top:18px; margin-bottom:6px; font-size:0.95rem; color:#2c1a0e;">Daily Care Log</h4>
+      <p class="sub-label" style="margin-bottom:8px;">Click a day to add or edit a note about what was done.</p>
+      <div class="livery-day-grid">
+        ${booking.dailyLog.map(d => `
+          <div class="livery-day-cell ${d.note ? 'has-note' : ''}" onclick="openDayNoteEditor('${booking._id}', ${d.dayNumber})">
+            <strong>Day ${d.dayNumber}</strong>
+            ${d.date ? `<div style="color:#999;">${d.date}</div>` : ''}
+          </div>
+        `).join('')}
+      </div>`;
+  }
+
+  openModal(`
+    <h3>${escapeHtml(booking.name)} — Slot ${booking.slotNumber}</h3>
+    <p class="sub-label">🐴 Horse: ${escapeHtml(booking.horseName)}</p>
+    <p class="sub-label">📧 ${escapeHtml(booking.email)} • 📱 ${escapeHtml(booking.phone)}</p>
+    <p class="sub-label">💰 AED ${booking.price} / month</p>
+    <p style="margin:10px 0;"><span class="approval-badge approval-${booking.approvalStatus.toLowerCase()}">${booking.approvalStatus}</span></p>
+    ${booking.startDate ? `<p class="sub-label">📅 Started: ${new Date(booking.startDate).toLocaleDateString()}</p>` : ''}
+    ${booking.endDate ? `<p class="sub-label">📅 Expires: ${new Date(booking.endDate).toLocaleDateString()}</p>` : ''}
+    ${remaining !== null ? `<p class="sub-label"><strong>${remaining} day(s) remaining</strong></p>` : ''}
+    ${booking.renewalRequested ? '<p class="sub-label" style="color:#a07840;">🔁 Customer has requested renewal</p>' : ''}
+    <p class="sub-label">🔗 Tracking link: ${window.location.origin}/livery-track.html?token=${booking.token}</p>
+    <div class="package-actions" style="margin-top:12px;">${actionButtons}</div>
+    ${dayGridHtml}
+  `);
+}
+
+async function approveLivery(id) {
+  await fetch(`/api/livery/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ approvalStatus: 'Approved' })
+  });
+  closeModal();
+  loadLivery();
+}
+
+async function rejectLivery(id) {
+  if (!confirm('Reject this livery request?')) return;
+  await fetch(`/api/livery/${id}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ approvalStatus: 'Rejected' })
+  });
+  closeModal();
+  loadLivery();
+}
+
+async function endLivery(id) {
+  if (!confirm('End this livery and free up the slot? This cannot be undone.')) return;
+  await fetch(`/api/livery/${id}/end`, { method: 'POST' });
+  closeModal();
+  loadLivery();
+}
+
+function openDayNoteEditor(bookingId, dayNumber) {
+  const booking = allLiveryCache.find(b => b._id === bookingId);
+  if (!booking) return;
+  const entry = booking.dailyLog.find(d => d.dayNumber === dayNumber);
+  const existingNote = entry ? entry.note || '' : '';
+
+  openModal(`
+    <h3>Day ${dayNumber} — ${escapeHtml(booking.horseName)}</h3>
+    <p class="sub-label">What did you do with ${escapeHtml(booking.horseName)} today?</p>
+    <textarea id="dayNoteInput" rows="5" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:0.9rem; margin-top:8px;">${escapeHtml(existingNote)}</textarea>
+    <div class="package-actions" style="margin-top:12px;">
+      <button class="btn-small btn-approve" onclick="saveDayNote('${bookingId}', ${dayNumber})">💾 Save</button>
+      <button class="btn-small" onclick="openLiveryModal('${bookingId}')">← Back</button>
+    </div>
+  `);
+}
+
+async function saveDayNote(bookingId, dayNumber) {
+  const note = document.getElementById('dayNoteInput').value;
+  try {
+    const res = await fetch(`/api/livery/${bookingId}/log/${dayNumber}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note })
+    });
+    const data = await res.json();
+    const idx = allLiveryCache.findIndex(b => b._id === bookingId);
+    if (idx !== -1) allLiveryCache[idx] = data.booking;
+    openLiveryModal(bookingId);
+    renderLiverySlots();
+  } catch (err) {
+    alert('Could not save day note.');
   }
 }
