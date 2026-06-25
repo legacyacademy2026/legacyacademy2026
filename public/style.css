@@ -118,7 +118,7 @@ body {
 
 /* ======= HERO ======= */
 .hero {
-  min-height: 50vh;
+  min-height: 78vh;
   background: linear-gradient(135deg, #1a0a00 0%, #3d1f00 50%, #1a0a00 100%);
   display: flex;
   align-items: center;
@@ -203,10 +203,10 @@ body {
 
 .hero-content h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 2.6rem;
+  font-size: 3.4rem;
   color: #fff;
-  line-height: 1.2;
-  margin-bottom: 16px;
+  line-height: 1.15;
+  margin-bottom: 20px;
 }
 
 .hero-content h1 span {
@@ -245,7 +245,9 @@ body {
   font-weight: 600;
   letter-spacing: 3px;
   text-transform: uppercase;
-  margin-bottom: 18px;
+  margin-bottom: 22px;
+  padding-bottom: 14px;
+  border-bottom: 2px solid rgba(200,169,110,0.5);
 }
 
 .hero-ctas {
@@ -287,10 +289,23 @@ body {
 
 .section-title {
   font-family: 'Playfair Display', serif;
-  font-size: 2.1rem;
+  font-size: 2.4rem;
   color: #2c1a0e;
   margin-bottom: 28px;
   text-align: center;
+  position: relative;
+  padding-bottom: 22px;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 56px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #c8a96e, transparent);
 }
 
 /* ======= ABOUT ======= */
@@ -372,7 +387,7 @@ body {
 /* ======= SERVICES ======= */
 .services {
   position: relative;
-  padding: 40px 0 50px;
+  padding: 100px 0 110px;
   overflow: hidden;
   text-align: center;
   background: #fdf8f3;
@@ -394,64 +409,68 @@ body {
 .services-intro {
   text-align: center;
   color: #6b5847;
-  max-width: 560px;
-  margin: -10px auto 30px;
-  font-size: 0.88rem;
+  max-width: 580px;
+  margin: -6px auto 56px;
+  font-size: 1.05rem;
+  line-height: 1.6;
 }
 
 .cards-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
+  gap: 32px;
 }
 
 .service-card {
   background: white;
-  padding: 26px 24px;
+  padding: 40px 32px;
   text-align: left;
   border: 1px solid #ece3d4;
-  border-radius: 10px;
-  transition: all 0.25s;
+  border-radius: 14px;
+  transition: all 0.3s;
 }
 .service-card:hover {
   border-color: #c8a96e;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  box-shadow: 0 16px 40px rgba(44,26,14,0.1);
+  transform: translateY(-4px);
 }
 
 .service-card-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding-bottom: 10px;
-  margin-bottom: 12px;
-  border-bottom: 2px solid #e8dcc4;
+  gap: 16px;
+  padding-bottom: 18px;
+  margin-bottom: 18px;
+  border-bottom: 1px solid #e8dcc4;
 }
 
 .service-icon {
-  width: auto;
-  height: auto;
-  background: none;
-  border: none;
-  font-size: 0.95rem;
-  color: #b08a52;
-  margin-bottom: 0;
+  width: 52px;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 35% 30%, rgba(200,169,110,0.22), rgba(200,169,110,0.08));
+  border: 1px solid rgba(200,169,110,0.5);
+  border-radius: 50%;
+  font-size: 1.3rem;
+  color: #a07840;
   flex-shrink: 0;
-  opacity: 0.85;
 }
 
 .service-card-header h3 {
   font-family: 'Playfair Display', serif;
-  font-size: 0.98rem;
+  font-size: 1.2rem;
   color: #2c1a0e;
   margin: 0;
-  line-height: 1.25;
+  line-height: 1.3;
 }
 
 .service-card p {
   color: #6b5847;
-  font-size: 0.78rem;
-  line-height: 1.55;
-  margin-bottom: 12px;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  margin-bottom: 18px;
 }
 
 @media (max-width: 900px) {
@@ -464,7 +483,7 @@ body {
 .learn-more {
   color: #a07840;
   font-weight: 600;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   text-decoration: none;
   transition: color 0.25s;
 }
