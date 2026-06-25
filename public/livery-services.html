@@ -48,6 +48,9 @@
           Our team handles feeding, mucking out, turnout, grooming, and rug changes — your horse is fully
           looked after, every single day, in a safe and professionally managed environment.
         </p>
+        <p style="color: #a07840; font-size: 0.9rem; margin-top: 14px; font-weight: 600;">
+          📅 After approval, your 1-month livery period begins once we confirm your horse has physically arrived at the academy.
+        </p>
       </div>
 
       <!-- Photos -->
@@ -111,6 +114,11 @@
             <label style="display:block; margin-bottom:6px; font-weight:600; color:#2c1a0e; font-size:0.9rem;">Horse's Name</label>
             <input type="text" id="liveryHorseName" required style="width:100%; padding:12px 14px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem;">
           </div>
+          <div style="margin-bottom: 24px;">
+            <label style="display:block; margin-bottom:6px; font-weight:600; color:#2c1a0e; font-size:0.9rem;">Preferred Drop-off Date</label>
+            <input type="date" id="liveryPreferredDate" required style="width:100%; padding:12px 14px; border:1px solid #ddd; border-radius:8px; font-size:0.95rem;">
+            <p style="font-size:0.8rem; color:#999; margin-top:6px;">Your 30-day livery period begins once we confirm your horse has arrived — not necessarily on this exact date.</p>
+          </div>
           <button type="submit" class="select-package-btn" style="width:100%; text-align:center; border:none; cursor:pointer;">Submit Request</button>
           <p id="liveryFormMessage" style="margin-top:14px; font-size:0.88rem; text-align:center;"></p>
         </form>
@@ -125,6 +133,8 @@
 
   <script src="script.js"></script>
   <script>
+    document.getElementById('liveryPreferredDate').min = new Date().toISOString().slice(0, 10);
+
     document.getElementById('liveryForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const msg = document.getElementById('liveryFormMessage');
@@ -135,7 +145,8 @@
         name: document.getElementById('liveryName').value,
         email: document.getElementById('liveryEmail').value,
         phone: document.getElementById('liveryPhone').value,
-        horseName: document.getElementById('liveryHorseName').value
+        horseName: document.getElementById('liveryHorseName').value,
+        preferredDate: document.getElementById('liveryPreferredDate').value
       };
 
       try {

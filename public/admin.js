@@ -1016,7 +1016,7 @@ async function loadLivery() {
 }
 
 function daysRemainingFor(booking) {
-  if (booking.approvalStatus !== 'Approved' || !booking.endDate) return null;
+  if (booking.approvalStatus !== 'Active' || !booking.endDate) return null;
   const ms = new Date(booking.endDate) - new Date();
   return Math.max(0, Math.ceil(ms / (1000 * 60 * 60 * 24)));
 }
@@ -1025,16 +1025,22 @@ function renderLiverySlots() {
   const grid = document.getElementById('liverySlotsGrid');
   const totalSlots = 10;
 
-  // Active bookings (Pending or Approved, active=true) keyed by slot number
+  // Active bookings (Pending, AwaitingHorse, or Active, active=true) keyed by slot number
   const bySlot = {};
   allLiveryCache.forEach(b => {
-    if (b.active && (b.approvalStatus === 'Pending' || b.approvalStatus === 'Approved')) {
+    if (b.active && ['Pending', 'AwaitingHorse', 'Active'].includes(b.approvalStatus)) {
       bySlot[b.slotNumber] = b;
     }
   });
 
   const occupiedCount = Object.keys(bySlot).length;
   document.getElementById('liverySlotCountText').textContent = `${occupiedCount} of ${totalSlots} slots occupied`;
+
+  const statusLabels = {
+    Pending: '⏳ Pending review',
+    AwaitingHorse: '🐴 Awaiting horse arrival',
+    Active: null // shows days remaining instead
+  };
 
   let html = '';
   for (let i = 1; i <= totalSlots; i++) {
@@ -1046,16 +1052,17 @@ function renderLiverySlots() {
           <div class="livery-slot-name" style="color:#aaa;">Empty</div>
         </div>`;
     } else {
-      const statusClass = booking.approvalStatus === 'Approved' ? 'slot-approved' : 'slot-pending';
+      const statusClass = booking.approvalStatus === 'Active' ? 'slot-approved' : 'slot-pending';
       const remaining = daysRemainingFor(booking);
+      const statusLabel = statusLabels[booking.approvalStatus];
       html += `
         <div class="livery-slot-card ${statusClass}" onclick="openLiveryModal('${booking._id}')">
           <div class="livery-slot-number">Slot ${i}</div>
           <div class="livery-slot-name">${escapeHtml(booking.name)}</div>
           <div class="livery-slot-horse">🐴 ${escapeHtml(booking.horseName)}</div>
-          ${booking.approvalStatus === 'Pending' ? '<div class="livery-slot-days">⏳ Pending approval</div>' : ''}
+          ${statusLabel ? `<div class="livery-slot-days">${statusLabel}</div>` : ''}
           ${remaining !== null ? `<div class="livery-slot-days">${remaining} day(s) left</div>` : ''}
-          ${booking.approvalStatus === 'Approved' ? `<div class="livery-slot-days" style="color:${booking.paymentStatus === 'Paid' ? '#1e7e34' : '#a71d2a'};">${booking.paymentStatus === 'Paid' ? '💰 Paid' : '⚠️ Unpaid'}</div>` : ''}
+          ${booking.approvalStatus === 'Active' ? `<div class="livery-slot-days" style="color:${booking.paymentStatus === 'Paid' ? '#1e7e34' : '#a71d2a'};">${booking.paymentStatus === 'Paid' ? '💰 Paid' : '⚠️ Unpaid'}</div>` : ''}
           ${booking.renewalRequested ? '<div class="livery-slot-days" style="color:#a07840;">🔁 Renewal requested</div>' : ''}
         </div>`;
     }
@@ -1073,16 +1080,22 @@ function openLiveryModal(id) {
     actionButtons += `<button class="btn-small btn-approve" onclick="approveLivery('${booking._id}')">✅ Approve</button>`;
     actionButtons += `<button class="btn-small btn-reject" onclick="rejectLivery('${booking._id}')">❌ Reject</button>`;
   }
-  if (booking.approvalStatus === 'Approved') {
+  if (booking.approvalStatus === 'AwaitingHorse') {
+    actionButtons += `<button class="btn-small btn-approve" onclick="openConfirmArrival('${booking._id}')">🐴 Confirm Horse Received</button>`;
+  }
+  if (booking.approvalStatus === 'Active') {
     if (booking.paymentStatus === 'Unpaid') {
       actionButtons += `<button class="btn-small btn-paid" onclick="markLiveryPaid('${booking._id}')">💰 Mark Paid</button>`;
     }
     actionButtons += `<button class="btn-small btn-approve" onclick="renewLivery('${booking._id}')">🔁 Renew for Another Month</button>`;
     actionButtons += `<button class="btn-small" style="background:#e8e0d5;color:#555;" onclick="endLivery('${booking._id}')">🔚 End &amp; Free Slot</button>`;
   }
+  if (booking.approvalStatus !== 'Rejected') {
+    actionButtons += `<button class="btn-small" style="background:#fdf3e2;color:#a07840;" onclick="openLiveryEditForm('${booking._id}')">✏️ Edit Details</button>`;
+  }
 
   let dayGridHtml = '';
-  if (booking.approvalStatus === 'Approved' && booking.dailyLog && booking.dailyLog.length) {
+  if (booking.approvalStatus === 'Active' && booking.dailyLog && booking.dailyLog.length) {
     dayGridHtml = `
       <h4 style="margin-top:18px; margin-bottom:6px; font-size:0.95rem; color:#2c1a0e;">Daily Care Log</h4>
       <p class="sub-label" style="margin-bottom:8px;">Click a day to add or edit a note about what was done.</p>
@@ -1096,14 +1109,22 @@ function openLiveryModal(id) {
       </div>`;
   }
 
+  const statusLabel = {
+    Pending: 'Pending Review',
+    AwaitingHorse: 'Awaiting Horse Arrival',
+    Active: 'Active',
+    Rejected: 'Rejected'
+  }[booking.approvalStatus] || booking.approvalStatus;
+
   openModal(`
     <h3>${escapeHtml(booking.name)} — Slot ${booking.slotNumber}</h3>
     <p class="sub-label">🐴 Horse: ${escapeHtml(booking.horseName)}</p>
     <p class="sub-label">📧 ${escapeHtml(booking.email)} • 📱 ${escapeHtml(booking.phone)}</p>
     <p class="sub-label">💰 AED ${booking.price} / month</p>
+    ${booking.preferredDate ? `<p class="sub-label">📅 Preferred Drop-off Date: ${new Date(booking.preferredDate + 'T00:00:00').toLocaleDateString()}</p>` : ''}
     <p style="margin:10px 0;">
-      <span class="approval-badge approval-${booking.approvalStatus.toLowerCase()}">${booking.approvalStatus}</span>
-      ${booking.approvalStatus === 'Approved' ? `<span class="payment-badge payment-${booking.paymentStatus.toLowerCase()}">${booking.paymentStatus}</span>` : ''}
+      <span class="approval-badge approval-${booking.approvalStatus === 'Active' ? 'approved' : booking.approvalStatus.toLowerCase()}">${statusLabel}</span>
+      ${booking.approvalStatus === 'Active' ? `<span class="payment-badge payment-${booking.paymentStatus.toLowerCase()}">${booking.paymentStatus}</span>` : ''}
       ${booking.renewalCount > 0 ? `<span class="approval-badge" style="background:#e8e0d5;color:#555;">Renewed ${booking.renewalCount}×</span>` : ''}
     </p>
     ${booking.startDate ? `<p class="sub-label">📅 Started: ${new Date(booking.startDate).toLocaleDateString()}</p>` : ''}
@@ -1120,7 +1141,7 @@ async function approveLivery(id) {
   await fetch(`/api/livery/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ approvalStatus: 'Approved' })
+    body: JSON.stringify({ approvalStatus: 'AwaitingHorse' })
   });
   closeModal();
   loadLivery();
@@ -1135,6 +1156,101 @@ async function rejectLivery(id) {
   });
   closeModal();
   loadLivery();
+}
+
+function openConfirmArrival(id) {
+  const booking = allLiveryCache.find(b => b._id === id);
+  if (!booking) return;
+  const today = new Date().toISOString().slice(0, 10);
+
+  openModal(`
+    <h3>Confirm Horse Received</h3>
+    <p class="sub-label" style="margin-bottom:14px;">Confirming that <strong>${escapeHtml(booking.horseName)}</strong> has arrived will start the 30-day livery period from the date below.</p>
+    <label style="display:block; margin-bottom:6px; font-weight:600; color:#2c1a0e; font-size:0.85rem;">Arrival Date</label>
+    <input type="date" id="arrivalDateInput" value="${today}" style="width:100%; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:0.9rem; margin-bottom:16px;">
+    <div class="package-actions">
+      <button class="btn-small btn-approve" onclick="confirmArrival('${id}')">✅ Confirm &amp; Start 30 Days</button>
+      <button class="btn-small" onclick="openLiveryModal('${id}')">← Back</button>
+    </div>
+  `);
+}
+
+async function confirmArrival(id) {
+  const startDate = document.getElementById('arrivalDateInput').value;
+  try {
+    const res = await fetch(`/api/livery/${id}/confirm-arrival`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ startDate })
+    });
+    const data = await res.json();
+    if (!res.ok) {
+      alert(data.message || 'Could not confirm arrival.');
+      return;
+    }
+    await loadLivery();
+    openLiveryModal(id);
+  } catch (err) {
+    alert('Could not confirm arrival.');
+  }
+}
+
+function openLiveryEditForm(id) {
+  const booking = allLiveryCache.find(b => b._id === id);
+  if (!booking) return;
+
+  const fmtDate = (d) => d ? new Date(d).toISOString().slice(0, 10) : '';
+
+  openModal(`
+    <h3>Edit Livery Details</h3>
+    <p class="sub-label" style="margin-bottom:14px;">Fix any mistakes — changes save immediately.</p>
+    <div class="edit-form">
+      <label>Customer Name</label>
+      <input type="text" id="editLiveryName" value="${escapeHtml(booking.name)}">
+      <label>Email</label>
+      <input type="email" id="editLiveryEmail" value="${escapeHtml(booking.email)}">
+      <label>Phone</label>
+      <input type="text" id="editLiveryPhone" value="${escapeHtml(booking.phone)}">
+      <label>Horse Name</label>
+      <input type="text" id="editLiveryHorseName" value="${escapeHtml(booking.horseName)}">
+      <label>Monthly Price (AED)</label>
+      <input type="number" id="editLiveryPrice" value="${booking.price}">
+      ${booking.approvalStatus === 'Active' ? `
+        <label>Start Date</label>
+        <input type="date" id="editLiveryStartDate" value="${fmtDate(booking.startDate)}">
+        <label>End Date</label>
+        <input type="date" id="editLiveryEndDate" value="${fmtDate(booking.endDate)}">
+      ` : ''}
+      <button class="btn-save" onclick="saveLiveryEdit('${id}')">Save Changes</button>
+    </div>
+  `);
+}
+
+async function saveLiveryEdit(id) {
+  const updates = {
+    name: document.getElementById('editLiveryName').value.trim(),
+    email: document.getElementById('editLiveryEmail').value.trim(),
+    phone: document.getElementById('editLiveryPhone').value.trim(),
+    horseName: document.getElementById('editLiveryHorseName').value.trim(),
+    price: parseFloat(document.getElementById('editLiveryPrice').value) || 0
+  };
+
+  const startInput = document.getElementById('editLiveryStartDate');
+  const endInput = document.getElementById('editLiveryEndDate');
+  if (startInput) updates.startDate = startInput.value;
+  if (endInput) updates.endDate = endInput.value;
+
+  try {
+    await fetch(`/api/livery/${id}`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updates)
+    });
+    await loadLivery();
+    openLiveryModal(id);
+  } catch (err) {
+    alert('Could not save changes.');
+  }
 }
 
 async function markLiveryPaid(id) {

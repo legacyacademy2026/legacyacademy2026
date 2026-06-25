@@ -17,13 +17,18 @@ const liveryBookingSchema = new mongoose.Schema({
   email:          { type: String, required: true },
   phone:          { type: String, required: true },
   horseName:      { type: String, required: true },
+  preferredDate:  { type: String }, // YYYY-MM-DD — customer's chosen drop-off date, set at submission
 
   price:          { type: Number, default: 3000 }, // AED per month
 
-  approvalStatus: { type: String, enum: ['Pending', 'Approved', 'Rejected'], default: 'Pending' },
+  // Pending: awaiting admin review.
+  // AwaitingHorse: admin approved the request, but the 30-day clock hasn't started — waiting for horse to physically arrive.
+  // Active: horse confirmed received, the 30-day period is running.
+  // Rejected: request declined.
+  approvalStatus: { type: String, enum: ['Pending', 'AwaitingHorse', 'Active', 'Rejected'], default: 'Pending' },
   paymentStatus:  { type: String, enum: ['Unpaid', 'Paid'], default: 'Unpaid' },
 
-  // Set once admin approves — defines the current 1-month period
+  // Set once admin confirms the horse has arrived — defines the current 1-month period
   startDate:      { type: Date },
   endDate:        { type: Date }, // startDate + 1 month
 

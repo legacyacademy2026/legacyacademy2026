@@ -12,11 +12,11 @@ const {
 const TOTAL_SLOTS = 10;
 
 // Find the lowest-numbered free slot (1-10). A slot is "free" if no active
-// (Pending or Approved, active=true) booking currently occupies it.
+// booking (Pending, AwaitingHorse, or Active, with active=true) currently occupies it.
 async function findFreeSlot() {
   const occupied = await LiveryBooking.find({
     active: true,
-    approvalStatus: { $in: ['Pending', 'Approved'] }
+    approvalStatus: { $in: ['Pending', 'AwaitingHorse', 'Active'] }
   }).select('slotNumber');
 
   const taken = new Set(occupied.map(b => b.slotNumber));
@@ -48,9 +48,9 @@ function notifyLivery(booking, { statusBadge, bodyText, statusLine, ctaLabel, in
 // ===== Customer submits a livery request =====
 router.post('/', async (req, res) => {
   try {
-    const { name, email, phone, horseName } = req.body;
-    if (!name || !email || !phone || !horseName) {
-      return res.status(400).json({ message: '❌ Name, email, phone, and horse name are all required.' });
+    const { name, email, phone, horseName, preferredDate } = req.body;
+    if (!name || !email || !phone || !horseName || !preferredDate) {
+      return res.status(400).json({ message: '❌ Name, email, phone, horse name, and preferred drop-off date are all required.' });
     }
 
     const slot = await findFreeSlot();
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
       return res.status(409).json({ message: '❌ Sorry, all livery slots are currently full. Please check back later or contact us directly.' });
     }
 
-    const booking = new LiveryBooking({ name, email, phone, horseName, slotNumber: slot });
+    const booking = new LiveryBooking({ name, email, phone, horseName, preferredDate, slotNumber: slot });
     await booking.save();
 
     res.status(201).json({ message: '✅ Livery request submitted! Our team will review it shortly.', token: booking.token });
@@ -88,7 +88,7 @@ router.get('/track/:token', async (req, res) => {
     if (!booking) return res.status(404).json({ message: 'Livery booking not found' });
 
     let daysRemaining = null;
-    if (booking.approvalStatus === 'Approved' && booking.endDate) {
+    if (booking.approvalStatus === 'Active' && booking.endDate) {
       const msRemaining = new Date(booking.endDate) - new Date();
       daysRemaining = Math.max(0, Math.ceil(msRemaining / (1000 * 60 * 60 * 24)));
     }
@@ -122,34 +122,30 @@ router.get('/', async (req, res) => {
   }
 });
 
-// ===== Admin: approve / reject / end a livery booking =====
+// ===== Admin: approve / reject / edit a livery booking =====
+// This is also the general-purpose "edit anything" endpoint — admin can PATCH
+// any field (name, email, phone, horseName, price, startDate, endDate, etc.)
+// at any time to fix mistakes.
 router.patch('/:id', async (req, res) => {
   try {
     const before = await LiveryBooking.findById(req.params.id);
     if (!before) return res.status(404).json({ message: 'Livery booking not found' });
 
-    // If approving for the first time, set the 1-month period now.
-    if (req.body.approvalStatus === 'Approved' && before.approvalStatus !== 'Approved') {
-      const start = new Date();
-      const end = new Date(start);
-      end.setMonth(end.getMonth() + 1);
-      req.body.startDate = start;
-      req.body.endDate = end;
-      req.body.dailyLog = Array.from({ length: 30 }, (_, i) => {
-        const d = new Date(start);
-        d.setDate(d.getDate() + i);
-        return { dayNumber: i + 1, date: d.toISOString().slice(0, 10), note: '' };
-      });
+    // Approving a Pending request just moves it to "awaiting horse" —
+    // the 30-day clock does NOT start here. It starts when admin separately
+    // confirms the horse has arrived (see /:id/confirm-arrival below).
+    if (req.body.approvalStatus === 'AwaitingHorse' && before.approvalStatus !== 'AwaitingHorse') {
+      // nothing extra to set — just the status change itself
     }
 
     const booking = await LiveryBooking.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json({ message: '✅ Livery booking updated', booking });
 
-    if (req.body.approvalStatus === 'Approved' && before.approvalStatus !== 'Approved') {
+    if (req.body.approvalStatus === 'AwaitingHorse' && before.approvalStatus !== 'AwaitingHorse') {
       notifyLivery(booking, {
-        statusBadge: { bg: '#d4edda', color: '#1e7e34', text: '✅ Livery Approved' },
-        bodyText: `Great news! Your <strong>Full Livery</strong> request for <strong>${booking.horseName}</strong> has been approved. Your 1-month livery period has started today.`,
-        statusLine: 'Your livery has been approved! ✅',
+        statusBadge: { bg: '#d4edda', color: '#1e7e34', text: '✅ Request Approved' },
+        bodyText: `Great news! Your <strong>Full Livery</strong> request for <strong>${booking.horseName}</strong> has been approved. Please bring ${booking.horseName} to the academy on your chosen date — your 1-month period will begin once we confirm arrival.`,
+        statusLine: 'Your livery request has been approved! ✅',
         ctaLabel: 'Track My Livery'
       });
     }
@@ -164,6 +160,43 @@ router.patch('/:id', async (req, res) => {
     }
   } catch (err) {
     res.status(500).json({ message: '❌ Error updating livery booking', error: err.message });
+  }
+});
+
+// ===== Admin: confirm horse has physically arrived — this starts the 30-day clock =====
+router.post('/:id/confirm-arrival', async (req, res) => {
+  try {
+    const booking = await LiveryBooking.findById(req.params.id);
+    if (!booking) return res.status(404).json({ message: 'Livery booking not found' });
+    if (booking.approvalStatus !== 'AwaitingHorse') {
+      return res.status(400).json({ message: '❌ This livery must be approved and awaiting horse arrival before confirming.' });
+    }
+
+    // Admin can optionally specify the exact arrival date; defaults to today.
+    const start = req.body.startDate ? new Date(req.body.startDate) : new Date();
+    const end = new Date(start);
+    end.setMonth(end.getMonth() + 1);
+
+    booking.startDate = start;
+    booking.endDate = end;
+    booking.approvalStatus = 'Active';
+    booking.dailyLog = Array.from({ length: 30 }, (_, i) => {
+      const d = new Date(start);
+      d.setDate(d.getDate() + i);
+      return { dayNumber: i + 1, date: d.toISOString().slice(0, 10), note: '' };
+    });
+
+    await booking.save();
+    res.json({ message: '✅ Horse arrival confirmed — 30-day livery period has started', booking });
+
+    notifyLivery(booking, {
+      statusBadge: { bg: '#d4edda', color: '#1e7e34', text: '🐴 Horse Received' },
+      bodyText: `We've confirmed <strong>${booking.horseName}</strong> has arrived! Your 1-month livery period has officially started today and will run until <strong>${end.toLocaleDateString()}</strong>.`,
+      statusLine: `${booking.horseName} has arrived — your livery month has started! 🐴`,
+      ctaLabel: 'Track My Livery'
+    });
+  } catch (err) {
+    res.status(500).json({ message: '❌ Error confirming arrival', error: err.message });
   }
 });
 
@@ -183,8 +216,8 @@ router.post('/:id/renew', async (req, res) => {
   try {
     const booking = await LiveryBooking.findById(req.params.id);
     if (!booking) return res.status(404).json({ message: 'Livery booking not found' });
-    if (booking.approvalStatus !== 'Approved') {
-      return res.status(400).json({ message: '❌ Only an approved livery can be renewed.' });
+    if (booking.approvalStatus !== 'Active') {
+      return res.status(400).json({ message: '❌ Only an active livery can be renewed.' });
     }
 
     // New period starts right where the old one ended (keeps things contiguous

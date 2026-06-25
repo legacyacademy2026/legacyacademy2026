@@ -64,8 +64,9 @@
     function renderLivery(booking) {
       const card = document.getElementById('liveryCard');
       let statusBannerClass = 'pending-banner';
-      let statusText = '⏳ Pending Approval';
-      if (booking.approvalStatus === 'Approved') { statusBannerClass = 'approved-banner'; statusText = '✅ Approved & Active'; }
+      let statusText = '⏳ Pending Review';
+      if (booking.approvalStatus === 'AwaitingHorse') { statusBannerClass = 'pending-banner'; statusText = '✅ Approved — Awaiting Horse Arrival'; }
+      if (booking.approvalStatus === 'Active') { statusBannerClass = 'approved-banner'; statusText = '✅ Active'; }
       if (booking.approvalStatus === 'Rejected') { statusBannerClass = 'rejected-banner'; statusText = '❌ Not Approved'; }
 
       let html = `
@@ -75,7 +76,12 @@
         <p style="color:#555; margin-bottom:6px;">💰 AED ${booking.price} / month</p>
       `;
 
-      if (booking.approvalStatus === 'Approved') {
+      if (booking.approvalStatus === 'AwaitingHorse') {
+        html += `<p style="color:#555; margin-bottom:6px;">📅 Preferred Drop-off Date: ${booking.preferredDate ? new Date(booking.preferredDate + 'T00:00:00').toLocaleDateString() : '-'}</p>`;
+        html += `<p style="color:#a07840; font-size:0.85rem; margin-top:10px;">Your request has been approved! Please bring ${escapeHtml(booking.horseName)} to the academy. Your 30-day period will officially start once our team confirms arrival.</p>`;
+      }
+
+      if (booking.approvalStatus === 'Active') {
         html += `<p style="color:#555; margin-bottom:6px;">📅 Started: ${new Date(booking.startDate).toLocaleDateString()}</p>`;
         html += `<p style="color:#555; margin-bottom:6px;">📅 Expires: ${new Date(booking.endDate).toLocaleDateString()}</p>`;
         if (booking.daysRemaining !== null) {
@@ -93,7 +99,7 @@
 
       card.innerHTML = html;
 
-      if (booking.approvalStatus === 'Approved' && booking.dailyLog && booking.dailyLog.length) {
+      if (booking.approvalStatus === 'Active' && booking.dailyLog && booking.dailyLog.length) {
         document.getElementById('logCard').style.display = 'block';
         window._dailyLog = booking.dailyLog; // cache for popup lookup
         document.getElementById('dayLogGrid').innerHTML = booking.dailyLog.map(d => {
@@ -107,7 +113,7 @@
         }).join('');
       }
 
-      if (booking.approvalStatus === 'Approved' && booking.daysRemaining !== null && booking.daysRemaining <= 7) {
+      if (booking.approvalStatus === 'Active' && booking.daysRemaining !== null && booking.daysRemaining <= 7) {
         document.getElementById('renewalCard').style.display = 'block';
         if (booking.renewalRequested) {
           document.getElementById('renewalNote').textContent = '✅ Your renewal request has been submitted. Our team will follow up shortly.';

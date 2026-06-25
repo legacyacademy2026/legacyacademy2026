@@ -66,7 +66,7 @@ function startReminderJob() {
       const now = new Date();
       const activeLiveries = await LiveryBooking.find({
         active: true,
-        approvalStatus: 'Approved',
+        approvalStatus: 'Active',
         reminderSent: false
       });
 
