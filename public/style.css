@@ -610,7 +610,7 @@ body {
 
 /* ======= RESPONSIVE ======= */
 @media (max-width: 768px) {
-  .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; background: rgba(0,0,0,0.97); padding: 20px; gap: 15px; }
+  .nav-links { display: none; flex-direction: column; position: absolute; top: 70px; left: 0; right: 0; transform: none; background: rgba(0,0,0,0.97); padding: 20px; gap: 15px; }
   .hero-content { text-align: center; }
   .hero-ctas { justify-content: center; }
   .nav-links.open { display: flex; }
