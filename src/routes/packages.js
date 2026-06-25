@@ -6,7 +6,10 @@ const Booking = require('../models/Booking');
 const ClosedDay = require('../models/ClosedDay');
 const { sendEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
-const { buildPackageEmailHtml, buildPackageWhatsAppText } = require('../utils/messageTemplates');
+const {
+  buildPackageEmailHtml, buildPackageWhatsAppText,
+  buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText
+} = require('../utils/messageTemplates');
 
 function timeToMinutes(timeStr) {
   const [time, period] = timeStr.split(' ');
@@ -14,6 +17,19 @@ function timeToMinutes(timeStr) {
   if (period === 'PM' && hours !== 12) hours += 12;
   if (period === 'AM' && hours === 12) hours = 0;
   return hours * 60 + minutes;
+}
+
+function notifyPackage(pkg, { statusBadge, bodyText, detailsHtml, ctaLabel, statusLine, includeLink = true }) {
+  const trackingUrl = includeLink ? `${process.env.PUBLIC_BASE_URL || ''}/track.html?token=${pkg.token}` : null;
+  const data = { name: pkg.name, title: pkg.title, statusBadge, bodyText, detailsHtml, trackingUrl, ctaLabel };
+
+  const emailRecipient = process.env.ADMIN_TEST_EMAIL || pkg.email;
+  sendEmail(emailRecipient, `🐴 Mervat Academy — Update on Your Package`, buildStatusUpdateEmailHtml(data))
+    .catch(err => console.log('⚠️ Email notification error:', err.message));
+
+  const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
+  sendWhatsApp(waRecipient, buildStatusUpdateWhatsAppText({ name: pkg.name, title: pkg.title, statusLine, bodyText, trackingUrl }))
+    .catch(err => console.log('⚠️ WhatsApp notification error:', err.message));
 }
 
 router.post('/', async (req, res) => {
@@ -29,10 +45,8 @@ router.post('/', async (req, res) => {
 
     const trackingUrl = `${req.protocol}://${req.get('host')}/track.html?token=${pkg.token}`;
 
-    // Respond immediately — don't make the customer wait for email/WhatsApp
     res.status(201).json({ message: '✅ Package request submitted', token: pkg.token });
 
-    // Fire off notifications in the background — they don't block the response above
     const templateData = {
       title: pkg.title, name: pkg.name, packageType: pkg.packageType,
       tierLabel: pkg.tierLabel, price: pkg.price, trackingUrl
@@ -164,8 +178,41 @@ router.get('/', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   try {
+    const before = await PackagePurchase.findById(req.params.id);
+    if (!before) return res.status(404).json({ message: 'Package not found' });
+
     const pkg = await PackagePurchase.findByIdAndUpdate(req.params.id, req.body, { new: true });
     res.json({ message: '✅ Package updated', package: pkg });
+
+    // Package approved
+    if (req.body.approvalStatus === 'Approved' && before.approvalStatus !== 'Approved') {
+      notifyPackage(pkg, {
+        statusBadge: { bg: '#d4edda', color: '#1e7e34', text: '✅ Package Approved' },
+        bodyText: `Great news! Your <strong>${pkg.packageType} — ${pkg.tierLabel}</strong> package has been approved. Please select your preferred dates and times for your sessions using the link below.`,
+        statusLine: 'Your package has been approved! ✅',
+        ctaLabel: 'Select My Sessions'
+      });
+    }
+
+    // Package rejected
+    if (req.body.approvalStatus === 'Rejected' && before.approvalStatus !== 'Rejected') {
+      notifyPackage(pkg, {
+        statusBadge: { bg: '#f8d7da', color: '#a71d2a', text: '❌ Request Not Approved' },
+        bodyText: `We're sorry, but we're unable to approve your <strong>${pkg.packageType} — ${pkg.tierLabel}</strong> request at this time. Please contact us directly so we can assist you further.`,
+        statusLine: 'Your package request was not approved.',
+        includeLink: false
+      });
+    }
+
+    // Payment confirmed
+    if (req.body.paymentStatus === 'Paid' && before.paymentStatus !== 'Paid') {
+      notifyPackage(pkg, {
+        statusBadge: { bg: '#d4edda', color: '#1e7e34', text: '💰 Payment Received' },
+        bodyText: `We've received your payment of <strong>AED ${pkg.price}</strong> for your ${pkg.packageType} — ${pkg.tierLabel} package. Thank you!`,
+        statusLine: 'Payment received — thank you! 💰',
+        ctaLabel: 'View My Package'
+      });
+    }
   } catch (err) {
     res.status(500).json({ message: '❌ Error updating package' });
   }

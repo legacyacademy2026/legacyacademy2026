@@ -4,7 +4,9 @@ const Booking = require('../models/Booking');
 const Customer = require('../models/Customer');
 const ClosedDay = require('../models/ClosedDay');
 const PackagePurchase = require('../models/PackagePurchase');
-const { sendReminderEmail } = require('../utils/mailer');
+const { sendEmail, sendReminderEmail } = require('../utils/mailer');
+const { sendWhatsApp } = require('../utils/whatsapp');
+const { buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText } = require('../utils/messageTemplates');
 
 function timeToMinutes(timeStr) {
   const [time, period] = timeStr.split(' ');
@@ -189,22 +191,56 @@ router.patch('/:id/status', async (req, res) => {
     booking.status = status;
     await booking.save();
 
-    // If this session belongs to a package, keep the package's counters in sync
+    res.json({ message: '✅ Status updated', booking });
+
     if (booking.packagePurchaseId) {
       const pkg = await PackagePurchase.findById(booking.packagePurchaseId);
       if (pkg) {
+        let notifyData = null;
+
         if (status === 'Cancelled' && previousStatus !== 'Cancelled') {
           pkg.sessionsBooked = Math.max(0, pkg.sessionsBooked - 1);
+          notifyData = {
+            statusBadge: { bg: '#f8d7da', color: '#a71d2a', text: '❌ Session Not Approved' },
+            bodyText: `Your session on <strong>${booking.date} at ${booking.startTime}</strong> could not be confirmed. Please select another date using the link below.`,
+            statusLine: 'Your session was declined — please pick another date.',
+            ctaLabel: 'Choose Another Date'
+          };
+        }
+        if (status === 'Confirmed' && previousStatus !== 'Confirmed') {
+          notifyData = {
+            statusBadge: { bg: '#d4edda', color: '#1e7e34', text: '✅ Session Confirmed' },
+            bodyText: `Your session on <strong>${booking.date} at ${booking.startTime}</strong> has been confirmed. We look forward to seeing you!`,
+            statusLine: 'Your session has been confirmed! ✅'
+          };
         }
         if (status === 'Completed' && previousStatus !== 'Completed') {
           pkg.sessionsCompleted = Math.min(pkg.sessionsTotal, pkg.sessionsCompleted + 1);
           if (pkg.sessionsCompleted >= pkg.sessionsTotal) pkg.finished = true;
+          const pending = pkg.sessionsTotal - pkg.sessionsCompleted;
+          notifyData = {
+            statusBadge: { bg: '#e0c89a', color: '#5c3d1a', text: '🎉 Session Completed' },
+            bodyText: `Great work! Your session on <strong>${booking.date}</strong> has been marked as completed. You have <strong>${pending}</strong> session(s) remaining in your package.`,
+            statusLine: 'Your session is complete! 🎉'
+          };
         }
+
         await pkg.save();
+
+        if (notifyData) {
+          const trackingUrl = `${process.env.PUBLIC_BASE_URL || ''}/track.html?token=${pkg.token}`;
+          const emailRecipient = process.env.ADMIN_TEST_EMAIL || pkg.email;
+          sendEmail(emailRecipient, '🐴 Mervat Academy — Update on Your Session', buildStatusUpdateEmailHtml({
+            name: pkg.name, title: pkg.title, trackingUrl, ...notifyData
+          })).catch(err => console.log('⚠️ Email notification error:', err.message));
+
+          const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
+          sendWhatsApp(waRecipient, buildStatusUpdateWhatsAppText({
+            name: pkg.name, title: pkg.title, trackingUrl, statusLine: notifyData.statusLine, bodyText: notifyData.bodyText
+          })).catch(err => console.log('⚠️ WhatsApp notification error:', err.message));
+        }
       }
     }
-
-    res.json({ message: '✅ Status updated', booking });
   } catch (err) {
     res.status(500).json({ message: '❌ Error updating status' });
   }
