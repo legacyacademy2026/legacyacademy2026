@@ -6,6 +6,7 @@ const Booking = require('../models/Booking');
 const ClosedDay = require('../models/ClosedDay');
 const { sendEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
+const { sendSMS } = require('../utils/sms');
 const {
   buildPackageEmailHtml, buildPackageWhatsAppText,
   buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText
@@ -61,6 +62,10 @@ router.post('/', async (req, res) => {
     const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
     sendWhatsApp(waRecipient, waText)
       .catch(waErr => console.log('⚠️ WhatsApp notification error (package still saved):', waErr.message));
+
+    const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || pkg.phone;
+    sendSMS(smsRecipient, waText)
+      .catch(smsErr => console.log('⚠️ SMS notification error (package still saved):', smsErr.message));
   } catch (err) {
     res.status(500).json({ message: '❌ Error submitting package request', error: err.message });
   }

@@ -6,6 +6,7 @@ const ClosedDay = require('../models/ClosedDay');
 const PackagePurchase = require('../models/PackagePurchase');
 const { sendEmail, sendReminderEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
+const { sendSMS } = require('../utils/sms');
 const { buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText } = require('../utils/messageTemplates');
 
 function timeToMinutes(timeStr) {
@@ -238,6 +239,11 @@ router.patch('/:id/status', async (req, res) => {
           sendWhatsApp(waRecipient, buildStatusUpdateWhatsAppText({
             name: pkg.name, title: pkg.title, trackingUrl, statusLine: notifyData.statusLine, bodyText: notifyData.bodyText
           })).catch(err => console.log('⚠️ WhatsApp notification error:', err.message));
+
+          const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || pkg.phone;
+          sendSMS(smsRecipient, buildStatusUpdateWhatsAppText({
+            name: pkg.name, title: pkg.title, trackingUrl, statusLine: notifyData.statusLine, bodyText: notifyData.bodyText
+          })).catch(err => console.log('⚠️ SMS notification error:', err.message));
         }
       }
     }

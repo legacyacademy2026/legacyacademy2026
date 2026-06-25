@@ -2,6 +2,7 @@ const cron = require('node-cron');
 const Booking = require('../models/Booking');
 const { sendReminderEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
+const { sendSMS } = require('../utils/sms');
 const { buildReminderWhatsAppText } = require('../utils/messageTemplates');
 require('dotenv').config();
 
@@ -35,6 +36,15 @@ function startReminderJob() {
             await sendWhatsApp(recipient, waText);
           } catch (waErr) {
             console.log('⚠️ WhatsApp reminder error:', waErr.message);
+          }
+
+          try {
+            const smsText = buildReminderWhatsAppText(booking);
+            // ⚠️ TESTING MODE: sends to ADMIN_TEST_PHONE_SMS. Switch to booking.phone later for real customers.
+            const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || booking.phone;
+            await sendSMS(smsRecipient, smsText);
+          } catch (smsErr) {
+            console.log('⚠️ SMS reminder error:', smsErr.message);
           }
 
           booking.reminderSent = true;
