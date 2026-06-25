@@ -626,27 +626,33 @@ async function viewCustomerHistory(id) {
   try {
     const res = await fetch(`/api/customers/${id}`);
     const data = await res.json();
-    const { customer, bookings } = data;
+    const { customer, timeline, totalPaid } = data;
 
     let html = `
-      <h3>${escapeHtml(customer.name)}'s Booking History</h3>
+      <h3>${escapeHtml(customer.name)}'s Full History</h3>
       <p class="modal-subtext">${escapeHtml(customer.email)} • ${escapeHtml(customer.phone || 'No phone')}</p>
+      <p class="sub-label" style="margin-bottom:14px;"><strong>💰 Total Paid (All Time): AED ${totalPaid.toFixed(0)}</strong></p>
     `;
 
-    if (bookings.length === 0) {
-      html += '<p class="no-bookings-text">No bookings yet.</p>';
+    if (!timeline || timeline.length === 0) {
+      html += '<p class="no-bookings-text">No history yet.</p>';
     } else {
       html += '<div class="history-list">';
-      bookings.forEach(b => {
-        const status = b.status || 'Pending';
+      timeline.forEach(t => {
+        const dateLabel = t.date ? new Date(t.date).toLocaleDateString() : '-';
+        const statusClass = (t.status || 'pending').toLowerCase();
+        const payClass = (t.paymentStatus || 'unpaid').toLowerCase().replace(/\s+/g, '');
         html += `
           <div class="history-item">
             <div>
-              <strong>${CATEGORY_ICONS[b.category] || '📌'} ${escapeHtml(b.category)}</strong>
-              ${b.subPackage ? `<br><span class="sub-label">${escapeHtml(b.subPackage)}</span>` : ''}
-              <br><span class="sub-label">${escapeHtml(b.date)} • ${b.startTime} (${b.duration}h) • AED ${(b.price||0).toFixed(0)}</span>
+              <strong>${t.icon || '📌'} ${escapeHtml(t.type)}</strong> — ${escapeHtml(t.label)}
+              ${t.horseName ? `<br><span class="sub-label">🐴 ${escapeHtml(t.horseName)}</span>` : ''}
+              <br><span class="sub-label">${dateLabel} • AED ${(t.amount || 0).toFixed(0)}${t.extra ? ' • ' + escapeHtml(t.extra) : ''}</span>
             </div>
-            <span class="status-badge status-${status.toLowerCase()}">${status}</span>
+            <div style="text-align:right;">
+              <span class="status-badge status-${statusClass}">${escapeHtml(t.status || '-')}</span><br>
+              <span class="payment-badge payment-${payClass}" style="margin-top:4px; display:inline-block;">${escapeHtml(t.paymentStatus || '-')}</span>
+            </div>
           </div>
         `;
       });
