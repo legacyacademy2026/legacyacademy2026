@@ -704,6 +704,14 @@ body {
   gap: 28px;
 }
 
+/* For package pages with exactly 2 cards (e.g. Desert & Beach Riding) */
+.packages-grid-2col {
+  grid-template-columns: repeat(2, 1fr);
+}
+@media (max-width: 700px) {
+  .packages-grid-2col { grid-template-columns: 1fr; }
+}
+
 .package-card-detail {
   background: white;
   border-radius: 18px;
