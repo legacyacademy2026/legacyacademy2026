@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mervat Horse Riding Academy</title>
+  <title>Mervat Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
@@ -13,7 +13,8 @@
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
       <span class="horse-badge"><span class="running-horse">🐎</span></span>
-      Mervat Academy
+      <span class="nav-logo-name">Mervat</span>
+      <span class="nav-logo-tagline">Equestrian School</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -22,28 +23,34 @@
       <li><a href="booking.html">Book Now</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
+    <span class="nav-phone"><i class="fas fa-phone"></i></span>
     <div class="hamburger" id="hamburger">&#9776;</div>
   </nav>
 
   <section class="hero" id="home">
+    <div class="container">
+      <div class="hero-grid">
 
-    <div class="intro-overlay" id="introOverlay">
-      <div class="intro-line"><span>WELCOME TO</span></div>
-      <div class="intro-line"><span>MERVAT ACADEMY</span></div>
-    </div>
+        <div class="hero-content">
+          <h1>Excellence in Equestrian<span class="accent">Starts Here</span></h1>
+          <ul class="hero-checklist">
+            <li><i class="fas fa-shield-alt"></i> Professional care.</li>
+            <li><i class="fas fa-award"></i> Comprehensive training.</li>
+            <li><i class="fas fa-star"></i> Trusted expertise.</li>
+            <li><i class="fas fa-horseshoe"></i> A place where both you and your horse can thrive.</li>
+          </ul>
+          <div class="hero-ctas">
+            <a href="#services" class="btn-primary"><i class="fas fa-arrow-right"></i> Explore Our Services</a>
+          </div>
+          <div class="hero-dots">
+            <span class="active"></span><span></span><span></span>
+          </div>
+        </div>
 
-   <video class="hero-video" autoplay muted loop playsinline>
-      <source src="assets/hero-video.mp4" type="video/mp4">
-    </video>
-    <div class="hero-overlay"></div>
+        <div class="hero-image-wrap">
+          <img src="https://images.unsplash.com/photo-1601726429844-acd8b1385972?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Horse portrait">
+        </div>
 
-    <div class="hero-content">
-      <span class="hero-eyebrow">Coached by Mervat · Dubai, UAE</span>
-      <h1>Where Every Rider<br/><span>Finds Their Stride</span></h1>
-      <p>Personalized training, premium horse care, and a community built around horsemanship — right here in Dubai.</p>
-      <div class="hero-ctas">
-        <a href="#services" class="btn-primary">Explore Our Services</a>
-        <a href="booking.html" class="btn-ghost">Book Now</a>
       </div>
     </div>
   </section>
@@ -58,26 +65,15 @@
 
         <div class="service-card">
           <div class="service-card-header">
-            <div class="service-icon"><i class="fas fa-horse"></i></div>
-            <h3>Equestrian Training Programs</h3>
+            <h3>Riding Lessons</h3>
           </div>
-          <p>Tailored training programs for riders of all levels, focused on developing confidence, technique, and excellence in horsemanship.</p>
+          <p>Lessons for beginners and advanced riders supervised by certified coaches.</p>
           <a href="training-programs.html" class="learn-more">View Packages &amp; Pricing →</a>
         </div>
 
         <div class="service-card">
           <div class="service-card-header">
-            <div class="service-icon"><i class="fas fa-chart-line"></i></div>
-            <h3>Horse Training &amp; Development</h3>
-          </div>
-          <p>Professional training services designed to enhance performance, discipline, responsiveness, and overall horse development.</p>
-          <a href="horse-training.html" class="learn-more">View Training Categories →</a>
-        </div>
-
-        <div class="service-card">
-          <div class="service-card-header">
-            <div class="service-icon"><i class="fas fa-warehouse"></i></div>
-            <h3>Premium Horse Boarding</h3>
+            <h3>Horse Boarding</h3>
           </div>
           <p>Coming soon — details about our premium boarding offering will be available here shortly.</p>
           <a href="booking.html?service=Horse+Boarding" class="learn-more">Enquire Now →</a>
@@ -85,7 +81,6 @@
 
         <div class="service-card">
           <div class="service-card-header">
-            <div class="service-icon"><i class="fas fa-house-chimney"></i></div>
             <h3>Livery Services</h3>
           </div>
           <p>Flexible livery care plans — from full-service stabling to grass/field livery — tailored to suit your horse's needs.</p>
@@ -94,46 +89,66 @@
 
         <div class="service-card">
           <div class="service-card-header">
-            <div class="service-icon"><i class="fas fa-sun"></i></div>
-            <h3>Desert &amp; Beach Riding</h3>
+            <h3>Horse Training &amp; Development</h3>
           </div>
-          <p>Guided horseback excursions across the desert dunes and along the coastline — a scenic riding experience for all levels.</p>
+          <p>Professional training programs designed to improve performance and build discipline.</p>
+          <a href="horse-training.html" class="learn-more">View Training Categories →</a>
+        </div>
+
+        <div class="service-card">
+          <div class="service-card-header">
+            <h3>Trail Rides &amp; Beach Rides</h3>
+          </div>
+          <p>Enjoy unforgettable horseback riding experiences in the most beautiful natural locations.</p>
           <a href="desert-beach-riding.html" class="learn-more">View Trip Options →</a>
         </div>
 
         <div class="service-card">
           <div class="service-card-header">
-            <div class="service-icon"><i class="fas fa-gem"></i></div>
             <h3>Quality Horses for Sale</h3>
           </div>
-          <p>Carefully selected horses available for purchase, with expert guidance to help clients find the perfect match.</p>
+          <p>Carefully selected horses with excellent bloodlines and great temperaments.</p>
           <a href="booking.html?service=Horse+Selling" class="learn-more">Browse Horses →</a>
         </div>
 
         <div class="service-card">
           <div class="service-card-header">
-            <div class="service-icon"><i class="fas fa-award"></i></div>
             <h3>Horse Rental for Events &amp; Occasions</h3>
           </div>
-          <p>Beautifully trained horses available for weddings, cultural events, private celebrations, photoshoots, and special occasions.</p>
+          <p>Beautifully trained horses available for weddings, cultural events, private celebrations, and photoshoots.</p>
           <a href="booking.html?service=Party+Renting" class="learn-more">Learn More →</a>
         </div>
 
         <div class="service-card">
           <div class="service-card-header">
-            <div class="service-icon"><i class="fas fa-shopping-bag"></i></div>
             <h3>Equestrian Equipment &amp; Tack Shop</h3>
           </div>
-          <p>A curated selection of premium riding apparel, horse tack, accessories, grooming products, and essential equestrian equipment.</p>
+          <p>A curated selection of premium riding apparel, horse tack, accessories, and grooming products.</p>
           <a href="booking.html?service=Equipment+for+Sale" class="learn-more">Shop Now →</a>
         </div>
 
       </div>
+
+      <a href="https://wa.me/971585953807" class="cta-banner">
+        <i class="fab fa-whatsapp"></i>
+        <div>
+          <div class="cta-text-main">Book Now &amp; Inquire</div>
+          <div class="cta-text-sub">Contact us via WhatsApp</div>
+        </div>
+        <i class="fas fa-arrow-right cta-arrow"></i>
+      </a>
+
     </div>
   </section>
 
   <footer class="footer">
-    <p>© 2026 Mervat Horse Riding Academy. All rights reserved. 🐴</p>
+    <div class="footer-socials">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-snapchat"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="https://wa.me/971585953807"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <p>© 2026 All Rights Reserved<br>MERVAT EQUESTRIAN SCHOOL</p>
   </footer>
 
   <script src="script.js"></script>
