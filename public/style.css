@@ -463,6 +463,13 @@ h1, h2, h3, .serif-heading {
 }
 .pkg-hero-info h1 .accent { color: var(--rust); display: block; }
 
+.pkg-hero-info .pkg-subtitle {
+  color: var(--grey-text);
+  font-size: 0.98rem;
+  margin-top: 14px;
+  line-height: 1.6;
+}
+
 .pkg-divider {
   display: flex;
   align-items: center;
@@ -497,6 +504,43 @@ h1, h2, h3, .serif-heading {
 @media (max-width: 900px) {
   .pkg-hero-grid { grid-template-columns: 1fr; }
   .pkg-hero-image { height: 280px; order: -1; }
+}
+
+/* Multi-tier pricing list (e.g. Single / 5 Lessons / 10 Lessons) */
+.pkg-pricing-list { margin-bottom: 26px; }
+.pkg-pricing-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  border: 1px solid var(--border-soft);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+.pkg-pricing-row i {
+  color: var(--rust);
+  font-size: 1rem;
+  width: 20px;
+  flex-shrink: 0;
+}
+.pkg-pricing-row .pkg-tier-name {
+  flex: 1;
+  font-size: 0.95rem;
+  color: var(--charcoal);
+  font-weight: 500;
+}
+.pkg-pricing-row .pkg-tier-price {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--navy);
+}
+.pkg-pricing-row .pkg-tier-currency {
+  font-size: 0.75rem;
+  color: var(--grey-text);
+  margin-left: 4px;
+  font-family: 'Inter', sans-serif;
 }
 
 /* Sticky info bar */
@@ -586,6 +630,15 @@ h1, h2, h3, .serif-heading {
   margin-top: 7px;
   flex-shrink: 0;
 }
+
+.pkg-tier-label {
+  color: var(--rust);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin: 18px 0 10px;
+  text-transform: none;
+}
+.pkg-tier-label:first-child { margin-top: 0; }
 
 .pkg-final-cta {
   display: flex;
