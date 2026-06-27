@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Horse Training & Development - Mervat Academy</title>
+  <title>Horse Training & Development - Mervat Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
-      <span class="horse-badge"><span class="running-horse">🐎</span></span>
-      Mervat Academy
+      <img src="assets/logo.png" alt="Mervat Equestrian School">
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -22,103 +21,73 @@
       <li><a href="booking.html">Book Now</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
+    <span class="nav-phone"><i class="fas fa-phone"></i></span>
     <div class="hamburger" id="hamburger">&#9776;</div>
   </nav>
 
-  <section class="package-page-hero">
-    <video class="package-page-hero-video" autoplay muted loop playsinline>
-      <source src="assets/hero-video.mp4" type="video/mp4">
-    </video>
-    <div class="package-page-hero-overlay"></div>
-    <div class="package-page-hero-content">
-      <span class="hero-eyebrow">Services</span>
-      <h1>Horse Training &amp; Development</h1>
-      <p>Professional training across every discipline, tailored to your horse's stage and goals.</p>
+  <section class="pkg-breadcrumb" style="background: var(--cream);">
+    <div class="container">
+      <div class="pkg-breadcrumb-row">
+        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
+        <span class="current">Horse Training &amp; Development</span>
+      </div>
     </div>
   </section>
 
-  <section class="packages-page-body">
+  <section style="background: var(--cream); padding: 20px 0 70px;">
     <div class="container">
-      <div class="packages-grid training-grid">
+      <span class="section-tag">Services</span>
+      <h2 class="section-title">Horse Training &amp; Development</h2>
+      <p class="services-intro">Professional training across every discipline, tailored to your horse's stage and goals.</p>
 
-        <div class="livery-card-detail">
-          <div class="livery-card-top">
-            <span class="package-number">1</span>
-            <i class="fas fa-seedling" style="color:#a07840;"></i>
-            <h3>Foundation / Basic Training</h3>
-          </div>
-          <p class="livery-desc">Groundwork, leading, halter training, and basic obedience for young or untrained horses.</p>
-          <a href="booking.html?service=Horse+Training&amp;training=Foundation%2FBasic+Training" class="select-package-btn">Enquire Now →</a>
+      <div class="cards-grid" style="grid-template-columns: repeat(4, 1fr);">
+
+        <div class="service-card">
+          <div class="service-card-header"><h3><i class="fas fa-seedling" style="color: var(--rust); margin-right: 8px;"></i>Foundation / Basic Training</h3></div>
+          <p>Groundwork, leading, halter training, and basic obedience for young or untrained horses.</p>
+          <a href="booking.html?service=Horse+Training&training=Foundation%2FBasic+Training" class="learn-more">Enquire Now →</a>
         </div>
 
-        <div class="livery-card-detail">
-          <div class="livery-card-top">
-            <span class="package-number">2</span>
-            <i class="fas fa-horse" style="color:#a07840;"></i>
-            <h3>Breaking &amp; Backing</h3>
-          </div>
-          <p class="livery-desc">Initial saddle training for young horses, typically between 2–4 years old.</p>
-          <a href="booking.html?service=Horse+Training&amp;training=Breaking+%26+Backing" class="select-package-btn">Enquire Now →</a>
+        <div class="service-card">
+          <div class="service-card-header"><h3><i class="fas fa-horse" style="color: var(--rust); margin-right: 8px;"></i>Breaking &amp; Backing</h3></div>
+          <p>Initial saddle training for young horses, typically between 2–4 years old.</p>
+          <a href="booking.html?service=Horse+Training&training=Breaking+%26+Backing" class="learn-more">Enquire Now →</a>
         </div>
 
-        <div class="livery-card-detail">
-          <div class="livery-card-top">
-            <span class="package-number">3</span>
-            <i class="fas fa-music" style="color:#a07840;"></i>
-            <h3>Dressage Training</h3>
-          </div>
-          <p class="livery-desc">Flatwork, schooling movements, and competition preparation.</p>
-          <a href="booking.html?service=Horse+Training&amp;training=Dressage+Training" class="select-package-btn">Enquire Now →</a>
+        <div class="service-card">
+          <div class="service-card-header"><h3><i class="fas fa-music" style="color: var(--rust); margin-right: 8px;"></i>Dressage Training</h3></div>
+          <p>Flatwork, schooling movements, and competition preparation.</p>
+          <a href="booking.html?service=Horse+Training&training=Dressage+Training" class="learn-more">Enquire Now →</a>
         </div>
 
-        <div class="livery-card-detail">
-          <div class="livery-card-top">
-            <span class="package-number">4</span>
-            <i class="fas fa-arrow-up" style="color:#a07840;"></i>
-            <h3>Show Jumping Training</h3>
-          </div>
-          <p class="livery-desc">Jump technique and course work for confident, competitive jumping.</p>
-          <a href="booking.html?service=Horse+Training&amp;training=Show+Jumping+Training" class="select-package-btn">Enquire Now →</a>
+        <div class="service-card">
+          <div class="service-card-header"><h3><i class="fas fa-arrow-up" style="color: var(--rust); margin-right: 8px;"></i>Show Jumping Training</h3></div>
+          <p>Jump technique and course work for confident, competitive jumping.</p>
+          <a href="booking.html?service=Horse+Training&training=Show+Jumping+Training" class="learn-more">Enquire Now →</a>
         </div>
 
-        <div class="livery-card-detail">
-          <div class="livery-card-top">
-            <span class="package-number">5</span>
-            <i class="fas fa-hand-holding-medical" style="color:#a07840;"></i>
-            <h3>Behavioral Correction / Rehabilitation</h3>
-          </div>
-          <p class="livery-desc">Fixing bad habits, anxiety, and aggression issues with patient, professional handling.</p>
-          <a href="booking.html?service=Horse+Training&amp;training=Behavioral+Correction%2FRehabilitation" class="select-package-btn">Enquire Now →</a>
+        <div class="service-card">
+          <div class="service-card-header"><h3><i class="fas fa-hand-holding-medical" style="color: var(--rust); margin-right: 8px;"></i>Behavioral Correction / Rehabilitation</h3></div>
+          <p>Fixing bad habits, anxiety, and aggression issues with patient, professional handling.</p>
+          <a href="booking.html?service=Horse+Training&training=Behavioral+Correction%2FRehabilitation" class="learn-more">Enquire Now →</a>
         </div>
 
-        <div class="livery-card-detail">
-          <div class="livery-card-top">
-            <span class="package-number">6</span>
-            <i class="fas fa-dumbbell" style="color:#a07840;"></i>
-            <h3>Performance Conditioning</h3>
-          </div>
-          <p class="livery-desc">Fitness and stamina building tailored for competition horses.</p>
-          <a href="booking.html?service=Horse+Training&amp;training=Performance+Conditioning" class="select-package-btn">Enquire Now →</a>
+        <div class="service-card">
+          <div class="service-card-header"><h3><i class="fas fa-dumbbell" style="color: var(--rust); margin-right: 8px;"></i>Performance Conditioning</h3></div>
+          <p>Fitness and stamina building tailored for competition horses.</p>
+          <a href="booking.html?service=Horse+Training&training=Performance+Conditioning" class="learn-more">Enquire Now →</a>
         </div>
 
-        <div class="livery-card-detail">
-          <div class="livery-card-top">
-            <span class="package-number">7</span>
-            <i class="fas fa-route" style="color:#a07840;"></i>
-            <h3>Endurance Training</h3>
-          </div>
-          <p class="livery-desc">Conditioning built specifically for long-distance riding.</p>
-          <a href="booking.html?service=Horse+Training&amp;training=Endurance+Training" class="select-package-btn">Enquire Now →</a>
+        <div class="service-card">
+          <div class="service-card-header"><h3><i class="fas fa-route" style="color: var(--rust); margin-right: 8px;"></i>Endurance Training</h3></div>
+          <p>Conditioning built specifically for long-distance riding.</p>
+          <a href="booking.html?service=Horse+Training&training=Endurance+Training" class="learn-more">Enquire Now →</a>
         </div>
 
-        <div class="livery-card-detail">
-          <div class="livery-card-top">
-            <span class="package-number">8</span>
-            <i class="fas fa-baby" style="color:#a07840;"></i>
-            <h3>Foal Training / Early Development</h3>
-          </div>
-          <p class="livery-desc">Imprinting and socialization for young foals, building trust from day one.</p>
-          <a href="booking.html?service=Horse+Training&amp;training=Foal+Training%2FEarly+Development" class="select-package-btn">Enquire Now →</a>
+        <div class="service-card">
+          <div class="service-card-header"><h3><i class="fas fa-baby" style="color: var(--rust); margin-right: 8px;"></i>Foal Training / Early Development</h3></div>
+          <p>Imprinting and socialization for young foals, building trust from day one.</p>
+          <a href="booking.html?service=Horse+Training&training=Foal+Training%2FEarly+Development" class="learn-more">Enquire Now →</a>
         </div>
 
       </div>
@@ -126,7 +95,13 @@
   </section>
 
   <footer class="footer">
-    <p>© 2026 Mervat Horse Riding Academy. All rights reserved. 🐴</p>
+    <div class="footer-socials">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-snapchat"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="https://wa.me/971585953807"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <p>© 2026 All Rights Reserved<br>MERVAT EQUESTRIAN SCHOOL</p>
   </footer>
 
   <script src="script.js"></script>

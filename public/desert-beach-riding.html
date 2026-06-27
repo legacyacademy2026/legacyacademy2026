@@ -3,17 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Desert & Beach Riding - Mervat Academy</title>
+  <title>Desert & Beach Riding - Mervat Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
-      <span class="horse-badge"><span class="running-horse">🐎</span></span>
-      Mervat Academy
+      <img src="assets/logo.png" alt="Mervat Equestrian School">
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
@@ -22,49 +21,37 @@
       <li><a href="booking.html">Book Now</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
+    <span class="nav-phone"><i class="fas fa-phone"></i></span>
     <div class="hamburger" id="hamburger">&#9776;</div>
   </nav>
 
-  <section class="package-page-hero">
-    <video class="package-page-hero-video" autoplay muted loop playsinline>
-      <source src="assets/hero-video.mp4" type="video/mp4">
-    </video>
-    <div class="package-page-hero-overlay"></div>
-    <div class="package-page-hero-content">
-      <span class="hero-eyebrow">Services</span>
-      <h1>Desert &amp; Beach Riding</h1>
-      <p>Guided horseback excursions across Dubai's desert dunes and along the coastline — a ride to remember.</p>
+  <section class="pkg-breadcrumb" style="background: var(--cream);">
+    <div class="container">
+      <div class="pkg-breadcrumb-row">
+        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
+        <span class="current">Desert &amp; Beach Riding</span>
+      </div>
     </div>
   </section>
 
-  <section class="packages-page-body">
+  <section style="background: var(--cream); padding: 20px 0 70px;">
     <div class="container">
-      <div class="packages-grid packages-grid-2col" style="max-width: 820px; margin: 0 auto;">
+      <span class="section-tag">Services</span>
+      <h2 class="section-title">Desert &amp; Beach Riding</h2>
+      <p class="services-intro">Guided horseback excursions across Dubai's desert dunes and along the coastline — a ride to remember.</p>
 
-        <div class="package-card-detail">
-          <div class="package-card-top">
-            <span class="package-number">1</span>
-            <h3>Desert Trail Ride</h3>
-          </div>
-          <div class="package-rows">
-            <div class="package-row"><span>Single Ride</span><strong>AED ---</strong></div>
-            <div class="package-row"><span>Duration</span><strong>-- Minutes</strong></div>
-          </div>
-          <p class="package-includes">🐎 Guided ride across the desert dunes<br/>🌅 Available at sunrise &amp; sunset slots</p>
-          <a href="booking.html?package=Desert+Trail+Ride" class="select-package-btn">Select This Package →</a>
+      <div class="cards-grid" style="grid-template-columns: repeat(2, 1fr); max-width: 800px; margin: 0 auto;">
+
+        <div class="service-card">
+          <div class="service-card-header"><h3>Desert Trail Ride</h3></div>
+          <p>Guided ride across the desert dunes, available at sunrise &amp; sunset slots. Pricing: AED --- · Duration: -- minutes.</p>
+          <a href="booking.html?package=Desert+Trail+Ride" class="learn-more">Select This Package →</a>
         </div>
 
-        <div class="package-card-detail">
-          <div class="package-card-top">
-            <span class="package-number">2</span>
-            <h3>Beach Ride</h3>
-          </div>
-          <div class="package-rows">
-            <div class="package-row"><span>Single Ride</span><strong>AED ---</strong></div>
-            <div class="package-row"><span>Duration</span><strong>-- Minutes</strong></div>
-          </div>
-          <p class="package-includes">🌊 Guided ride along the coastline<br/>📸 Great for photos &amp; first-time riders</p>
-          <a href="booking.html?package=Beach+Ride" class="select-package-btn">Select This Package →</a>
+        <div class="service-card">
+          <div class="service-card-header"><h3>Beach Ride</h3></div>
+          <p>Guided ride along the coastline, great for photos &amp; first-time riders. Pricing: AED --- · Duration: -- minutes.</p>
+          <a href="booking.html?package=Beach+Ride" class="learn-more">Select This Package →</a>
         </div>
 
       </div>
@@ -72,7 +59,13 @@
   </section>
 
   <footer class="footer">
-    <p>© 2026 Mervat Horse Riding Academy. All rights reserved. 🐴</p>
+    <div class="footer-socials">
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-snapchat"></i></a>
+      <a href="#"><i class="fab fa-tiktok"></i></a>
+      <a href="https://wa.me/971585953807"><i class="fab fa-whatsapp"></i></a>
+    </div>
+    <p>© 2026 All Rights Reserved<br>MERVAT EQUESTRIAN SCHOOL</p>
   </footer>
 
   <script src="script.js"></script>
