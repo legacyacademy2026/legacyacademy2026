@@ -407,6 +407,7 @@ h1, h2, h3, .serif {
   border-radius: 6px;
   padding: 36px 32px 28px;
   position: relative;
+  text-align: center;
 }
 .pricing-card.best-value {
   border-color: var(--olive);
