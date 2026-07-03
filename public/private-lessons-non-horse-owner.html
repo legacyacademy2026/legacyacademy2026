@@ -1,161 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Private Lessons (Non-Horse Owner) - Mervat Equestrian School</title>
+  <title>Private Lessons — Coach Mervat Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
-      <img src="assets/logo.png" alt="Mervat Equestrian School">
+      <img src="assets/logo.png" alt="Coach Mervat Equestrian School">
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
+      <li><a href="#">Gallery</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="booking.html">Book Now</a></li>
+      <li><a href="index.html#services" class="active">Services</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <span class="nav-phone"><i class="fas fa-phone"></i></span>
-    <div class="hamburger" id="hamburger">&#9776;</div>
+    <div class="nav-right">
+      <span class="nav-lang"><i class="fas fa-globe"></i> EN</span>
+      <a href="booking.html" class="btn-book-now">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
 
-  <section class="pkg-breadcrumb">
+  <!-- Hero -->
+  <section class="hero" style="margin-top: 72px;">
+    <img src="https://images.unsplash.com/photo-1650397306200-bae62961143f?fm=jpg&q=85&w=1800&auto=format&fit=crop" alt="Private Lessons">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-breadcrumb">
+        <a href="index.html">Home</a> &gt;
+        <a href="training-programs.html">Riding</a> &gt;
+        Private Lessons
+      </p>
+      <h1>Private Lessons</h1>
+    </div>
+  </section>
+
+  <!-- Description -->
+  <section style="background: var(--white); padding: 80px 32px;">
+    <div style="max-width: 780px; margin: 0 auto; text-align: center;">
+      <p class="section-eyebrow" style="margin-bottom:16px;">About This Program</p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:400; color:var(--brown); margin-bottom:26px; line-height:1.2;">Private Horse Riding Sessions</h2>
+      <p style="font-size:1.05rem; color:var(--brown-light); line-height:1.8; margin-bottom:22px;">
+        Experience the personal attention and focused progress that comes with one-on-one riding. Our private sessions are tailored entirely to you — your pace, your goals, and your level. Whether you are a first-time rider or looking to refine your technique, our expert instructors provide dedicated guidance in a calm and supportive environment.
+      </p>
+      <p class="pkg-duration" style="text-align:left;">Class Duration: <span>45 minutes</span></p>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="pkg-pricing">
     <div class="container">
-      <div class="pkg-breadcrumb-row">
-        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
-        <a href="training-programs.html">Riding Lessons</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
-        <a href="training-programs.html">Private Lessons</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
-        <span class="current">Private Lessons (Non-Horse Owner)</span>
+      <h2>Choose Your Package</h2>
+      <div class="pricing-grid">
+
+        <div class="pricing-card">
+          <p class="pricing-sessions">1 Session</p>
+          <p class="pricing-amount">200<span class="pricing-currency">AED</span></p>
+          <div class="pricing-divider"></div>
+          <a href="booking.html?service=Private+Lessons+Non-Horse+Owner&tier=Single" class="btn-book">Book Now</a>
+        </div>
+
+        <div class="pricing-card best-value">
+          <span class="best-value-badge">Best Value</span>
+          <p class="pricing-sessions">10 Sessions</p>
+          <p class="pricing-amount">2,700<span class="pricing-currency">AED</span></p>
+          <div class="pricing-divider"></div>
+          <a href="booking.html?service=Private+Lessons+Non-Horse+Owner&tier=10+Sessions" class="btn-book">Book Now</a>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <section class="pkg-hero">
-    <div class="container">
-      <div class="pkg-hero-grid">
-
-        <div class="pkg-hero-image">
-          <img src="https://images.unsplash.com/photo-1650397306200-bae62961143f?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Rider on horseback">
-        </div>
-
-        <div class="pkg-hero-info">
-          <h1>Private Lessons<span class="accent">(Non-Horse Owner)</span></h1>
-          <div class="pkg-divider"><span class="line"></span><i class="fas fa-horseshoe"></i><span class="line"></span></div>
-          <p class="pkg-subtitle">Learn to ride with one of our well-trained school horses, under the guidance of our experienced instructors.</p>
-        </div>
-
-      </div>
+  <!-- Terms -->
+  <section class="pkg-terms">
+    <div class="container" style="max-width: 780px;">
+      <h2>10 Lessons Package — Terms &amp; Regulations</h2>
+      <ul class="terms-list">
+        <li>Valid for 2 months from the date of purchase</li>
+        <li>Expires automatically after the validity period</li>
+        <li>Membership may be frozen for up to 2 weeks during the subscription period</li>
+        <li>Class may be rescheduled up to 24 hours before the scheduled booking time. Unfortunately, cancellations or rescheduling requests made less than 24 hours in advance will not be eligible for rescheduling, and the class will be deducted from your package.</li>
+      </ul>
     </div>
   </section>
 
-  <div class="pkg-info-bar">
-    <div class="container">
-      <div class="pkg-info-bar-row">
-        <span class="pkg-info-item"><i class="fas fa-calendar"></i> Flexible Packages</span>
-        <span class="pkg-info-divider"></span>
-        <span class="pkg-info-item"><i class="fas fa-tag"></i> From AED 200</span>
-        <a href="booking.html?service=Private+Lessons+Non-Horse+Owner" class="btn-primary"><i class="fas fa-arrow-right"></i> Book Now</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="pkg-details">
-
-    <div>
-      <h2>Pricing</h2>
-      <div class="section-underline"></div>
-      <div class="pkg-pricing-list">
-        <div class="pkg-pricing-row">
-          <i class="fas fa-user"></i>
-          <span class="pkg-tier-name">Single Lesson</span>
-          <span class="pkg-tier-price">200<span class="pkg-tier-currency">AED</span></span>
-        </div>
-        <div class="pkg-pricing-row">
-          <i class="fas fa-calendar-days"></i>
-          <span class="pkg-tier-name">5 Lessons Package</span>
-          <span class="pkg-tier-price">1,400<span class="pkg-tier-currency">AED</span></span>
-        </div>
-        <div class="pkg-pricing-row">
-          <i class="fas fa-calendar-days"></i>
-          <span class="pkg-tier-name">10 Lessons Package</span>
-          <span class="pkg-tier-price">2,700<span class="pkg-tier-currency">AED</span></span>
-        </div>
-      </div>
-      <a href="booking.html?service=Private+Lessons+Non-Horse+Owner" class="btn-primary" style="width:100%; justify-content:center;"><i class="fas fa-arrow-right"></i> Book Now</a>
-    </div>
-
-    <div>
-      <h2>About the Package</h2>
-      <div class="section-underline"></div>
-      <p>Train using one of our well-trained school horses under the guidance of our experienced instructors. Private lessons are tailored to your riding level and personal goals, ensuring a safe and enjoyable learning experience.</p>
-    </div>
-
-    <div>
-      <h2>What's Included</h2>
-      <div class="section-underline"></div>
-      <ul class="pkg-list">
-        <li><i class="fas fa-check-circle"></i> Training with one of our school horses</li>
-        <li><i class="fas fa-check-circle"></i> Personalized one-on-one coaching</li>
-        <li><i class="fas fa-check-circle"></i> Individual lesson plans tailored to your riding level</li>
-        <li><i class="fas fa-check-circle"></i> Professional instructor guidance</li>
-        <li><i class="fas fa-check-circle"></i> Safety equipment provided during lessons</li>
-      </ul>
-    </div>
-
-    <div>
-      <h2>Membership Terms</h2>
-      <div class="section-underline"></div>
-
-      <p class="pkg-tier-label">5 Lessons Package</p>
-      <ul class="pkg-terms-list">
-        <li>Valid for 1 month from the date of purchase.</li>
-        <li>Expires automatically after the validity period.</li>
-        <li>Membership may be frozen for up to 1 week during the validity period.</li>
-      </ul>
-
-      <p class="pkg-tier-label">10 Lessons Package</p>
-      <ul class="pkg-terms-list">
-        <li>Valid for 2 months from the date of purchase.</li>
-        <li>Expires automatically after the validity period.</li>
-        <li>Membership may be frozen for up to 2 weeks during the validity period.</li>
-        <li>Membership is non-transferable.</li>
-        <li>Missed sessions without prior notice may be forfeited.</li>
-      </ul>
-    </div>
-
-    <div>
-      <h2>Who Is This Package For?</h2>
-      <div class="section-underline"></div>
-      <ul class="pkg-list">
-        <li><i class="fas fa-check-circle"></i> Beginners with no riding experience</li>
-        <li><i class="fas fa-check-circle"></i> Intermediate riders</li>
-        <li><i class="fas fa-check-circle"></i> Adults and children</li>
-        <li><i class="fas fa-check-circle"></i> Riders who want to learn without owning a horse</li>
-      </ul>
-    </div>
-
-  </div>
-
-  <div class="container">
-    <a href="booking.html?service=Private+Lessons+Non-Horse+Owner" class="pkg-final-cta">
-      Book Your Private Lesson Today <i class="fas fa-arrow-right"></i>
-    </a>
-  </div>
-
+  <!-- Footer -->
   <footer class="footer">
-    <div class="footer-socials">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-snapchat"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="https://wa.me/971585953807"><i class="fab fa-whatsapp"></i></a>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-contact">
+          <p class="footer-contact-label">Contact</p>
+          <p>+971 XX XXX XXXX</p>
+          <p>hello@coachmervat.com</p>
+          <p>Dubai, UAE</p>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>© 2026 Coach Mervat. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
     </div>
-    <p>© 2026 All Rights Reserved<br>MERVAT EQUESTRIAN SCHOOL</p>
   </footer>
 
   <script src="script.js"></script>
