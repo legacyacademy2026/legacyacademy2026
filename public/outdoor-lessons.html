@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Outdoor Lessons — Legacy Equestrian School</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+</head>
+<body>
+
+  <nav class="navbar" id="navbar">
+    <div class="nav-logo">
+      <span class="nav-logo-name">Legacy</span>
+      <span class="nav-logo-sub">Ecole Equestre</span>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="index.html#services" class="active">Services</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-right">
+      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
+      <a href="booking.html" class="btn-book-now">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" style="margin-top:72px; height:55vh; min-height:340px;">
+    <img src="assets/outdoor-lessons-hero.png" alt="Outdoor Lessons">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-breadcrumb">
+        <a href="index.html">Home</a> &gt;
+        <a href="training-programs.html">Riding</a> &gt;
+        Outdoor Lessons
+      </p>
+      <h1>Outdoor Lessons</h1>
+    </div>
+  </section>
+
+  <!-- About This Program -->
+  <section style="background: var(--white); padding: 80px 32px;">
+    <div style="max-width: 780px; margin: 0 auto; text-align: center;">
+      <p class="section-eyebrow" style="margin-bottom:16px;">About This Program</p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:400; color:var(--brown); margin-bottom:26px; line-height:1.2;">Outdoor Lessons</h2>
+      <p style="font-size:1.02rem; color:var(--brown-light); line-height:1.8; margin-bottom:22px;">
+        Experience the thrill of horseback riding in the open desert. Our outdoor lessons offer a unique and immersive setting where you connect with your horse beneath open skies and golden dunes.
+      </p>
+      <p class="pkg-duration" style="text-align:left; max-width:780px; margin:0 auto;">Class Duration: <span>45 minutes</span></p>
+    </div>
+  </section>
+
+  <!-- Choose Your Package -->
+  <section class="pkg-pricing" style="background: var(--cream);">
+    <div class="container">
+      <h2>Choose Your Package</h2>
+      <div class="pricing-grid" style="margin-top:40px;">
+
+        <div class="pricing-card">
+          <p class="pricing-sessions">1 Private Session</p>
+          <p class="pricing-amount">200<span class="pricing-currency">AED</span></p>
+          <div class="pricing-divider"></div>
+          <a href="booking.html?service=Outdoor+Lessons&tier=Private" class="btn-book">Book Now</a>
+        </div>
+
+        <div class="pricing-card" style="border-color: var(--olive);">
+          <span class="best-value-badge">Best Value</span>
+          <p class="pricing-sessions">1 Group Session</p>
+          <p class="pricing-amount">100<span class="pricing-currency">AED</span></p>
+          <div class="pricing-divider"></div>
+          <a href="booking.html?service=Outdoor+Lessons&tier=Group" class="btn-book">Book Now</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Terms & Regulations -->
+  <section class="pkg-terms" style="background: var(--cream);">
+    <div class="container" style="max-width: 780px;">
+      <h2>Terms &amp; Regulations</h2>
+      <ul class="terms-list">
+        <li>Valid for 2 months from the date of purchase</li>
+        <li>Expires automatically after the validity period</li>
+        <li>Membership may be frozen for up to 2 weeks</li>
+        <li>Class may be rescheduled up to 24 hours before the scheduled booking time. Unfortunately, cancellations or rescheduling requests made less than 24 hours in advance will not be eligible for rescheduling, and the class will be deducted from your package.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-contact">
+          <p class="footer-contact-label">Contact</p>
+          <p>+212 555 123 456</p>
+          <p>hello@coachmervat.com</p>
+          <p>Desert Oasis, Route 42</p>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>© 2024 Legacy. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
