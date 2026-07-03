@@ -400,6 +400,7 @@ h1, h2, h3, .serif {
   gap: 24px;
   max-width: 900px;
   margin: 0 auto;
+  align-items: start;
 }
 .pricing-card {
   background: var(--white);
@@ -425,6 +426,7 @@ h1, h2, h3, .serif {
   text-transform: uppercase;
   padding: 5px 14px;
   border-radius: 20px;
+  white-space: nowrap;
 }
 .pricing-sessions {
   font-size: 0.72rem;
