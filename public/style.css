@@ -402,13 +402,19 @@ h1, h2, h3, .serif {
   margin: 0 auto;
   align-items: start;
 }
+
+/* Both cards get top padding to reserve space for badge */
 .pricing-card {
   background: var(--white);
   border: 1px solid var(--border);
   border-radius: 6px;
-  padding: 36px 32px 28px;
+  padding: 46px 32px 28px;
   position: relative;
   text-align: center;
+}
+/* Card without badge needs same top padding as card with badge */
+.pricing-card:not(.best-value) {
+  padding-top: 46px;
 }
 .pricing-card.best-value {
   border-color: var(--olive);
