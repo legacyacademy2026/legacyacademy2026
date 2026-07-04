@@ -68,6 +68,12 @@ const TRAINING_PACKAGES = {
       { label: "40 Minutes", price: 80, sessions: 1, duration: 40, validity: "-", freeze: "-" },
       { label: "60 Minutes (1 Hour)", price: 120, sessions: 1, duration: 60, validity: "-", freeze: "-" }
     ]
+  },
+  "Outdoor Lessons": {
+    tiers: [
+      { label: "1 Private Session", price: 200, sessions: 1, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" },
+      { label: "1 Group Session", price: 100, sessions: 1, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
+    ]
   }
 };
 
@@ -394,11 +400,18 @@ if (bookingFormEl) {
 
 window.addEventListener('DOMContentLoaded', () => {
   const params = new URLSearchParams(window.location.search);
-  const presetPackage = params.get('package');
+  let presetPackage = params.get('package');
   const presetService = params.get('service');
+  const presetTier = params.get('tier');
   const categoryEl = document.getElementById('category');
 
-  if (categoryEl && presetService) {
+  // Some lesson pages pass ?service=<package type name> instead of a real
+  // category (e.g. "Outdoor Lessons", "Hand Ride Experience"). Route those
+  // through the Riding Packages / packageType flow instead of the raw
+  // category select, which only understands actual category values.
+  if (presetService && TRAINING_PACKAGES[presetService]) {
+    presetPackage = presetService;
+  } else if (categoryEl && presetService) {
     categoryEl.value = presetService;
     showSubPackage();
   }
@@ -421,6 +434,16 @@ window.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => {
       document.getElementById('packageType').value = presetPackage;
       updatePackageTiers();
+
+      if (presetTier) {
+        const tierSelect = document.getElementById('packageTier');
+        const tiers = TRAINING_PACKAGES[presetPackage].tiers;
+        const matchIndex = tiers.findIndex(t => t.label.toLowerCase().includes(presetTier.toLowerCase()));
+        if (matchIndex !== -1) {
+          tierSelect.value = matchIndex;
+          updatePackageInfo();
+        }
+      }
     }, 200);
   }
 });
