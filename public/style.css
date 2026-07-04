@@ -578,3 +578,193 @@ h1, h2, h3, .serif {
   .footer-top { flex-direction: column; gap: 30px; }
   .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
 }
+/* ===================================================================
+   LEGACY THEME — ADDED COMPONENTS (booking form, whatsapp, gallery,
+   coming-soon, single-price, about, responsive polish)
+   =================================================================== */
+
+/* ------- WhatsApp button (horses-for-sale, rental, contact) ------- */
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #25D366;
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 14px 30px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+.btn-whatsapp:hover { opacity: 0.88; }
+.btn-whatsapp i { font-size: 1.1rem; }
+
+/* ------- Breadcrumb strip (booking) ------- */
+.pkg-breadcrumb { padding: 96px 0 0; }
+.pkg-breadcrumb-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--brown-light);
+}
+.pkg-breadcrumb-row a { color: var(--brown-light); text-decoration: none; }
+.pkg-breadcrumb-row a:hover { color: var(--brown); }
+.pkg-breadcrumb-row .current { color: var(--brown); font-weight: 600; }
+
+.section-tag {
+  display: inline-block;
+  font-size: 0.72rem; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--olive); margin-bottom: 10px;
+}
+.section-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2.8rem; font-weight: 400; color: var(--brown); line-height: 1.15;
+}
+.services-intro {
+  font-size: 1rem; color: var(--brown-light); max-width: 560px;
+  margin: 8px auto 0; line-height: 1.7;
+}
+
+/* ------- BOOKING FORM ------- */
+.booking { padding: 20px 0 90px; background: var(--cream); }
+
+.selected-package-banner {
+  max-width: 760px; margin: 0 auto 34px;
+  background: var(--white); border: 1px solid var(--olive);
+  border-left: 4px solid var(--olive);
+  border-radius: 6px; padding: 20px 26px;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+}
+.selected-package-banner .spb-label {
+  font-size: 0.68rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--olive); margin-bottom: 4px;
+}
+.selected-package-banner .spb-name {
+  font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; color: var(--brown);
+}
+.selected-package-banner .spb-price { color: var(--brown-light); font-size: 0.9rem; margin-top:2px; }
+.selected-package-banner .spb-change {
+  font-size: 0.72rem; letter-spacing: 1px; text-transform: uppercase;
+  color: var(--brown-light); text-decoration: underline; white-space: nowrap;
+}
+
+.booking-form {
+  max-width: 760px; margin: 0 auto;
+  background: var(--white); border: 1px solid var(--border);
+  border-radius: 10px; padding: 42px 40px;
+}
+.form-row {
+  display: flex; gap: 22px; margin-bottom: 22px;
+}
+.form-group { flex: 1; display: flex; flex-direction: column; }
+.form-group.full-width { width: 100%; }
+.booking-form label {
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.5px;
+  text-transform: uppercase; color: var(--brown-mid); margin-bottom: 8px;
+}
+.booking-form input,
+.booking-form select,
+.booking-form textarea {
+  font-family: 'Inter', sans-serif; font-size: 0.95rem; color: var(--brown);
+  background: var(--cream-light);
+  border: 1px solid var(--border); border-radius: 6px;
+  padding: 13px 14px; width: 100%; transition: border-color 0.2s;
+}
+.booking-form input:focus,
+.booking-form select:focus,
+.booking-form textarea:focus {
+  outline: none; border-color: var(--olive);
+}
+.booking-form textarea { resize: vertical; }
+
+.package-info-card {
+  background: var(--cream-light); border: 1px solid var(--border);
+  border-radius: 6px; padding: 16px 18px;
+}
+.package-info-card p { font-size: 0.9rem; color: var(--brown-light); margin-bottom: 8px; }
+.package-info-card p:last-child { margin-bottom: 0; }
+.package-info-card strong { color: var(--brown); }
+
+.btn-submit {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--btn-bg); color: #fff;
+  font-size: 0.78rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 16px 34px; border: none; border-radius: 6px; cursor: pointer;
+  margin-top: 8px; transition: opacity 0.2s;
+}
+.btn-submit:hover { opacity: 0.88; }
+
+.form-success {
+  display: none; margin-top: 22px; padding: 16px 20px;
+  background: rgba(107,122,90,0.12); border: 1px solid var(--olive);
+  border-radius: 6px; color: var(--brown); font-size: 0.92rem; line-height: 1.6;
+}
+.form-success a { color: var(--olive); }
+.time-status { font-size: 0.82rem; margin-top: 8px; color: var(--brown-light); }
+.time-status.error { color: #b4462f; }
+
+/* ------- GALLERY (livery "Our Stables") ------- */
+.stable-gallery {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 18px;
+  max-width: 900px; margin: 0 auto;
+}
+.stable-gallery img {
+  width: 100%; height: 260px; object-fit: cover; border-radius: 8px; display: block;
+}
+
+/* ------- SINGLE PRICE CARD (horse-training, hand-ride) ------- */
+.single-price-wrap { display: flex; justify-content: center; }
+.single-price-card {
+  background: var(--white); border: 1px solid var(--border); border-radius: 8px;
+  padding: 40px 48px; text-align: center; min-width: 300px;
+}
+.single-price-card .sp-label {
+  font-size: 0.72rem; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--brown-light); margin-bottom: 12px;
+}
+.single-price-card .sp-amount {
+  font-family: 'Cormorant Garamond', serif; font-size: 3.6rem; color: var(--brown); line-height: 1;
+}
+.single-price-card .sp-amount span { font-family:'Inter',sans-serif; font-size: 1rem; color: var(--brown-light); margin-left: 6px; }
+.single-price-card .pricing-divider { margin: 26px 0 22px; }
+
+/* ------- COMING SOON ------- */
+.coming-soon-tag {
+  font-family: 'Cormorant Garamond', serif; font-style: italic;
+  font-size: 2rem; color: #fff; margin-top: 10px;
+}
+
+/* ------- ABOUT PAGE ------- */
+.about-block { padding: 80px 0; background: var(--white); }
+.about-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center;
+  max-width: 1100px; margin: 0 auto;
+}
+.about-grid img { width: 100%; height: 420px; object-fit: cover; border-radius: 10px; }
+.about-grid h2 {
+  font-family: 'Cormorant Garamond', serif; font-size: 2.6rem; font-weight: 400;
+  color: var(--brown); margin-bottom: 20px; line-height: 1.2;
+}
+.about-grid p { color: var(--brown-light); line-height: 1.8; margin-bottom: 18px; }
+
+/* ===================================================================
+   RESPONSIVE — TABLET & PHONE (fixes cramped mobile/ipad layouts)
+   =================================================================== */
+@media (max-width: 900px) {
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-grid { grid-template-columns: 1fr; gap: 30px; }
+  .about-grid img { height: 300px; }
+}
+@media (max-width: 700px) {
+  .container { padding: 0 20px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .stable-gallery { grid-template-columns: 1fr; }
+  .form-row { flex-direction: column; gap: 18px; }
+  .booking-form { padding: 28px 20px; }
+  .selected-package-banner { flex-direction: column; align-items: flex-start; }
+  .section-heading { font-size: 2.2rem; }
+  .pkg-description h2, .pkg-pricing h2 { font-size: 2.2rem; }
+  .single-price-card { min-width: 0; width: 100%; padding: 34px 24px; }
+}

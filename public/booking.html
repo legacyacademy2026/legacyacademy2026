@@ -3,47 +3,60 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Book a Session - Mervat Equestrian School</title>
+  <title>Book a Session — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
-      <img src="assets/logo.png" alt="Mervat Equestrian School">
+      <span class="nav-logo-name">Legacy</span>
+      <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
+      <li><a href="#">Gallery</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="index.html#services">Services</a></li>
-      <li><a href="booking.html">Book Now</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <span class="nav-phone"><i class="fas fa-phone"></i></span>
-    <div class="hamburger" id="hamburger">&#9776;</div>
+    <div class="nav-right">
+      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
+      <a href="booking.html" class="btn-book-now">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
 
-  <section class="pkg-breadcrumb" style="background: var(--cream);">
+  <section class="pkg-breadcrumb">
     <div class="container">
       <div class="pkg-breadcrumb-row">
-        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
+        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.55rem;"></i>
         <span class="current">Book a Session</span>
       </div>
     </div>
   </section>
 
-  <section style="background: var(--cream); padding: 30px 0;">
-    <div class="container" style="text-align:center;">
+  <section style="background: var(--cream); padding: 34px 0 10px; text-align:center;">
+    <div class="container">
       <span class="section-tag">Reserve Your Spot</span>
-      <h1 class="section-title" style="margin-bottom: 6px;">Book a Session</h1>
+      <h1 class="section-title">Book a Session</h1>
       <p class="services-intro">Choose your service below and we'll take care of the rest.</p>
     </div>
   </section>
 
   <section class="booking" id="booking">
     <div class="container">
+
+      <div class="selected-package-banner" id="selectedPackageBanner" style="display:none;">
+        <div>
+          <p class="spb-label">You're Booking</p>
+          <p class="spb-name" id="spbName">—</p>
+        </div>
+        <a href="booking.html" class="spb-change">Change service</a>
+      </div>
+
       <form class="booking-form" id="bookingForm" novalidate>
 
         <div class="form-row">
@@ -76,62 +89,60 @@
           </div>
         </div>
 
-       <div class="form-row">
-            <div class="form-group">
-              <label>Select Service *</label>
-              <select id="category" required onchange="showSubPackage()">
-                <option value="">-- Choose a Service --</option>
-                <option value="Riding Packages">🏇 Equestrian Training Programs</option>
-                <option value="Livery Horse">🏠 Premium Horse Boarding</option>
-                <option value="Horse Selling">💎 Quality Horses for Sale</option>
-                <option value="Horse Training">🐴 Horse Training &amp; Development</option>
-                <option value="Party Renting">🎉 Horse Rental for Events &amp; Occasions</option>
-                <option value="Equipment for Sale">🛍️ Equestrian Equipment &amp; Tack Shop</option>
-              </select>
-            </div>
-            <div class="form-group" id="subPackageGroup" style="display:none;">
-              <label>Select Package Type *</label>
-              <select id="packageType" onchange="updatePackageTiers()">
-                <option value="">-- Choose Package Type --</option>
-                <option value="Private Lessons for Horse Owners">Private Lessons for Horse Owners</option>
-                <option value="Private Lessons for Non-Horse Owners">Private Lessons for Non-Horse Owners</option>
-                <option value="Group Riding Package">Group Riding Package</option>
-                <option value="Family Riding Package">Family Riding Package</option>
-                <option value="Special Needs Riding Program">Special Needs Riding Program</option>
-                <option value="Mixed Package (Private & Group Lessons)">Mixed Package (Private &amp; Group Lessons)</option>
-                <option value="Hand Ride Experience">Hand Ride Experience</option>
-                <option value="Outdoor Lessons">Outdoor Lessons</option>
-              </select>
-            </div>
+        <div class="form-row" id="serviceSelectRow">
+          <div class="form-group">
+            <label>Select Service *</label>
+            <select id="category" required onchange="showSubPackage()">
+              <option value="">-- Choose a Service --</option>
+              <option value="Riding Packages">🏇 Riding Lessons</option>
+              <option value="Livery Horse">🏠 Horse Livery</option>
+              <option value="Horse Selling">💎 Horses for Sale</option>
+              <option value="Horse Training">🐴 Horse Training</option>
+              <option value="Party Renting">🎉 Horse Rental for Events</option>
+            </select>
           </div>
+          <div class="form-group" id="subPackageGroup" style="display:none;">
+            <label>Select Lesson Type *</label>
+            <select id="packageType" onchange="updatePackageTiers()">
+              <option value="">-- Choose Lesson Type --</option>
+              <option value="Private Lessons">Private Lessons</option>
+              <option value="Group Lessons">Group Lessons</option>
+              <option value="Outdoor Lessons">Outdoor Lessons</option>
+              <option value="Jumping Lessons">Jumping Lessons</option>
+              <option value="Special Needs Lessons">Special Needs Lessons</option>
+              <option value="Hand Ride">Hand Ride</option>
+            </select>
+          </div>
+        </div>
 
-          <div class="form-row" id="packageTierRow" style="display:none;">
-            <div class="form-group">
-              <label>Select Package Tier *</label>
-              <select id="packageTier" onchange="updatePackageInfo()">
-                <option value="">-- Choose Tier --</option>
-              </select>
-            </div>
-            <div class="form-group" id="packageInfoBox" style="display:none;">
-              <label>Package Details</label>
-              <div class="package-info-card">
-                <p>💰 <strong>Price:</strong> <span id="packagePrice">-</span></p>
-                <p>📅 <strong>Validity:</strong> <span id="packageValidity">-</span></p>
-                <p>🧊 <strong>Freeze Policy:</strong> <span id="packageFreeze">-</span></p>
-              </div>
+        <div class="form-row" id="packageTierRow" style="display:none;">
+          <div class="form-group">
+            <label>Select Package *</label>
+            <select id="packageTier" onchange="updatePackageInfo()">
+              <option value="">-- Choose Package --</option>
+            </select>
+          </div>
+          <div class="form-group" id="packageInfoBox" style="display:none;">
+            <label>Package Details</label>
+            <div class="package-info-card">
+              <p>💰 <strong>Price:</strong> <span id="packagePrice">-</span></p>
+              <p>📅 <strong>Validity:</strong> <span id="packageValidity">-</span></p>
+              <p>🧊 <strong>Freeze Policy:</strong> <span id="packageFreeze">-</span></p>
             </div>
           </div>
+        </div>
 
-          <div class="form-row" id="paymentMethodRow" style="display:none;">
-            <div class="form-group">
-              <label>Payment Method *</label>
-              <select id="paymentMethod">
-                <option value="">-- Choose Payment Method --</option>
-                <option value="Cash">💵 Cash</option>
-                <option value="Card">💳 Card</option>
-              </select>
-            </div>
+        <div class="form-row" id="paymentMethodRow" style="display:none;">
+          <div class="form-group">
+            <label>Payment Method *</label>
+            <select id="paymentMethod">
+              <option value="">-- Choose Payment Method --</option>
+              <option value="Cash">💵 Cash</option>
+              <option value="Card">💳 Card</option>
+            </select>
           </div>
+          <div class="form-group"></div>
+        </div>
 
         <div class="form-row" id="schedulingRow">
           <div class="form-group">
@@ -152,7 +163,7 @@
           </div>
         </div>
 
-        <div class="form-group full-width">
+        <div class="form-group full-width" style="margin-bottom:22px;">
           <label>Message / Special Request</label>
           <textarea id="message" rows="4" placeholder="Any special requests or questions..."></textarea>
         </div>
@@ -165,7 +176,7 @@
           ✅ Your booking has been received! We will contact you shortly.
         </div>
 
-        <div class="form-success package-success" id="packageSuccess" style="display:none;">
+        <div class="form-success" id="packageSuccess" style="display:none;">
           ✅ Your package request has been submitted for approval!<br>
           📌 Save this link to track your sessions and book classes once approved:<br>
           <a href="#" id="trackingLinkDisplay" target="_blank" style="word-break:break-all;"></a>
@@ -176,13 +187,29 @@
   </section>
 
   <footer class="footer">
-    <div class="footer-socials">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-snapchat"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="https://wa.me/971585953807"><i class="fab fa-whatsapp"></i></a>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-contact">
+          <p class="footer-contact-label">Contact</p>
+          <p>+971 XX XXX XXXX</p>
+          <p>hello@coachmervat.com</p>
+          <p>Dubai, UAE</p>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>© 2026 Legacy. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
     </div>
-    <p>© 2026 All Rights Reserved<br>MERVAT EQUESTRIAN SCHOOL</p>
   </footer>
 
   <script src="script.js"></script>

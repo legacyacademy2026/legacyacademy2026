@@ -24,55 +24,39 @@ function presetCategory(value) {
 }
 
 const TRAINING_PACKAGES = {
-  "Private Lessons for Horse Owners": {
+  "Private Lessons": {
     tiers: [
-      { label: "10 Private Lessons", price: 1500, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
+      { label: "Single Session", price: 250, sessions: 1, duration: 45, validity: "-", freeze: "-" },
+      { label: "10 Sessions Package", price: 2500, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
     ]
   },
-  "Private Lessons for Non-Horse Owners": {
+  "Group Lessons": {
     tiers: [
-      { label: "Single Lesson", price: 200, sessions: 1, duration: 45, validity: "-", freeze: "-" },
-      { label: "5 Lessons Package", price: 1400, sessions: 5, duration: 45, validity: "Valid for 1 month", freeze: "Freeze up to 1 week" },
-      { label: "10 Lessons Package", price: 2700, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
-    ]
-  },
-  "Group Riding Package": {
-    tiers: [
-      { label: "Single Lesson", price: 180, sessions: 1, duration: 45, validity: "-", freeze: "-" },
-      { label: "5 Lessons Package", price: 850, sessions: 5, duration: 45, validity: "Valid for 1 month", freeze: "Freeze up to 1 week" },
-      { label: "10 Lessons Package", price: 1600, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
-    ]
-  },
-  "Family Riding Package": {
-    tiers: [
-      { label: "Single Lesson", price: 180, sessions: 1, duration: 45, validity: "-", freeze: "-" },
-      { label: "5 Lessons Package", price: 850, sessions: 5, duration: 45, validity: "Valid for 1 month", freeze: "Freeze up to 1 week" },
-      { label: "10 Lessons Package", price: 1600, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
-    ]
-  },
-  "Special Needs Riding Program": {
-    tiers: [
-      { label: "Single Session (20 min)", price: 100, sessions: 1, duration: 20, validity: "-", freeze: "-" },
-      { label: "5 Sessions Package (20 min each)", price: 2000, sessions: 5, duration: 20, validity: "-", freeze: "-" }
-    ]
-  },
-  "Mixed Package (Private & Group Lessons)": {
-    tiers: [
-      { label: "Package One: 5 Private + 5 Group", price: 2000, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" },
-      { label: "Package Two: 10 Private + 10 Group", price: 4000, sessions: 20, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 3 weeks" }
-    ]
-  },
-  "Hand Ride Experience": {
-    tiers: [
-      { label: "20 Minutes", price: 40, sessions: 1, duration: 20, validity: "-", freeze: "-" },
-      { label: "40 Minutes", price: 80, sessions: 1, duration: 40, validity: "-", freeze: "-" },
-      { label: "60 Minutes (1 Hour)", price: 120, sessions: 1, duration: 60, validity: "-", freeze: "-" }
+      { label: "Single Session", price: 170, sessions: 1, duration: 45, validity: "-", freeze: "-" },
+      { label: "10 Sessions Package", price: 1700, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
     ]
   },
   "Outdoor Lessons": {
     tiers: [
-      { label: "1 Private Session", price: 200, sessions: 1, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" },
-      { label: "1 Group Session", price: 100, sessions: 1, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
+      { label: "1 Private Session", price: 200, sessions: 1, duration: 45, validity: "-", freeze: "-" },
+      { label: "1 Group Session", price: 100, sessions: 1, duration: 45, validity: "-", freeze: "-" }
+    ]
+  },
+  "Jumping Lessons": {
+    tiers: [
+      { label: "Single Session", price: 300, sessions: 1, duration: 45, validity: "-", freeze: "-" },
+      { label: "10 Sessions Package", price: 3000, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
+    ]
+  },
+  "Special Needs Lessons": {
+    tiers: [
+      { label: "Single Session", price: 100, sessions: 1, duration: 20, validity: "-", freeze: "-" },
+      { label: "10 Sessions Package", price: 400, sessions: 10, duration: 20, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
+    ]
+  },
+  "Hand Ride": {
+    tiers: [
+      { label: "Single Session", price: 50, sessions: 1, duration: 20, validity: "-", freeze: "-" }
     ]
   }
 };
@@ -90,6 +74,22 @@ function showSubPackage() {
     document.getElementById('packageTierRow').style.display = 'none';
     document.getElementById('packageInfoBox').style.display = 'none';
     document.getElementById('packageType').value = '';
+  }
+}
+
+
+function lockToPackage(typeName) {
+  // Hide the raw service/type/tier selectors and show a clean summary banner
+  const serviceRow = document.getElementById('serviceSelectRow');
+  const tierRow    = document.getElementById('packageTierRow');
+  const banner     = document.getElementById('selectedPackageBanner');
+  if (serviceRow) serviceRow.style.display = 'none';
+  if (document.getElementById('subPackageGroup')) document.getElementById('subPackageGroup').style.display = 'none';
+  if (tierRow) tierRow.style.display = 'none';
+  if (banner) {
+    const nameEl = document.getElementById('spbName');
+    if (nameEl) nameEl.textContent = typeName;
+    banner.style.display = 'flex';
   }
 }
 
@@ -428,12 +428,13 @@ window.addEventListener('DOMContentLoaded', () => {
     if (messageEl) messageEl.value = `Interested in: ${presetTraining}`;
   }
 
-  if (categoryEl && presetPackage) {
+  if (categoryEl && presetPackage && TRAINING_PACKAGES[presetPackage]) {
     categoryEl.value = 'Riding Packages';
     showSubPackage();
     setTimeout(() => {
       document.getElementById('packageType').value = presetPackage;
       updatePackageTiers();
+      lockToPackage(presetPackage);
 
       if (presetTier) {
         const tierSelect = document.getElementById('packageTier');

@@ -1,105 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About Coach Mervat - Mervat Equestrian School</title>
+  <title>About — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
-      <img src="assets/logo.png" alt="Mervat Equestrian School">
+      <span class="nav-logo-name">Legacy</span>
+      <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
-      <li><a href="about.html">About</a></li>
+      <li><a href="#">Gallery</a></li>
+      <li><a href="about.html" class="active">About</a></li>
       <li><a href="index.html#services">Services</a></li>
-      <li><a href="booking.html">Book Now</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <span class="nav-phone"><i class="fas fa-phone"></i></span>
-    <div class="hamburger" id="hamburger">&#9776;</div>
+    <div class="nav-right">
+      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
+      <a href="booking.html" class="btn-book-now">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
 
-  <section class="pkg-breadcrumb" style="background: var(--cream);">
-    <div class="container">
-      <div class="pkg-breadcrumb-row">
-        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
-        <span class="current">About Us</span>
-      </div>
+  <section class="hero" style="margin-top:72px; height:52vh; min-height:320px;">
+    <img src="assets/hero-horse.png" alt="About Legacy">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-breadcrumb"><a href="index.html">Home</a> &gt; About</p>
+      <h1>About Us</h1>
     </div>
   </section>
 
-  <section style="background: var(--cream); padding: 30px 0;">
-    <div class="container" style="text-align:center;">
-      <span class="section-tag">About Us</span>
-      <h1 class="section-title" style="margin-bottom: 6px;">Meet Coach Mervat</h1>
-      <p class="services-intro">Fifteen years of dedication to the art and discipline of horsemanship.</p>
-    </div>
-  </section>
-
-  <section class="about">
+  <section class="about-block">
     <div class="container">
       <div class="about-grid">
-        <div class="about-image">
-          <div class="coach-placeholder">
-            <i class="fas fa-user-circle"></i>
-            <p>Coach Mervat</p>
-          </div>
-        </div>
-        <div class="about-text">
-          <span class="section-tag" style="text-align:left;">Meet Your Coach</span>
-          <h2>Coach Mervat</h2>
-          <p class="highlight-text">
-            <i class="fas fa-trophy"></i> Certified Professional Horse Riding Coach with over 15 years of experience
-          </p>
-          <p>
-            Coach Mervat is a passionate and dedicated equestrian professional,
-            specializing in flatwork, show jumping, and desert trail riding.
-            Her unique teaching style blends technical precision with a deep love
-            for horses, creating a safe and exciting learning environment for
-            riders of all levels.
-          </p>
-          <div class="coach-stats">
-            <div class="stat">
-              <h3>15+</h3>
-              <p>Years Experience</p>
-            </div>
-            <div class="stat">
-              <h3>500+</h3>
-              <p>Students Trained</p>
-            </div>
-            <div class="stat">
-              <h3>50+</h3>
-              <p>Championships</p>
-            </div>
-          </div>
+        <img src="https://images.pexels.com/photos/15793935/pexels-photo-15793935.jpeg?auto=compress&cs=tinysrgb&w=900" alt="Coach Mervat with horse">
+        <div>
+          <p class="section-eyebrow" style="margin-bottom:12px;">Our Story</p>
+          <h2>A Lifelong Love for the Horse</h2>
+          <p>Legacy Equestrian was founded on a simple belief: that the bond between horse and rider transforms lives. Under the guidance of Coach Mervat, our academy blends disciplined, world-class instruction with genuine warmth and care for every rider who walks through our gates.</p>
+          <p>From first-time riders taking their very first hand-led steps to advanced competitors refining their craft, we meet each student where they are — nurturing confidence, skill, and a deep respect for these remarkable animals.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <a href="https://wa.me/971585953807" class="cta-banner" style="margin: 0 auto 60px;">
-    <i class="fab fa-whatsapp"></i>
-    <div>
-      <div class="cta-text-main">Book Now &amp; Inquire</div>
-      <div class="cta-text-sub">Contact us via WhatsApp</div>
+  <section style="background: var(--cream); padding: 70px 32px;">
+    <div class="container" style="max-width:900px; text-align:center;">
+      <p class="section-eyebrow" style="margin-bottom:14px;">What We Stand For</p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:400; color:var(--brown); margin-bottom:40px;">Our Values</h2>
+      <div class="services-grid" style="grid-template-columns:repeat(3,1fr);">
+        <div class="service-card" style="padding:30px 24px;">
+          <h3 class="service-card-title" style="margin-bottom:10px;">Care</h3>
+          <p style="font-size:0.9rem; color:var(--brown-light); line-height:1.7;">Every horse and rider is treated with patience, kindness, and respect.</p>
+        </div>
+        <div class="service-card" style="padding:30px 24px;">
+          <h3 class="service-card-title" style="margin-bottom:10px;">Excellence</h3>
+          <p style="font-size:0.9rem; color:var(--brown-light); line-height:1.7;">Certified coaching and structured programs for every level and ambition.</p>
+        </div>
+        <div class="service-card" style="padding:30px 24px;">
+          <h3 class="service-card-title" style="margin-bottom:10px;">Community</h3>
+          <p style="font-size:0.9rem; color:var(--brown-light); line-height:1.7;">A welcoming home for riders, families, and horse lovers alike.</p>
+        </div>
+      </div>
     </div>
-    <i class="fas fa-arrow-right cta-arrow"></i>
-  </a>
+  </section>
 
   <footer class="footer">
-    <div class="footer-socials">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-snapchat"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="https://wa.me/971585953807"><i class="fab fa-whatsapp"></i></a>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-contact">
+          <p class="footer-contact-label">Contact</p>
+          <p>+971 XX XXX XXXX</p>
+          <p>hello@coachmervat.com</p>
+          <p>Dubai, UAE</p>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>© 2026 Legacy. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
     </div>
-    <p>© 2026 All Rights Reserved<br>MERVAT EQUESTRIAN SCHOOL</p>
   </footer>
 
   <script src="script.js"></script>

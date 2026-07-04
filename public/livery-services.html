@@ -1,196 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Livery Services - Mervat Equestrian School</title>
+  <title>Horse Livery — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
-      <img src="assets/logo.png" alt="Mervat Equestrian School">
+      <span class="nav-logo-name">Legacy</span>
+      <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
+      <li><a href="#">Gallery</a></li>
       <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="booking.html">Book Now</a></li>
+      <li><a href="index.html#services" class="active">Services</a></li>
       <li><a href="contact.html">Contact</a></li>
     </ul>
-    <span class="nav-phone"><i class="fas fa-phone"></i></span>
-    <div class="hamburger" id="hamburger">&#9776;</div>
+    <div class="nav-right">
+      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
+      <a href="booking.html" class="btn-book-now">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
 
-  <section class="pkg-breadcrumb">
-    <div class="container">
-      <div class="pkg-breadcrumb-row">
-        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
-        <span class="current">Livery Services</span>
-      </div>
+  <section class="hero" style="margin-top:72px; height:55vh; min-height:340px;">
+    <img src="https://images.pexels.com/photos/15658039/pexels-photo-15658039.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Horse Livery">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-breadcrumb"><a href="index.html">Home</a> &gt; Horse Livery</p>
+      <h1>Horse Livery</h1>
     </div>
   </section>
 
-  <section class="pkg-hero">
-    <div class="container">
-      <div class="pkg-hero-grid">
-
-        <div class="pkg-hero-image">
-          <img src="https://images.unsplash.com/photo-1657446901144-286a877a5328?fm=jpg&q=80&w=1200&auto=format&fit=crop" alt="Horse in stable care">
-        </div>
-
-        <div class="pkg-hero-info">
-          <h1>Livery Services</h1>
-          <div class="pkg-divider"><span class="line"></span><i class="fas fa-horseshoe"></i><span class="line"></span></div>
-          <p class="pkg-subtitle">Complete daily care for your horse, every day of the month.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <div class="pkg-info-bar">
-    <div class="container">
-      <div class="pkg-info-bar-row">
-        <span class="pkg-info-item"><i class="fas fa-calendar"></i> Per Month</span>
-        <span class="pkg-info-divider"></span>
-        <span class="pkg-info-item"><i class="fas fa-tag"></i> AED 3,000</span>
-        <a href="#livery-form" class="btn-primary"><i class="fas fa-arrow-right"></i> Request Full Livery</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="pkg-details">
-
-    <div>
-      <h2>About the Package</h2>
-      <div class="section-underline"></div>
-      <p>Our Full Livery package gives your horse complete daily care so you can simply turn up and ride. Our team handles feeding, mucking out, turnout, grooming, and rug changes — your horse is fully looked after, every single day, in a safe and professionally managed environment.</p>
-      <p style="color: var(--rust); font-weight: 600; margin-top: 14px; font-size: 0.92rem;">
-        <i class="fas fa-calendar-check"></i> After approval, your 1-month livery period begins once we confirm your horse has physically arrived at the academy.
+  <section style="background: var(--white); padding: 80px 32px;">
+    <div style="max-width: 780px; margin: 0 auto; text-align: center;">
+      <p class="section-eyebrow" style="margin-bottom:16px;">About This Program</p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:400; color:var(--brown); margin-bottom:26px; line-height:1.2;">Horse Livery</h2>
+      <p style="font-size:1.02rem; color:var(--brown-light); line-height:1.8;">
+        Provide your horse with a premium home away from home. Our Horse Livery offers full boarding services in state-of-the-art stables, with daily care, high-quality nutrition, and regular health monitoring by our experienced team. Your horse will enjoy spacious, clean stalls, regular grooming, and access to training paddocks — all in a safe, professional, and nurturing environment.
       </p>
     </div>
+  </section>
 
-    <div>
-      <h2>Pricing</h2>
-      <div class="section-underline"></div>
-      <div class="pkg-pricing-list">
-        <div class="pkg-pricing-row">
-          <i class="fas fa-calendar-days"></i>
-          <span class="pkg-tier-name">Full Livery — Monthly Rate</span>
-          <span class="pkg-tier-price">3,000<span class="pkg-tier-currency">AED</span></span>
+  <section class="pkg-pricing" style="background: var(--cream);">
+    <div class="container">
+      <h2>Livery Pricing</h2>
+      <div class="single-price-wrap">
+        <div class="single-price-card">
+          <p class="sp-label">Per Month</p>
+          <p class="sp-amount">2,500<span>AED</span></p>
+          <div class="pricing-divider"></div>
+          <a href="booking.html?service=Livery+Horse" class="btn-book">Enquire Now</a>
         </div>
       </div>
-      <a href="#livery-form" class="btn-primary" style="width:100%; justify-content:center;"><i class="fas fa-arrow-right"></i> Request Full Livery</a>
+      <p style="text-align:center; font-size:0.85rem; color:var(--brown-light); margin-top:26px; max-width:640px; margin-left:auto; margin-right:auto;">
+        * Please note that any additional feed or bedding beyond the included amount will incur an extra charge.
+      </p>
     </div>
+  </section>
 
-    <div>
-      <h2>What's Included</h2>
-      <div class="section-underline"></div>
-      <ul class="pkg-list">
-        <li><i class="fas fa-check-circle"></i> Daily feeding, mucking out &amp; turnout</li>
-        <li><i class="fas fa-check-circle"></i> Regular grooming &amp; rug changes</li>
-        <li><i class="fas fa-check-circle"></i> Full use of academy facilities</li>
-        <li><i class="fas fa-check-circle"></i> 24-hour stable security</li>
-      </ul>
+  <section style="background: var(--white); padding: 70px 32px 90px;">
+    <div class="container">
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:400; color:var(--brown); text-align:center; margin-bottom:40px;">Our Stables</h2>
+      <div class="stable-gallery">
+        <img src="https://images.pexels.com/photos/15658039/pexels-photo-15658039.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Stable interior">
+        <img src="https://images.pexels.com/photos/6520091/pexels-photo-6520091.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Training paddock">
+        <img src="https://images.pexels.com/photos/13340057/pexels-photo-13340057.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Horse at sunrise">
+        <img src="https://images.pexels.com/photos/2531234/pexels-photo-2531234.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Horse on the beach">
+      </div>
     </div>
-
-    <div>
-      <h2>Stable Standards &amp; Regulations</h2>
-      <div class="section-underline"></div>
-      <ul class="pkg-terms-list">
-        <li><strong style="color: var(--charcoal);">Vaccination Records</strong> — All horses accepted for livery must have up-to-date vaccination records, including Equine Influenza, which is required for competition under UAE Equestrian Federation and FEI regulations. Tetanus vaccination is strongly recommended for every horse in our care.</li>
-        <li><strong style="color: var(--charcoal);">Owner Responsibility</strong> — It remains the horse owner's responsibility to ensure their horse's vaccination schedule stays current. Our team will request a copy of your horse's vaccination record upon arrival.</li>
-        <li><strong style="color: var(--charcoal);">Security &amp; Welfare</strong> — Our stable yard operates 24-hour security with CCTV coverage, consistent with standards followed by leading UAE equestrian facilities.</li>
-        <li><strong style="color: var(--charcoal);">Climate Care</strong> — Given Dubai's summer temperatures, our facilities follow recommended equine welfare guidance for ventilation and cooling between June and September.</li>
-        <li><strong style="color: var(--charcoal);">Veterinary &amp; Farrier Access</strong> — Routine veterinary and farrier visits are coordinated as part of your horse's care. Any additional costs beyond routine care are billed separately.</li>
-        <li><strong style="color: var(--charcoal);">Documentation</strong> — New horses joining our livery must provide proof of ownership and any relevant health certificates prior to arrival.</li>
-      </ul>
-    </div>
-
-    <div id="livery-form">
-      <h2>Request Full Livery</h2>
-      <div class="section-underline"></div>
-      <form id="liveryForm" style="background: #fff; border: 1px solid var(--border-soft); border-radius: 6px; padding: 30px 26px;">
-        <div style="margin-bottom: 18px;">
-          <label style="display:block; margin-bottom:6px; font-weight:500; color: var(--navy); font-size:0.9rem;">Your Name</label>
-          <input type="text" id="liveryName" required style="width:100%; padding:12px 14px; border:1px solid var(--border-soft); border-radius:4px; font-size:0.95rem; font-family: 'Inter', sans-serif;">
-        </div>
-        <div style="margin-bottom: 18px;">
-          <label style="display:block; margin-bottom:6px; font-weight:500; color: var(--navy); font-size:0.9rem;">Email</label>
-          <input type="email" id="liveryEmail" required style="width:100%; padding:12px 14px; border:1px solid var(--border-soft); border-radius:4px; font-size:0.95rem; font-family: 'Inter', sans-serif;">
-        </div>
-        <div style="margin-bottom: 18px;">
-          <label style="display:block; margin-bottom:6px; font-weight:500; color: var(--navy); font-size:0.9rem;">Phone Number</label>
-          <input type="tel" id="liveryPhone" required placeholder="+971..." style="width:100%; padding:12px 14px; border:1px solid var(--border-soft); border-radius:4px; font-size:0.95rem; font-family: 'Inter', sans-serif;">
-        </div>
-        <div style="margin-bottom: 18px;">
-          <label style="display:block; margin-bottom:6px; font-weight:500; color: var(--navy); font-size:0.9rem;">Horse's Name</label>
-          <input type="text" id="liveryHorseName" required style="width:100%; padding:12px 14px; border:1px solid var(--border-soft); border-radius:4px; font-size:0.95rem; font-family: 'Inter', sans-serif;">
-        </div>
-        <div style="margin-bottom: 24px;">
-          <label style="display:block; margin-bottom:6px; font-weight:500; color: var(--navy); font-size:0.9rem;">Preferred Drop-off Date</label>
-          <input type="date" id="liveryPreferredDate" required style="width:100%; padding:12px 14px; border:1px solid var(--border-soft); border-radius:4px; font-size:0.95rem; font-family: 'Inter', sans-serif;">
-          <p style="font-size:0.8rem; color: var(--grey-text); margin-top:6px;">Your 30-day livery period begins once we confirm your horse has arrived — not necessarily on this exact date.</p>
-        </div>
-        <button type="submit" class="btn-primary" style="width:100%; justify-content:center; border:none; cursor:pointer;">Submit Request</button>
-        <p id="liveryFormMessage" style="margin-top:14px; font-size:0.88rem; text-align:center;"></p>
-      </form>
-    </div>
-
-  </div>
+  </section>
 
   <footer class="footer">
-    <div class="footer-socials">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-snapchat"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="https://wa.me/971585953807"><i class="fab fa-whatsapp"></i></a>
+    <div class="container">
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-contact">
+          <p class="footer-contact-label">Contact</p>
+          <p>+971 XX XXX XXXX</p>
+          <p>hello@coachmervat.com</p>
+          <p>Dubai, UAE</p>
+        </div>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>© 2026 Legacy. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+        </div>
+      </div>
     </div>
-    <p>© 2026 All Rights Reserved<br>MERVAT EQUESTRIAN SCHOOL</p>
   </footer>
 
   <script src="script.js"></script>
-  <script>
-    document.getElementById('liveryPreferredDate').min = new Date().toISOString().slice(0, 10);
-
-    document.getElementById('liveryForm').addEventListener('submit', async function(e) {
-      e.preventDefault();
-      const msg = document.getElementById('liveryFormMessage');
-      msg.style.color = '#555';
-      msg.textContent = 'Submitting...';
-
-      const payload = {
-        name: document.getElementById('liveryName').value,
-        email: document.getElementById('liveryEmail').value,
-        phone: document.getElementById('liveryPhone').value,
-        horseName: document.getElementById('liveryHorseName').value,
-        preferredDate: document.getElementById('liveryPreferredDate').value
-      };
-
-      try {
-        const res = await fetch('/api/livery', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        if (res.ok) {
-          msg.style.color = '#1e7e34';
-          msg.textContent = data.message;
-          document.getElementById('liveryForm').reset();
-        } else {
-          msg.style.color = '#a71d2a';
-          msg.textContent = data.message;
-        }
-      } catch (err) {
-        msg.style.color = '#a71d2a';
-        msg.textContent = '❌ Something went wrong. Please try again or contact us directly.';
-      }
-    });
-  </script>
 </body>
 </html>

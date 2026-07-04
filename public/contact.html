@@ -1,87 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact Us - Mervat Equestrian School</title>
+  <title>Contact — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
   <nav class="navbar" id="navbar">
     <div class="nav-logo">
-      <img src="assets/logo.png" alt="Mervat Equestrian School">
+      <span class="nav-logo-name">Legacy</span>
+      <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="index.html">Home</a></li>
+      <li><a href="#">Gallery</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="index.html#services">Services</a></li>
-      <li><a href="booking.html">Book Now</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
     </ul>
-    <span class="nav-phone"><i class="fas fa-phone"></i></span>
-    <div class="hamburger" id="hamburger">&#9776;</div>
+    <div class="nav-right">
+      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
+      <a href="booking.html" class="btn-book-now">Book Now</a>
+    </div>
+    <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
 
-  <section class="pkg-breadcrumb" style="background: var(--cream);">
+  <section class="pkg-breadcrumb">
     <div class="container">
       <div class="pkg-breadcrumb-row">
-        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.6rem;"></i>
+        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.55rem;"></i>
         <span class="current">Contact</span>
       </div>
     </div>
   </section>
 
-  <section style="background: var(--cream); padding: 30px 0;">
-    <div class="container" style="text-align:center;">
+  <section style="background: var(--white); padding: 50px 32px 90px; text-align:center;">
+    <div class="container" style="max-width:680px;">
       <span class="section-tag">Get In Touch</span>
-      <h1 class="section-title" style="margin-bottom: 6px;">We'd Love to Hear From You</h1>
-      <p class="services-intro">Questions about lessons, boarding, or events? Reach out anytime.</p>
+      <h1 class="section-title" style="margin-bottom:18px;">Contact Us</h1>
+      <p style="color:var(--brown-light); line-height:1.8; margin-bottom:40px;">
+        Have a question about our lessons, livery, or events? We'd love to hear from you. Reach out through any of the channels below.
+      </p>
+
+      <div style="display:flex; flex-direction:column; gap:18px; max-width:420px; margin:0 auto 40px; text-align:left;">
+        <div class="package-info-card"><p><i class="fas fa-phone" style="color:var(--olive); margin-right:10px;"></i><strong>Phone:</strong> +971 XX XXX XXXX</p></div>
+        <div class="package-info-card"><p><i class="fas fa-envelope" style="color:var(--olive); margin-right:10px;"></i><strong>Email:</strong> hello@coachmervat.com</p></div>
+        <div class="package-info-card"><p><i class="fas fa-location-dot" style="color:var(--olive); margin-right:10px;"></i><strong>Location:</strong> Dubai, UAE</p></div>
+      </div>
+
+      <a href="https://wa.me/971585953807" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
     </div>
   </section>
 
-  <section class="contact">
+  <footer class="footer">
     <div class="container">
-      <div class="contact-grid">
-        <div class="contact-item">
-          <i class="fas fa-phone"></i>
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
+        </div>
+        <div class="footer-contact">
+          <p class="footer-contact-label">Contact</p>
           <p>+971 XX XXX XXXX</p>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-envelope"></i>
-          <p>info@mervatacademy.com</p>
-        </div>
-        <div class="contact-item">
-          <i class="fas fa-map-marker-alt"></i>
+          <p>hello@coachmervat.com</p>
           <p>Dubai, UAE</p>
         </div>
-        <div class="contact-item">
-          <i class="fab fa-instagram"></i>
-          <p>@mervatacademy</p>
+      </div>
+      <div class="footer-divider"></div>
+      <div class="footer-bottom">
+        <span>© 2026 Legacy. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
         </div>
       </div>
     </div>
-  </section>
-
-  <a href="https://wa.me/971585953807" class="cta-banner" style="margin: 0 auto 60px;">
-    <i class="fab fa-whatsapp"></i>
-    <div>
-      <div class="cta-text-main">Book Now &amp; Inquire</div>
-      <div class="cta-text-sub">Contact us via WhatsApp</div>
-    </div>
-    <i class="fas fa-arrow-right cta-arrow"></i>
-  </a>
-
-  <footer class="footer">
-    <div class="footer-socials">
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-snapchat"></i></a>
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="https://wa.me/971585953807"><i class="fab fa-whatsapp"></i></a>
-    </div>
-    <p>© 2026 All Rights Reserved<br>MERVAT EQUESTRIAN SCHOOL</p>
   </footer>
 
   <script src="script.js"></script>
