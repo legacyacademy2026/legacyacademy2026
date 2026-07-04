@@ -8,6 +8,7 @@ const {
   buildLiveryRequestEmailHtml, buildLiveryRequestWhatsAppText,
   buildLiveryStatusEmailHtml, buildLiveryStatusWhatsAppText
 } = require('../utils/messageTemplates');
+const { notifyAll } = require('../utils/notifier');
 
 const TOTAL_SLOTS = 10;
 
@@ -28,21 +29,12 @@ async function findFreeSlot() {
 
 function notifyLivery(booking, { statusBadge, bodyText, statusLine, ctaLabel, includeLink = true }) {
   const trackingUrl = includeLink ? `${process.env.PUBLIC_BASE_URL || ''}/livery-track.html?token=${booking.token}` : null;
-
-  const emailRecipient = process.env.ADMIN_TEST_EMAIL || booking.email;
-  sendEmail(emailRecipient, '🐴 Legacy Équestre — Update on Your Livery', buildLiveryStatusEmailHtml({
-    name: booking.name, horseName: booking.horseName, statusBadge, bodyText, trackingUrl, ctaLabel
-  })).catch(err => console.log('⚠️ Livery email notification error:', err.message));
-
-  const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${booking.phone}`;
-  sendWhatsApp(waRecipient, buildLiveryStatusWhatsAppText({
-    name: booking.name, horseName: booking.horseName, statusLine, bodyText, trackingUrl
-  })).catch(err => console.log('⚠️ Livery WhatsApp notification error:', err.message));
-
-  const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || booking.phone;
-  sendSMS(smsRecipient, buildLiveryStatusWhatsAppText({
-    name: booking.name, horseName: booking.horseName, statusLine, bodyText, trackingUrl
-  })).catch(err => console.log('⚠️ Livery SMS notification error:', err.message));
+  notifyAll({
+    customer: { name: booking.name, email: booking.email, phone: booking.phone },
+    subject: '🐴 Legacy Équestre — Update on Your Livery',
+    emailHtml: buildLiveryStatusEmailHtml({ name: booking.name, horseName: booking.horseName, statusBadge, bodyText, trackingUrl, ctaLabel }),
+    waText: buildLiveryStatusWhatsAppText({ name: booking.name, horseName: booking.horseName, statusLine, bodyText, trackingUrl })
+  });
 }
 
 // ===== Customer submits a livery request =====
@@ -64,18 +56,12 @@ router.post('/', async (req, res) => {
     res.status(201).json({ message: '✅ Livery request submitted! Our team will review it shortly.', token: booking.token });
 
     const trackingUrl = `${process.env.PUBLIC_BASE_URL || ''}/livery-track.html?token=${booking.token}`;
-
-    const emailRecipient = process.env.ADMIN_TEST_EMAIL || booking.email;
-    sendEmail(emailRecipient, '🐴 Your Legacy Équestre Livery Request', buildLiveryRequestEmailHtml({
-      name: booking.name, horseName: booking.horseName, trackingUrl
-    })).catch(err => console.log('⚠️ Livery email error (booking still saved):', err.message));
-
-    const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${booking.phone}`;
-    const waText = buildLiveryRequestWhatsAppText({ name: booking.name, horseName: booking.horseName, trackingUrl });
-    sendWhatsApp(waRecipient, waText).catch(err => console.log('⚠️ Livery WhatsApp error (booking still saved):', err.message));
-
-    const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || booking.phone;
-    sendSMS(smsRecipient, waText).catch(err => console.log('⚠️ Livery SMS error (booking still saved):', err.message));
+    notifyAll({
+      customer: { name: booking.name, email: booking.email, phone: booking.phone },
+      subject: '🐴 Your Legacy Équestre Livery Request',
+      emailHtml: buildLiveryRequestEmailHtml({ name: booking.name, horseName: booking.horseName, trackingUrl }),
+      waText: buildLiveryRequestWhatsAppText({ name: booking.name, horseName: booking.horseName, trackingUrl })
+    });
   } catch (err) {
     res.status(500).json({ message: '❌ Error submitting livery request', error: err.message });
   }

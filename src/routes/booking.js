@@ -8,6 +8,7 @@ const { sendEmail, sendReminderEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
 const { sendSMS } = require('../utils/sms');
 const { buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText } = require('../utils/messageTemplates');
+const { notifyAll } = require('../utils/notifier');
 
 function timeToMinutes(timeStr) {
   const [time, period] = timeStr.split(' ');
@@ -77,6 +78,24 @@ router.post('/', async (req, res) => {
     );
 
     res.status(201).json({ message: '✅ Booking saved successfully!' });
+
+    // Notify customer + admin that the booking was received
+    const detailsLine = `${booking.category}${booking.subPackage ? ' — ' + booking.subPackage : ''} on <strong>${booking.date || ''}${booking.startTime ? ' at ' + booking.startTime : ''}</strong>`;
+    notifyAll({
+      customer: { name: booking.name, email: booking.email, phone: booking.phone },
+      subject: '🐴 Legacy Équestre — Booking Received',
+      emailHtml: buildStatusUpdateEmailHtml({
+        name: booking.name, title: booking.title,
+        statusBadge: { bg: '#e6ede0', color: '#4a5c39', text: '📩 Booking Received' },
+        bodyText: `Thank you! We've received your booking request for ${detailsLine}. Our team will confirm it shortly.`,
+        trackingUrl: null
+      }),
+      waText: buildStatusUpdateWhatsAppText({
+        name: booking.name, title: booking.title,
+        statusLine: 'We received your booking request 📩',
+        bodyText: `${booking.category}${booking.subPackage ? ' — ' + booking.subPackage : ''}${booking.date ? '\n📅 ' + booking.date : ''}${booking.startTime ? '\n🕐 ' + booking.startTime : ''}\n\nOur team will confirm it shortly.`
+      })
+    });
   } catch (err) {
     res.status(500).json({ message: '❌ Error saving booking', error: err.message });
   }
@@ -230,20 +249,12 @@ router.patch('/:id/status', async (req, res) => {
 
         if (notifyData) {
           const trackingUrl = `${process.env.PUBLIC_BASE_URL || ''}/track.html?token=${pkg.token}`;
-          const emailRecipient = process.env.ADMIN_TEST_EMAIL || pkg.email;
-          sendEmail(emailRecipient, '🐴 Legacy Équestre — Update on Your Session', buildStatusUpdateEmailHtml({
-            name: pkg.name, title: pkg.title, trackingUrl, ...notifyData
-          })).catch(err => console.log('⚠️ Email notification error:', err.message));
-
-          const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
-          sendWhatsApp(waRecipient, buildStatusUpdateWhatsAppText({
-            name: pkg.name, title: pkg.title, trackingUrl, statusLine: notifyData.statusLine, bodyText: notifyData.bodyText
-          })).catch(err => console.log('⚠️ WhatsApp notification error:', err.message));
-
-          const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || pkg.phone;
-          sendSMS(smsRecipient, buildStatusUpdateWhatsAppText({
-            name: pkg.name, title: pkg.title, trackingUrl, statusLine: notifyData.statusLine, bodyText: notifyData.bodyText
-          })).catch(err => console.log('⚠️ SMS notification error:', err.message));
+          notifyAll({
+            customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
+            subject: '🐴 Legacy Équestre — Update on Your Session',
+            emailHtml: buildStatusUpdateEmailHtml({ name: pkg.name, title: pkg.title, trackingUrl, ...notifyData }),
+            waText: buildStatusUpdateWhatsAppText({ name: pkg.name, title: pkg.title, trackingUrl, statusLine: notifyData.statusLine, bodyText: notifyData.bodyText })
+          });
         }
       }
     }

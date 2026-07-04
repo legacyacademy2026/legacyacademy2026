@@ -6,6 +6,7 @@ const { sendReminderEmail, sendEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
 const { sendSMS } = require('../utils/sms');
 const { buildReminderWhatsAppText, buildLiveryStatusEmailHtml, buildLiveryStatusWhatsAppText, buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText } = require('../utils/messageTemplates');
+const { notifyAll } = require('../utils/notifier');
 require('dotenv').config();
 
 function parseBookingDateTime(dateStr, timeStr) {
@@ -29,29 +30,17 @@ function startReminderJob() {
         const hoursUntil = (bookingTime - now) / (1000 * 60 * 60);
 
         if (hoursUntil <= 24 && hoursUntil > 23) {
-          await sendReminderEmail(booking);
-
-          try {
-            const waText = buildReminderWhatsAppText(booking);
-            // ⚠️ TESTING MODE: sends to ADMIN_TEST_PHONE. Switch to booking.phone later for real customers.
-            const recipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${booking.phone}`;
-            await sendWhatsApp(recipient, waText);
-          } catch (waErr) {
-            console.log('⚠️ WhatsApp reminder error:', waErr.message);
-          }
-
-          try {
-            const smsText = buildReminderWhatsAppText(booking);
-            // ⚠️ TESTING MODE: sends to ADMIN_TEST_PHONE_SMS. Switch to booking.phone later for real customers.
-            const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || booking.phone;
-            await sendSMS(smsRecipient, smsText);
-          } catch (smsErr) {
-            console.log('⚠️ SMS reminder error:', smsErr.message);
-          }
+          const { buildReminderEmailHtml } = require('../utils/messageTemplates');
+          notifyAll({
+            customer: { name: booking.name, email: booking.email, phone: booking.phone },
+            subject: '🐴 Reminder: Your session is tomorrow!',
+            emailHtml: buildReminderEmailHtml(booking),
+            waText: buildReminderWhatsAppText(booking)
+          });
 
           booking.reminderSent = true;
           await booking.save();
-          console.log(`✅ Reminder sent for booking ${booking._id}`);
+          console.log(`✅ 24h reminder sent (customer + admin) for booking ${booking._id}`);
         }
       }
     } catch (err) {
@@ -80,38 +69,20 @@ function startReminderJob() {
           const bodyText = `Your <strong>Full Livery</strong> for <strong>${booking.horseName}</strong> expires in ${Math.ceil(daysUntilExpiry)} day(s). Please renew before it expires to keep your slot.`;
           const statusLine = `⏳ Your livery expires in ${Math.ceil(daysUntilExpiry)} day(s) — renew soon!`;
 
-          try {
-            const emailRecipient = process.env.ADMIN_TEST_EMAIL || booking.email;
-            await sendEmail(emailRecipient, '🐴 Legacy Équestre — Livery Renewal Reminder', buildLiveryStatusEmailHtml({
+          notifyAll({
+            customer: { name: booking.name, email: booking.email, phone: booking.phone },
+            subject: '🐴 Legacy Équestre — Livery Renewal Reminder',
+            emailHtml: buildLiveryStatusEmailHtml({
               name: booking.name, horseName: booking.horseName,
               statusBadge: { bg: '#fff3cd', color: '#8a6d00', text: '⏳ Renewal Reminder' },
               bodyText, trackingUrl, ctaLabel: 'Renew My Livery'
-            }));
-          } catch (emailErr) {
-            console.log('⚠️ Livery reminder email error:', emailErr.message);
-          }
-
-          try {
-            const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${booking.phone}`;
-            await sendWhatsApp(waRecipient, buildLiveryStatusWhatsAppText({
-              name: booking.name, horseName: booking.horseName, statusLine, bodyText, trackingUrl
-            }));
-          } catch (waErr) {
-            console.log('⚠️ Livery reminder WhatsApp error:', waErr.message);
-          }
-
-          try {
-            const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || booking.phone;
-            await sendSMS(smsRecipient, buildLiveryStatusWhatsAppText({
-              name: booking.name, horseName: booking.horseName, statusLine, bodyText, trackingUrl
-            }));
-          } catch (smsErr) {
-            console.log('⚠️ Livery reminder SMS error:', smsErr.message);
-          }
+            }),
+            waText: buildLiveryStatusWhatsAppText({ name: booking.name, horseName: booking.horseName, statusLine, bodyText, trackingUrl })
+          });
 
           booking.reminderSent = true;
           await booking.save();
-          console.log(`✅ Livery renewal reminder sent for booking ${booking._id}`);
+          console.log(`✅ Livery renewal reminder sent (customer + admin) for booking ${booking._id}`);
         }
       }
     } catch (err) {
@@ -160,22 +131,21 @@ function startReminderJob() {
           (forfeited > 0 ? ` ${forfeited} unused session(s) have expired and are non-refundable, as per our terms.` : '');
 
         try {
-          const emailRecipient = process.env.ADMIN_TEST_EMAIL || pkg.email;
-          await sendEmail(emailRecipient, '🐴 Legacy Équestre — Your Package Has Expired', buildStatusUpdateEmailHtml({
-            name: pkg.name, title: pkg.title,
-            statusBadge: { bg: '#efe9db', color: '#6b6560', text: '⌛ Package Expired' },
-            bodyText, trackingUrl: null
-          }));
-        } catch (e) { console.log('⚠️ Expiry email error:', e.message); }
-
-        try {
-          const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
-          await sendWhatsApp(waRecipient, buildStatusUpdateWhatsAppText({
-            name: pkg.name, title: pkg.title,
-            statusLine: 'Your package has expired ⌛',
-            bodyText: bodyText.replace(/<[^>]+>/g, '')
-          }));
-        } catch (e) { console.log('⚠️ Expiry WhatsApp error:', e.message); }
+          notifyAll({
+            customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
+            subject: '🐴 Legacy Équestre — Your Package Has Expired',
+            emailHtml: buildStatusUpdateEmailHtml({
+              name: pkg.name, title: pkg.title,
+              statusBadge: { bg: '#efe9db', color: '#6b6560', text: '⌛ Package Expired' },
+              bodyText, trackingUrl: null
+            }),
+            waText: buildStatusUpdateWhatsAppText({
+              name: pkg.name, title: pkg.title,
+              statusLine: 'Your package has expired ⌛',
+              bodyText: bodyText.replace(/<[^>]+>/g, '')
+            })
+          });
+        } catch (e) { console.log('⚠️ Expiry notify error:', e.message); }
 
         console.log(`⌛ Package ${pkg._id} expired (kept in records).`);
       }

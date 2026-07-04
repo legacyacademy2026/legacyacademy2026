@@ -7,6 +7,7 @@ const ClosedDay = require('../models/ClosedDay');
 const { sendEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
 const { sendSMS } = require('../utils/sms');
+const { notifyAll } = require('../utils/notifier');
 const {
   buildPackageEmailHtml, buildPackageWhatsAppText,
   buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText
@@ -23,14 +24,12 @@ function timeToMinutes(timeStr) {
 function notifyPackage(pkg, { statusBadge, bodyText, detailsHtml, ctaLabel, statusLine, includeLink = true }) {
   const trackingUrl = includeLink ? `${process.env.PUBLIC_BASE_URL || ''}/track.html?token=${pkg.token}` : null;
   const data = { name: pkg.name, title: pkg.title, statusBadge, bodyText, detailsHtml, trackingUrl, ctaLabel };
-
-  const emailRecipient = process.env.ADMIN_TEST_EMAIL || pkg.email;
-  sendEmail(emailRecipient, `🐴 Legacy Équestre — Update on Your Package`, buildStatusUpdateEmailHtml(data))
-    .catch(err => console.log('⚠️ Email notification error:', err.message));
-
-  const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
-  sendWhatsApp(waRecipient, buildStatusUpdateWhatsAppText({ name: pkg.name, title: pkg.title, statusLine, bodyText, trackingUrl }))
-    .catch(err => console.log('⚠️ WhatsApp notification error:', err.message));
+  notifyAll({
+    customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
+    subject: '🐴 Legacy Équestre — Update on Your Package',
+    emailHtml: buildStatusUpdateEmailHtml(data),
+    waText: buildStatusUpdateWhatsAppText({ name: pkg.name, title: pkg.title, statusLine, bodyText, trackingUrl })
+  });
 }
 
 router.post('/', async (req, res) => {
@@ -54,18 +53,13 @@ router.post('/', async (req, res) => {
     };
 
     const emailHtml = buildPackageEmailHtml(templateData);
-    const emailRecipient = process.env.ADMIN_TEST_EMAIL || pkg.email;
-    sendEmail(emailRecipient, '🐴 Your Legacy Équestre Package Request', emailHtml)
-      .catch(emailErr => console.log('⚠️ Email notification error (package still saved):', emailErr.message));
-
     const waText = buildPackageWhatsAppText(templateData);
-    const waRecipient = process.env.ADMIN_TEST_PHONE || `whatsapp:${pkg.phone}`;
-    sendWhatsApp(waRecipient, waText)
-      .catch(waErr => console.log('⚠️ WhatsApp notification error (package still saved):', waErr.message));
-
-    const smsRecipient = process.env.ADMIN_TEST_PHONE_SMS || pkg.phone;
-    sendSMS(smsRecipient, waText)
-      .catch(smsErr => console.log('⚠️ SMS notification error (package still saved):', smsErr.message));
+    notifyAll({
+      customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
+      subject: '🐴 Your Legacy Équestre Package Request',
+      emailHtml,
+      waText
+    });
   } catch (err) {
     res.status(500).json({ message: '❌ Error submitting package request', error: err.message });
   }
