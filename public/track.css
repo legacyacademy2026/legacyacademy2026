@@ -4,28 +4,67 @@ body {
   background: #f0ece0;
   min-height:100vh;
   display:flex; align-items:center; justify-content:center;
-  padding:20px;
+  padding:36px 20px;
+  position: relative;
+  overflow-x: hidden;
 }
-.track-container { width:100%; max-width:480px; }
+/* Faded horse background */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background: url('assets/hero-horse.png') center center / cover no-repeat;
+  opacity:0.10;
+  z-index:-2;
+}
+body::after {
+  content:'';
+  position:fixed; inset:0;
+  background: radial-gradient(circle at 50% 20%, rgba(240,236,224,0.5), rgba(240,236,224,0.92) 70%);
+  z-index:-1;
+}
+.track-container { width:100%; max-width:480px; position:relative; z-index:1; }
 .track-brand {
-  display:flex; align-items:center; justify-content:center; gap:10px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
   color:#2c2420;
-  font-family:'Cormorant Garamond', serif;
-  font-size:1.6rem; font-weight:600; letter-spacing:2px;
-  margin-bottom:18px;
+  margin-bottom:22px;
+  animation: fadeDown 0.7s ease both;
 }
-.track-brand .horse-badge { width:38px; height:38px; }
-.track-brand .running-horse { font-size:1.2rem; }
+.track-brand-name {
+  font-family:'Cormorant Garamond', serif;
+  font-size:2rem; font-weight:600; letter-spacing:4px; line-height:1;
+}
+.track-brand-sub {
+  font-size:0.62rem; letter-spacing:4px; text-transform:uppercase; color:#6b7a5a; margin-top:4px;
+}
+.track-brand .horse-badge {
+  width:48px; height:48px; margin-bottom:8px;
+  background: radial-gradient(circle at 35% 30%, rgba(107,122,90,0.3), rgba(107,122,90,0.08));
+  border:2px solid rgba(107,122,90,0.5);
+}
+.track-brand .running-horse { font-size:1.4rem; }
+@keyframes fadeDown { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:translateY(0); } }
 
 .track-card {
-  background:#ffffff;
-  border-radius:14px;
-  padding:40px 30px;
-  border:1px solid #e5ddcf;
-  box-shadow:0 12px 34px rgba(44,36,32,0.12);
+  background: rgba(255,255,255,0.94);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  border-radius:16px;
+  padding:38px 30px;
+  border:1px solid rgba(229,221,207,0.9);
+  box-shadow:0 16px 40px rgba(44,36,32,0.14);
   text-align:center;
   margin-bottom:16px;
+  animation: cardRise 0.6s cubic-bezier(0.22,1,0.36,1) both;
 }
+#trackCard { position:relative; overflow:hidden; }
+#trackCard::before {
+  content:''; position:absolute; top:0; left:0; right:0; height:4px;
+  background: linear-gradient(90deg, #6b7a5a, #a3b18a, #6b7a5a);
+}
+#bookingCard { animation-delay:0.08s; }
+#sessionsCard { animation-delay:0.16s; }
+#refundCard { animation-delay:0.24s; }
+@keyframes cardRise { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
 .track-card h2 { font-family:'Cormorant Garamond',serif; color:#2c2420; margin-bottom:6px; font-size:1.8rem; font-weight:600; }
 .track-card h3 { font-family:'Cormorant Garamond',serif; color:#2c2420; margin-bottom:16px; font-size:1.35rem; font-weight:600; text-align:center; }
 .package-name { color:#6b7a5a; font-weight:600; margin-bottom:16px; font-size:0.9rem; letter-spacing:0.5px; }
@@ -43,7 +82,19 @@ body {
 .progress-label { font-size:0.75rem; color:#6b6560; }
 
 .progress-bar-track { background:#e5ddcf; border-radius:10px; height:10px; overflow:hidden; margin-bottom:20px; }
-.progress-bar-fill { background:#6b7a5a; height:100%; transition:width 0.5s ease; }
+.progress-bar-fill {
+  background: linear-gradient(90deg, #6b7a5a, #8a9b74);
+  height:100%; transition:width 0.8s cubic-bezier(0.22,1,0.36,1);
+  position:relative; overflow:hidden;
+}
+.progress-bar-fill::after {
+  content:''; position:absolute; inset:0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  animation: shimmer 2.2s infinite;
+}
+@keyframes shimmer { 0% { transform:translateX(-100%); } 100% { transform:translateX(100%); } }
+.progress-num { transition: transform 0.3s ease; }
+.progress-stat:hover .progress-num { transform: scale(1.08); }
 
 .package-detail-line { font-size:0.8rem; color:#6b6560; margin-bottom:6px; }
 .booking-note { margin-top:20px; font-size:0.8rem; color:#4a5c39; background:#f5f2e8; padding:12px; border-radius:8px; }
@@ -137,3 +188,46 @@ body {
   font-size:0.82rem; font-weight:600; cursor:pointer; transition:opacity 0.2s;
 }
 .btn-freeze:hover { opacity:0.85; }
+
+/* ===== Polish: buttons, badges, status ===== */
+.btn-book-session, .btn-freeze, .btn-refund-request {
+  position: relative; overflow: hidden; z-index: 0;
+  transition: transform 0.15s ease, box-shadow 0.2s ease;
+}
+.btn-book-session::before {
+  content:''; position:absolute; inset:0; background:#6b7a5a;
+  transform: scaleX(0); transform-origin:left; transition: transform 0.4s cubic-bezier(0.22,1,0.36,1); z-index:-1;
+}
+.btn-book-session:hover::before { transform: scaleX(1); }
+.btn-book-session:active, .btn-freeze:active, .btn-refund-request:active { transform: scale(0.98); }
+
+.status-banner { animation: cardRise 0.5s ease both; }
+
+.session-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.session-item:hover { transform: translateX(3px); box-shadow: 0 4px 12px rgba(44,36,32,0.08); }
+
+.package-name {
+  text-transform: uppercase; font-size: 0.72rem; letter-spacing: 2px;
+}
+
+/* Elegant divider under package title */
+.track-card h2 + .package-name { position: relative; padding-bottom: 14px; margin-bottom: 18px; }
+.track-card h2 + .package-name::after {
+  content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%);
+  width:40px; height:2px; background:#6b7a5a; opacity:0.5;
+}
+
+/* Freeze button gets a soft entrance */
+.btn-freeze { transition: transform 0.15s ease, background 0.2s ease; }
+.btn-freeze:hover { transform: translateY(-2px); }
+
+/* Fade-in the whole container */
+.track-container { animation: fadeIn 0.5s ease both; }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .track-card, .track-brand, .status-banner, .track-container { animation: none; }
+  .progress-bar-fill::after { animation: none; }
+}
