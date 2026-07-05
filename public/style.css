@@ -891,12 +891,12 @@ h1, h2, h3, .serif {
   /* Inline-styled sections on lesson pages */
   section[style*="padding:80px"], section[style*="padding: 80px"] { padding: 16px 8px !important; }
   section[style*="padding:70px"], section[style*="padding: 70px"] { padding: 12px 0 !important; }
-}
-
   /* Override inline hero text styles */
   .hero-content h1[style] { font-size: 2rem !important; }
   .hero-centered .hero-content h1[style] { font-size: 1.8rem !important; }
   .hero-centered .hero-content p[style] { font-size: 0.65rem !important; max-width: 90% !important; }
+
+}
 
 
 /* ===================================================================
