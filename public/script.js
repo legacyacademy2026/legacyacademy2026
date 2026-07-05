@@ -520,3 +520,36 @@ const cardObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 document.querySelectorAll('.reveal-card').forEach(card => cardObserver.observe(card));
+// ===== Make entire service/package cards clickable =====
+document.querySelectorAll('.service-card').forEach(card => {
+  const link = card.querySelector('.service-explore, .btn-book, a[href]');
+  if (!link) return;
+  const href = link.getAttribute('href');
+  if (!href || href === '#') return;
+  card.style.cursor = 'pointer';
+  card.setAttribute('role', 'link');
+  card.setAttribute('tabindex', '0');
+  const go = (e) => {
+    if (e.target.closest('a')) return; // let real links/buttons work normally
+    window.location.href = href;
+  };
+  card.addEventListener('click', go);
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') window.location.href = href;
+  });
+});
+
+// ===== Scroll-reveal for service + pricing cards =====
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach((entry, i) => {
+    if (entry.isIntersecting) {
+      setTimeout(() => entry.target.classList.add('revealed'), (i % 6) * 80);
+      revealObserver.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.12 });
+
+document.querySelectorAll('.service-card, .pricing-card, .single-price-card, .stable-gallery img').forEach(el => {
+  el.classList.add('reveal-up');
+  revealObserver.observe(el);
+});
