@@ -796,16 +796,16 @@ h1, h2, h3, .serif {
   .services-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
   .service-card { border-radius: 5px; }
   .service-card-img { height: 80px; object-fit: cover; object-position: center 30%; display: block; }
-  .service-card-body { padding: 3px 4px 4px; }
-  .service-card-title { font-size: 0.66rem; margin-bottom: 1px; line-height: 1.15; }
+  .service-card-body { padding: 2px 3px 3px; }
+  .service-card-title { font-size: 0.62rem; margin-bottom: 0; line-height: 1.1; }
   .service-card-body p { 
-    font-size: 0.48rem; line-height: 1.2; 
-    margin-bottom: 2px; text-align: left;
+    font-size: 0.38rem; line-height: 1.15; 
+    margin-bottom: 1px; text-align: left;
   }
-  .service-explore { font-size: 0.5rem; letter-spacing: 0.5px; margin-top: 1px; }
-  .service-price-rows { margin-bottom: 4px; }
-  .service-price-row { padding: 1px 0; font-size: 0.5rem; }
-  .service-card .btn-book { padding: 4px 3px; font-size: 0.48rem; letter-spacing: 0.5px; margin-top: 2px; }
+  .service-explore { font-size: 0.45rem; letter-spacing: 0.5px; margin-top: 0; }
+  .service-price-rows { margin-bottom: 2px; }
+  .service-price-row { padding: 1px 0; font-size: 0.45rem; }
+  .service-card .btn-book { padding: 3px 2px; font-size: 0.42rem; letter-spacing: 0.5px; margin-top: 1px; }
 
   /* ---- PRICING ---- */
   .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -930,11 +930,11 @@ h1, h2, h3, .serif {
   .section-eyebrow { font-size: 0.5rem; }
   .services-grid { gap: 4px; }
   .service-card-img { height: 62px; object-fit: cover; object-position: center 30%; display: block; }
-  .service-card-body { padding: 3px 4px 4px; }
-  .service-card-title { font-size: 0.58rem; line-height: 1.1; }
-  .service-card-body p { font-size: 0.42rem; line-height: 1.15; text-align: left; }
-  .service-price-row { padding: 1px 0; font-size: 0.44rem; }
-  .service-card .btn-book { padding: 3px 2px; font-size: 0.42rem; }
+  .service-card-body { padding: 2px 3px 3px; }
+  .service-card-title { font-size: 0.54rem; line-height: 1.05; }
+  .service-card-body p { font-size: 0.32rem; line-height: 1.1; text-align: left; margin: 0; }
+  .service-price-row { padding: 0; font-size: 0.38rem; }
+  .service-card .btn-book { padding: 2px; font-size: 0.36rem; }
 
   /* Pricing single column */
   .pricing-grid { grid-template-columns: 1fr; gap: 6px; }
