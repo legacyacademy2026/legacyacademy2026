@@ -412,6 +412,20 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
+// ===== Admin permanently deletes a package (keeps the customer profile) =====
+router.delete('/:id', async (req, res) => {
+  try {
+    const pkg = await PackagePurchase.findById(req.params.id);
+    if (!pkg) return res.status(404).json({ message: 'Package not found' });
+    // Remove the package's session bookings too (customer record in Customers is kept)
+    await Booking.deleteMany({ packagePurchaseId: pkg._id });
+    await PackagePurchase.findByIdAndDelete(req.params.id);
+    res.json({ message: '🗑️ Package and its sessions deleted. Customer profile kept.' });
+  } catch (err) {
+    res.status(500).json({ message: '❌ Error deleting package' });
+  }
+});
+
 router.applyFreeze = applyFreeze;
 router.applyUnfreeze = applyUnfreeze;
 router.freezeDaysLeft = freezeDaysLeft;

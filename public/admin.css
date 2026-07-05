@@ -391,3 +391,7 @@ tr:hover { background: #fef9f3; }
 }
 .sub-tab-btn:hover { background:#ece6d8; }
 .sub-tab-btn.active { background:#6b7a5a; color:#fff; border-color:#6b7a5a; }
+
+/* Delete package button */
+.btn-delete-pkg { background:#fdecea; color:#a71d2a; border:1px solid #f3c6c0; }
+.btn-delete-pkg:hover { background:#f8d7da; }

@@ -821,8 +821,22 @@ async function loadPackages() {
     const res = await fetch('/api/packages');
     allPackagesCache = await res.json();
     renderPackages();
+    renderFrozen();
   } catch (err) {
     alert('Could not load packages.');
+  }
+}
+
+async function deletePackage(id, name) {
+  if (!confirm(`Permanently delete ${name}'s package and its booked sessions?\n\nThe customer's profile (in Customers) will be kept. This cannot be undone.`)) return;
+  try {
+    const res = await fetch(`/api/packages/${id}`, { method: 'DELETE' });
+    const result = await res.json();
+    if (!res.ok) { alert(result.message || 'Could not delete.'); return; }
+    await loadPackages();
+    await loadBookings();
+  } catch (err) {
+    alert('Could not delete the package. Please try again.');
   }
 }
 
@@ -925,6 +939,7 @@ function packageCardHtml(p) {
         <div class="package-actions">
           ${actionButtons}
           <button class="btn-small" onclick="toggleSessionsList('${p._id}')">📋 View/Manage Sessions</button>
+          <button class="btn-small btn-delete-pkg" onclick="deletePackage('${p._id}', '${escapeHtml(p.name)}')">🗑️ Delete</button>
         </div>
         <div id="sessionsList-${p._id}" style="display:none; margin-top:12px;"></div>
       </div>
