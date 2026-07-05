@@ -155,43 +155,89 @@ h1, h2, h3, .serif {
   color: var(--brown);
 }
 
+/* =====================================================
+   RESPONSIVE — TABLET + PHONE (single consolidated block)
+   ====================================================== */
 @media (max-width: 900px) {
   .nav-links { display: none; }
   .nav-links.open {
-    display: flex;
-    flex-direction: column;
-    position: absolute;
-    top: 72px;
-    left: 0; right: 0;
-    background: var(--white);
-    border-bottom: 1px solid var(--border);
-    padding: 20px 24px;
-    gap: 0;
-    z-index: 999;
-    box-shadow: 0 12px 30px rgba(44,36,32,0.12);
+    display: flex; flex-direction: column;
+    position: absolute; top: 60px; left: 0; right: 0;
+    background: var(--white); border-bottom: 1px solid var(--border);
+    padding: 16px 20px; gap: 0; z-index: 999;
+    box-shadow: 0 10px 28px rgba(44,36,32,0.12);
   }
-  .nav-links.open li { padding: 12px 0; border-bottom: 1px solid var(--border); }
+  .nav-links.open li { padding: 10px 0; border-bottom: 1px solid var(--border); }
   .nav-links.open li:last-child { border-bottom: none; }
-  .nav-links.open a { font-size: 1rem; }
+  .nav-links.open a { font-size: 0.95rem; }
   .hamburger { display: block; }
-  .navbar { padding: 0 20px; }
-  .nav-right { gap: 10px; }
+  .navbar { padding: 0 16px; height: 60px; }
+  .nav-right { gap: 8px; }
   .nav-lang { display: none; }
-  .btn-book-now { padding: 10px 18px; font-size: 0.7rem; }
-  .services-grid { grid-template-columns: repeat(2, 1fr); }
-  .about-grid { grid-template-columns: 1fr; gap: 30px; }
-  .about-grid img { height: 300px; }
-  .hero-content h1 { font-size: 3rem; }
-  .hero-cta-row { flex-direction: column; gap: 12px; }
-  .hero-cta-row a { width: 100%; text-align: center; }
+  .btn-book-now { padding: 8px 16px; font-size: 0.68rem; }
+  .hero { height: 35vh; min-height: 200px; margin-top: 60px; }
+  .hero-content h1 { font-size: 2rem; }
+  .hero-content { bottom: 16px; left: 16px; right: 16px; }
+  .hero-eyebrow { font-size: 0.6rem; letter-spacing: 2px; }
+  .hero-breadcrumb { font-size: 0.6rem; }
+  .hero-centered .hero-content h1 { font-size: 2.2rem; }
+  .hero-cta-row { flex-direction: row; gap: 8px; }
+  .hero-cta-row a { padding: 10px 16px; font-size: 0.65rem; }
+  .services { padding: 30px 0; }
+  .section-heading { font-size: 1.6rem; margin-bottom: 20px; }
+  .section-eyebrow { margin-bottom: 6px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .service-card-img { height: 100px; }
+  .service-card-body { padding: 10px 12px 14px; }
+  .service-card-title { font-size: 1rem; margin-bottom: 6px; }
+  .service-card-body p { font-size: 0.72rem; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .service-explore { font-size: 0.65rem; margin-top: 6px; }
+  .service-card .btn-book { padding: 10px; font-size: 0.65rem; margin-top: 8px; }
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .pricing-card { padding: 20px 16px; }
+  .pricing-amount { font-size: 2.2rem; }
+  .pricing-sessions { font-size: 0.7rem; }
+  .pricing-card:not(.best-value) { margin-top: 0; }
+  .pkg-pricing { padding: 40px 0; }
+  .pkg-pricing h2 { font-size: 1.8rem; margin-bottom: 20px; }
+  .pkg-description h2 { font-size: 1.8rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 20px; }
+  .about-grid img { height: 200px; }
+  .footer { padding: 30px 0 20px; }
+  .footer-top { flex-direction: column; gap: 16px; text-align: center; }
+  .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  .booking { padding: 16px 0 40px; }
+  .booking-form { padding: 24px 18px; }
+  .form-row { flex-direction: column; gap: 14px; }
+  .selected-package-banner { flex-direction: column; align-items: flex-start; }
+  .pkg-breadcrumb { padding: 68px 0 0; }
+  .stable-gallery { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stable-gallery img { height: 140px; }
+  .single-price-card { min-width: 0; width: 100%; padding: 28px 20px; }
+  .single-price-card .sp-amount { font-size: 2.6rem; }
+  .container { padding: 0 14px; }
+}
+
+@media (max-width: 420px) {
+  .hero { height: 28vh; min-height: 160px; }
+  .hero-content h1 { font-size: 1.5rem; }
+  .hero-centered .hero-content h1 { font-size: 1.7rem; }
+  .services-grid { gap: 8px; }
+  .service-card-img { height: 80px; }
+  .service-card-body { padding: 8px 10px 10px; }
+  .service-card-title { font-size: 0.85rem; }
+  .pricing-grid { grid-template-columns: 1fr; }
+  .hero-cta-row a { padding: 8px 12px; font-size: 0.6rem; }
 }
 .hero {
   position: relative;
   width: 100%;
-  height: 60vh;
-  min-height: 380px;
+  height: 55vh;
+  min-height: 340px;
+  margin-top: 72px;
   overflow: hidden;
 }
+.hero.hero-centered { height: 65vh; min-height: 420px; }
 .hero img {
   width: 100%; height: 100%;
   object-fit: cover;
@@ -263,17 +309,7 @@ h1, h2, h3, .serif {
 }
 .btn-ghost-white:hover { background: rgba(255,255,255,0.15); }
 
-@media (max-width: 700px) {
-  .hero { height: 50vh; min-height: 300px; }
-  .hero-content h1 { font-size: 2.2rem; }
-  .hero-centered .hero-content h1 { font-size: 2.4rem; }
-  .hero-content { bottom: 24px; left: 20px; right: 20px; }
-  .hero-eyebrow { font-size: 0.65rem; }
-  .hero-breadcrumb { font-size: 0.65rem; }
-  .services-grid { grid-template-columns: 1fr; }
-  .section-heading { font-size: 2rem; }
-  .container { padding: 0 16px; }
-}
+
 
 /* ======= HOMEPAGE SERVICES GRID ======= */
 .services {
@@ -505,9 +541,7 @@ h1, h2, h3, .serif {
 }
 .btn-book:hover { opacity: 0.85; }
 
-@media (max-width: 700px) {
-  .pricing-grid { grid-template-columns: 1fr; }
-}
+
 
 /* Terms & Regulations */
 .pkg-terms {
@@ -602,10 +636,7 @@ h1, h2, h3, .serif {
 }
 .footer-bottom-links a:hover { color: var(--brown); }
 
-@media (max-width: 700px) {
-  .footer-top { flex-direction: column; gap: 30px; }
-  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
-}
+
 /* ===================================================================
    LEGACY THEME — ADDED COMPONENTS (booking form, whatsapp, gallery,
    coming-soon, single-price, about, responsive polish)
@@ -780,15 +811,4 @@ h1, h2, h3, .serif {
 /* ===================================================================
    RESPONSIVE — TABLET & PHONE (consolidated above in main breakpoints)
    =================================================================== */
-@media (max-width: 700px) {
-  .stable-gallery { grid-template-columns: 1fr; }
-  .form-row { flex-direction: column; gap: 18px; }
-  .booking-form { padding: 28px 20px; }
-  .selected-package-banner { flex-direction: column; align-items: flex-start; }
-  .pkg-description h2, .pkg-pricing h2 { font-size: 2rem; }
-  .single-price-card { min-width: 0; width: 100%; padding: 34px 24px; }
-  .pricing-grid { grid-template-columns: 1fr; gap: 18px; }
-  .pricing-card { margin-top: 0; }
-  .footer-top { flex-direction: column; gap: 24px; text-align: center; }
-  .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
-}
+
