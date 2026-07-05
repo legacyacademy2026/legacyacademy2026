@@ -739,219 +739,264 @@ h1, h2, h3, .serif {
 .about-grid p { color: var(--brown-light); line-height: 1.8; margin-bottom: 18px; }
 
 /* ===================================================================
-   RESPONSIVE — TABLET & PHONE (consolidated above in main breakpoints)
-   =================================================================== */
-
-/* ===================================================================
-   RESPONSIVE — TABLET & iPAD ≤900px
-   Compact layout: smaller hero, 2-col cards, reduced spacing
-   All @media rules at END of file so they correctly override desktop
+   RESPONSIVE — PHONE & TABLET ≤900px
+   Ultra-compact: everything fits on ONE screen, minimal scrolling
    =================================================================== */
 @media (max-width: 900px) {
 
   /* ---- NAVBAR ---- */
-  .navbar { padding: 0 14px; height: 56px; }
-  .nav-logo-name { font-size: 0.95rem; letter-spacing: 2px; }
-  .nav-logo-sub { font-size: 0.45rem; letter-spacing: 2px; }
+  .navbar { padding: 0 12px; height: 52px; }
+  .nav-logo-name { font-size: 0.9rem; letter-spacing: 2px; }
+  .nav-logo-sub { font-size: 0.42rem; letter-spacing: 1px; }
   .nav-links { display: none; }
   .nav-links.open {
     display: flex; flex-direction: column;
-    position: absolute; top: 56px; left: 0; right: 0;
+    position: absolute; top: 52px; left: 0; right: 0;
     background: var(--white); border-bottom: 1px solid var(--border);
-    padding: 10px 16px; gap: 0; z-index: 999;
+    padding: 8px 14px; gap: 0; z-index: 999;
     box-shadow: 0 10px 28px rgba(44,36,32,0.12);
     transform: none;
   }
-  .nav-links.open li { padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .nav-links.open li { padding: 8px 0; border-bottom: 1px solid var(--border); }
   .nav-links.open li:last-child { border-bottom: none; }
-  .nav-links.open a { font-size: 0.9rem; }
+  .nav-links.open a { font-size: 0.85rem; }
   .hamburger { display: block; }
-  .nav-right { gap: 6px; }
+  .nav-right { gap: 4px; }
   .nav-lang { display: none; }
-  .btn-book-now { padding: 7px 14px; font-size: 0.62rem; letter-spacing: 1px; }
+  .btn-book-now { padding: 6px 12px; font-size: 0.58rem; letter-spacing: 1px; }
 
-  /* ---- HERO ---- */
-  .hero { height: 30vh; min-height: 180px; margin-top: 56px; }
-  .hero.hero-centered { height: 32vh; min-height: 200px; }
+  /* ---- HERO — as small as possible ---- */
+  .hero { height: 22vh; min-height: 150px; margin-top: 52px; }
+  .hero.hero-centered { height: 24vh; min-height: 170px; }
   .hero img { object-fit: cover; object-position: center 30%; }
-  .hero-content { bottom: 14px; left: 14px; right: 14px; }
-  .hero-content h1 { font-size: 1.7rem; }
-  .hero-eyebrow { font-size: 0.55rem; letter-spacing: 2px; margin-bottom: 6px; }
-  .hero-breadcrumb { font-size: 0.55rem; letter-spacing: 1px; }
-  .hero-breadcrumb a { font-size: 0.55rem; }
+  .hero-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.5) 100%); }
+  .hero-content { bottom: 12px; left: 12px; right: 12px; }
+  .hero-content h1 { font-size: 1.5rem; }
+  .hero-eyebrow { font-size: 0.5rem; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .hero-breadcrumb { font-size: 0.5rem; letter-spacing: 1px; margin-bottom: 6px; }
+  .hero-breadcrumb a { font-size: 0.5rem; }
   .hero-centered .hero-content { top: 50%; transform: translateY(-50%); text-align: center; left: 0; right: 0; bottom: auto; }
-  .hero-centered .hero-content h1 { font-size: 1.8rem; }
-  .hero-ctas { margin-top: 14px; gap: 10px; }
-  .hero-ctas a { padding: 8px 14px; font-size: 0.6rem; letter-spacing: 1px; }
-  .hero-cta-row { flex-direction: column; gap: 8px; }
-  .hero-cta-row a { padding: 8px 14px; font-size: 0.6rem; }
-  .btn-ghost-white { padding: 8px 14px; font-size: 0.6rem; }
-  .coming-soon-tag { font-size: 1.3rem; }
+  .hero-centered .hero-content h1 { font-size: 1.6rem; }
+  .hero-ctas { margin-top: 10px; gap: 8px; }
+  .hero-ctas a { padding: 7px 12px; font-size: 0.55rem; letter-spacing: 1px; }
+  .hero-cta-row { flex-direction: column; gap: 6px; }
+  .hero-cta-row a { padding: 7px 12px; font-size: 0.55rem; }
+  .btn-ghost-white { padding: 7px 12px; font-size: 0.55rem; }
+  .coming-soon-tag { font-size: 1.1rem; }
 
   /* ---- CONTAINER ---- */
-  .container { padding: 0 12px; }
+  .container { padding: 0 10px; }
 
-  /* ---- SERVICES GRID ---- */
-  .services { padding: 24px 0; }
-  .section-heading { font-size: 1.4rem; margin-bottom: 16px; }
-  .section-eyebrow { font-size: 0.6rem; letter-spacing: 2px; margin-bottom: 4px; }
-  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .service-card { border-radius: 6px; }
-  .service-card-img { height: 90px; object-fit: cover; object-position: center 30%; }
-  .service-card-body { padding: 8px 10px 12px; }
-  .service-card-title { font-size: 0.9rem; margin-bottom: 4px; }
-  .service-card-body p { font-size: 0.65rem; line-height: 1.3; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-  .service-explore { font-size: 0.6rem; letter-spacing: 1px; margin-top: 4px; }
-  .service-price-rows { margin-bottom: 10px; }
-  .service-price-row { padding: 6px 0; font-size: 0.7rem; }
-  .service-card .btn-book { padding: 8px; font-size: 0.6rem; letter-spacing: 1px; margin-top: 6px; }
+  /* ---- SECTION HEADINGS ---- */
+  .section-heading { font-size: 1.2rem; margin-bottom: 10px; }
+  .section-eyebrow { font-size: 0.55rem; letter-spacing: 1.5px; margin-bottom: 2px; }
 
-  /* ---- PRICING GRID ---- */
-  .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .pricing-card { padding: 36px 14px 20px; }
-  .pricing-card:not(.best-value) { padding-top: 36px; }
-  .pricing-amount { font-size: 2rem; }
-  .pricing-sessions { font-size: 0.62rem; letter-spacing: 1px; }
-  .pricing-divider { margin: 18px 0 14px; }
-  .best-value-badge { font-size: 0.55rem; padding: 4px 10px; top: -11px; }
-  .pkg-pricing { padding: 30px 0; }
-  .pkg-pricing h2 { font-size: 1.5rem; margin-bottom: 16px; }
-  .pkg-description h2 { font-size: 1.5rem; }
+  /* ---- HOME SERVICES — tightest compact grid ---- */
+  .services { padding: 12px 0 8px; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); gap: 7px; }
+  .service-card { border-radius: 5px; }
+  .service-card-img { height: 72px; object-fit: cover; object-position: center 25%; }
+  .service-card-body { padding: 6px 8px 8px; }
+  .service-card-title { font-size: 0.78rem; margin-bottom: 2px; }
+  .service-card-body p { 
+    font-size: 0.58rem; line-height: 1.25; 
+    display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .service-explore { font-size: 0.55rem; letter-spacing: 0.5px; margin-top: 2px; }
+  .service-price-rows { margin-bottom: 6px; }
+  .service-price-row { padding: 3px 0; font-size: 0.62rem; }
+  .service-card .btn-book { padding: 6px; font-size: 0.55rem; letter-spacing: 0.5px; margin-top: 4px; }
+
+  /* ---- PRICING ---- */
+  .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+  .pricing-card { padding: 28px 10px 14px; }
+  .pricing-card:not(.best-value) { padding-top: 28px; }
+  .pricing-amount { font-size: 1.8rem; }
+  .pricing-sessions { font-size: 0.58rem; letter-spacing: 0.5px; margin-bottom: 4px; }
+  .pricing-divider { margin: 12px 0 10px; }
+  .best-value-badge { font-size: 0.5rem; padding: 3px 8px; top: -10px; }
+
+  /* ---- PACKAGE PAGES ---- */
+  .pkg-pricing { padding: 16px 0; }
+  .pkg-pricing h2 { font-size: 1.2rem; margin-bottom: 10px; }
+  .pkg-description { padding: 16px 0; }
+  .pkg-description h2 { font-size: 1.2rem; margin-bottom: 8px; }
+  .pkg-description p { font-size: 0.72rem; line-height: 1.4; margin-bottom: 8px; }
+  .pkg-duration { font-size: 0.72rem; margin-bottom: 2px; }
 
   /* ---- BOOKING FORM ---- */
-  .booking { padding: 12px 0 30px; }
-  .booking-form { padding: 20px 14px; border-radius: 8px; }
-  .form-row { flex-direction: column; gap: 10px; margin-bottom: 14px; }
-  .booking-form label { font-size: 0.68rem; margin-bottom: 5px; }
-  .booking-form input, .booking-form select, .booking-form textarea { padding: 10px 12px; font-size: 0.85rem; }
-  .btn-submit { padding: 12px 22px; font-size: 0.68rem; }
-  .selected-package-banner { flex-direction: column; align-items: flex-start; padding: 14px 16px; margin-bottom: 18px; }
-  .selected-package-banner .spb-name { font-size: 1.2rem; }
-  .pkg-breadcrumb { padding: 64px 0 0; }
-  .pkg-breadcrumb-row { font-size: 0.62rem; }
-  .section-tag { font-size: 0.62rem; letter-spacing: 2px; }
-  .section-title { font-size: 2rem; }
-  .services-intro { font-size: 0.82rem; }
+  .booking { padding: 8px 0 20px; }
+  .booking-form { padding: 16px 12px; border-radius: 6px; }
+  .form-row { flex-direction: column; gap: 8px; margin-bottom: 10px; }
+  .booking-form label { font-size: 0.62rem; margin-bottom: 3px; }
+  .booking-form input, .booking-form select, .booking-form textarea { 
+    padding: 8px 10px; font-size: 0.8rem; border-radius: 4px; 
+  }
+  .btn-submit { padding: 10px 18px; font-size: 0.62rem; margin-top: 4px; }
+  .selected-package-banner { 
+    flex-direction: column; align-items: flex-start; 
+    padding: 10px 12px; margin-bottom: 12px; border-left-width: 3px;
+  }
+  .selected-package-banner .spb-name { font-size: 1rem; }
+  .selected-package-banner .spb-label { font-size: 0.55rem; }
+  .selected-package-banner .spb-price { font-size: 0.72rem; }
+  .pkg-breadcrumb { padding: 60px 0 0; }
+  .pkg-breadcrumb-row { font-size: 0.58rem; }
+  .section-tag { font-size: 0.55rem; letter-spacing: 1.5px; margin-bottom: 4px; }
+  .section-title { font-size: 1.5rem; }
+  .services-intro { font-size: 0.72rem; }
 
   /* ---- SINGLE PRICE CARD ---- */
   .single-price-wrap { padding: 0; }
-  .single-price-card { min-width: 0; width: 100%; padding: 24px 18px; border-radius: 6px; }
-  .single-price-card .sp-amount { font-size: 2.4rem; }
-  .single-price-card .sp-label { font-size: 0.62rem; }
+  .single-price-card { min-width: 0; width: 100%; padding: 18px 14px; border-radius: 6px; }
+  .single-price-card .sp-amount { font-size: 2rem; }
+  .single-price-card .sp-label { font-size: 0.55rem; margin-bottom: 6px; }
+  .single-price-card .pricing-divider { margin: 14px 0 10px; }
 
   /* ---- GALLERY ---- */
-  .stable-gallery { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .stable-gallery img { height: 120px; border-radius: 6px; object-fit: cover; }
+  .stable-gallery { grid-template-columns: repeat(2, 1fr); gap: 6px; }
+  .stable-gallery img { height: 90px; border-radius: 5px; object-fit: cover; }
 
   /* ---- ABOUT ---- */
-  .about-block { padding: 30px 0; }
-  .about-grid { grid-template-columns: 1fr; gap: 16px; }
-  .about-grid img { height: 180px; border-radius: 8px; object-fit: cover; }
-  .about-grid h2 { font-size: 1.6rem; margin-bottom: 12px; }
-  .about-grid p { font-size: 0.82rem; line-height: 1.6; margin-bottom: 10px; }
+  .about-block { padding: 16px 0; }
+  .about-grid { grid-template-columns: 1fr; gap: 12px; }
+  .about-grid img { height: 150px; border-radius: 6px; object-fit: cover; }
+  .about-grid h2 { font-size: 1.3rem; margin-bottom: 8px; }
+  .about-grid p { font-size: 0.72rem; line-height: 1.45; margin-bottom: 6px; }
 
   /* ---- TERMS ---- */
-  .pkg-terms { padding: 30px 0; }
-  .pkg-terms h2 { font-size: 1.4rem; margin-bottom: 16px; }
-  .terms-list li { font-size: 0.78rem; margin-bottom: 12px; gap: 10px; }
+  .pkg-terms { padding: 16px 0; }
+  .pkg-terms h2 { font-size: 1.1rem; margin-bottom: 10px; }
+  .terms-list li { font-size: 0.68rem; margin-bottom: 8px; gap: 8px; }
+  .terms-list li::before { width: 5px; height: 5px; margin-top: 6px; }
 
-  /* ---- FOOTER ---- */
-  .footer { padding: 20px 0 0; }
-  .footer-top { flex-direction: column; gap: 12px; text-align: center; padding-bottom: 20px; }
-  .footer-bottom { flex-direction: column; gap: 6px; text-align: center; padding: 12px 0; font-size: 0.68rem; }
-  .footer-bottom-links { gap: 14px; }
-  .footer-bottom-links a { font-size: 0.68rem; }
-  .footer-contact-label { margin-bottom: 8px; font-size: 0.62rem; }
-  .footer-contact p { font-size: 0.75rem; margin-bottom: 3px; }
+  /* ---- FOOTER — ultra compact ---- */
+  .footer { padding: 12px 0 0; }
+  .footer-top { flex-direction: column; gap: 8px; text-align: center; padding-bottom: 12px; }
+  .footer-bottom { flex-direction: column; gap: 4px; text-align: center; padding: 8px 0; font-size: 0.6rem; }
+  .footer-bottom-links { gap: 10px; }
+  .footer-bottom-links a { font-size: 0.6rem; }
+  .footer-contact-label { margin-bottom: 4px; font-size: 0.55rem; }
+  .footer-contact p { font-size: 0.65rem; margin-bottom: 2px; }
+  .footer-socials { gap: 12px; }
+  .footer-socials a { font-size: 0.9rem; }
 
   /* ---- WHATSAPP ---- */
-  .btn-whatsapp { padding: 10px 20px; font-size: 0.68rem; border-radius: 24px; }
+  .btn-whatsapp { padding: 8px 16px; font-size: 0.6rem; border-radius: 20px; }
 
   /* ---- MISC ---- */
-  .pkg-duration { font-size: 0.85rem; }
   .about-values-grid { grid-template-columns: repeat(2, 1fr) !important; }
+  
+  /* Inline-styled sections on lesson pages */
+  section[style*="padding:80px"], section[style*="padding: 80px"] { padding: 16px 8px !important; }
+  section[style*="padding:70px"], section[style*="padding: 70px"] { padding: 12px 0 !important; }
 }
+
+  /* Override inline hero text styles */
+  .hero-content h1[style] { font-size: 2rem !important; }
+  .hero-centered .hero-content h1[style] { font-size: 1.8rem !important; }
+  .hero-centered .hero-content p[style] { font-size: 0.65rem !important; max-width: 90% !important; }
+
 
 /* ===================================================================
    RESPONSIVE — SMALL PHONE ≤420px
-   Single-column layouts, ultra-compact, minimal scrolling
+   Everything visible on one screen, zero scroll needed
    =================================================================== */
 @media (max-width: 420px) {
 
-  .navbar { padding: 0 10px; height: 52px; }
-  .nav-logo-name { font-size: 0.85rem; letter-spacing: 2px; }
-  .nav-logo-sub { font-size: 0.4rem; }
-  .btn-book-now { padding: 6px 10px; font-size: 0.58rem; }
-  .nav-links.open { top: 52px; }
+  .navbar { padding: 0 8px; height: 48px; }
+  .nav-logo-name { font-size: 0.8rem; letter-spacing: 1px; }
+  .btn-book-now { padding: 5px 8px; font-size: 0.52rem; }
+  .nav-links.open { top: 48px; }
+  .hamburger { font-size: 1.1rem; }
 
-  /* Hero ultra compact */
-  .hero { height: 22vh; min-height: 140px; margin-top: 52px; }
-  .hero.hero-centered { height: 24vh; min-height: 160px; }
-  .hero-content h1 { font-size: 1.3rem; }
-  .hero-centered .hero-content h1 { font-size: 1.4rem; }
-  .hero-content { bottom: 10px; left: 10px; right: 10px; }
-  .hero-eyebrow { font-size: 0.5rem; letter-spacing: 1px; }
-  .hero-breadcrumb { font-size: 0.5rem; }
-  .hero-ctas a { padding: 7px 10px; font-size: 0.55rem; }
-  .coming-soon-tag { font-size: 1.1rem; }
+  /* Hero — barely there, just for brand feel */
+  .hero { height: 18vh; min-height: 120px; margin-top: 48px; }
+  .hero.hero-centered { height: 20vh; min-height: 140px; }
+  .hero-content h1 { font-size: 1.2rem; }
+  .hero-centered .hero-content h1 { font-size: 1.3rem; }
+  .hero-content { bottom: 8px; left: 8px; right: 8px; }
+  .hero-eyebrow { font-size: 0.45rem; letter-spacing: 1px; margin-bottom: 2px; }
+  .hero-breadcrumb { font-size: 0.45rem; margin-bottom: 4px; }
+  .hero-ctas { margin-top: 6px; gap: 6px; }
+  .hero-ctas a { padding: 5px 10px; font-size: 0.5rem; }
+  .coming-soon-tag { font-size: 0.95rem; }
 
-  .container { padding: 0 8px; }
+  .container { padding: 0 6px; }
 
   /* Services */
-  .services { padding: 16px 0; }
-  .section-heading { font-size: 1.2rem; margin-bottom: 12px; }
-  .services-grid { gap: 6px; }
-  .service-card-img { height: 70px; }
-  .service-card-body { padding: 6px 8px 8px; }
-  .service-card-title { font-size: 0.78rem; }
-  .service-card-body p { font-size: 0.6rem; -webkit-line-clamp: 2; }
-  .service-price-row { padding: 4px 0; font-size: 0.62rem; }
-  .service-card .btn-book { padding: 7px; font-size: 0.56rem; }
+  .services { padding: 8px 0 4px; }
+  .section-heading { font-size: 1.05rem; margin-bottom: 6px; }
+  .section-eyebrow { font-size: 0.5rem; }
+  .services-grid { gap: 5px; }
+  .service-card-img { height: 58px; }
+  .service-card-body { padding: 4px 6px 6px; }
+  .service-card-title { font-size: 0.7rem; }
+  .service-card-body p { font-size: 0.52rem; -webkit-line-clamp: 2; }
+  .service-price-row { padding: 2px 0; font-size: 0.55rem; }
+  .service-card .btn-book { padding: 5px; font-size: 0.5rem; }
 
   /* Pricing single column */
-  .pricing-grid { grid-template-columns: 1fr; gap: 8px; }
-  .pricing-card { padding: 28px 14px 16px; }
-  .pricing-amount { font-size: 1.8rem; }
+  .pricing-grid { grid-template-columns: 1fr; gap: 6px; }
+  .pricing-card { padding: 22px 10px 12px; }
+  .pricing-card:not(.best-value) { padding-top: 22px; }
+  .pricing-amount { font-size: 1.5rem; }
+  .best-value-badge { font-size: 0.45rem; padding: 2px 6px; top: -8px; }
 
-  /* Booking form tighter */
-  .booking-form { padding: 14px 10px; }
-  .booking-form label { font-size: 0.62rem; }
-  .booking-form input, .booking-form select, .booking-form textarea { padding: 8px 10px; font-size: 0.8rem; }
-  .pkg-breadcrumb { padding: 58px 0 0; }
+  /* Booking */
+  .booking-form { padding: 10px 8px; }
+  .booking-form label { font-size: 0.56rem; }
+  .booking-form input, .booking-form select, .booking-form textarea { 
+    padding: 6px 8px; font-size: 0.75rem; 
+  }
+  .pkg-breadcrumb { padding: 54px 0 0; }
 
   /* Gallery */
-  .stable-gallery { gap: 6px; }
-  .stable-gallery img { height: 100px; }
+  .stable-gallery { gap: 4px; }
+  .stable-gallery img { height: 75px; }
 
   /* About */
-  .about-grid img { height: 140px; }
-  .about-grid h2 { font-size: 1.3rem; }
+  .about-grid img { height: 110px; }
+  .about-grid h2 { font-size: 1.1rem; }
+  .about-grid p { font-size: 0.65rem; }
 
   /* Values cards single column */
   .about-values-grid { grid-template-columns: 1fr !important; }
 
-  /* Single price card */
-  .single-price-card { padding: 20px 14px; }
-  .single-price-card .sp-amount { font-size: 2rem; }
+  /* Single price */
+  .single-price-card { padding: 14px 10px; }
+  .single-price-card .sp-amount { font-size: 1.6rem; }
 
   /* Footer */
-  .footer { padding: 14px 0 0; }
-  .footer-top { padding-bottom: 14px; gap: 8px; }
+  .footer { padding: 8px 0 0; }
+  .footer-top { padding-bottom: 8px; gap: 4px; }
+  .footer-bottom { padding: 6px 0; font-size: 0.55rem; }
+  .footer-bottom-links { gap: 8px; }
+  .footer-bottom-links a { font-size: 0.55rem; }
+  .footer-contact p { font-size: 0.6rem; }
 
   /* WhatsApp */
-  .btn-whatsapp { padding: 8px 16px; font-size: 0.62rem; }
+  .btn-whatsapp { padding: 6px 12px; font-size: 0.55rem; }
 
   /* Terms */
-  .pkg-terms { padding: 20px 0; }
-  .pkg-terms h2 { font-size: 1.2rem; }
+  .pkg-terms { padding: 10px 0; }
+  .pkg-terms h2 { font-size: 1rem; }
+  .terms-list li { font-size: 0.62rem; margin-bottom: 6px; }
 
   /* Package */
-  .pkg-description h2 { font-size: 1.3rem; }
-  .pkg-pricing h2 { font-size: 1.3rem; }
+  .pkg-description h2 { font-size: 1.1rem; }
+  .pkg-pricing h2 { font-size: 1.1rem; }
+  .pkg-description { padding: 10px 0; }
+  .pkg-pricing { padding: 10px 0; }
 
-  /* Breadcrumb */
-  .pkg-breadcrumb-row { font-size: 0.56rem; }
+  /* Breadcrumb / section */
+  .pkg-breadcrumb-row { font-size: 0.5rem; }
+  .section-title { font-size: 1.3rem; }
+  .services-intro { font-size: 0.65rem; }
+  .hero-content h1[style] { font-size: 1.4rem !important; }
+  .hero-centered .hero-content h1[style] { font-size: 1.3rem !important; }
+  .hero-centered .hero-content p[style] { font-size: 0.55rem !important; max-width: 92% !important; }
 
-  /* Section title */
-  .section-title { font-size: 1.6rem; }
+
 }
