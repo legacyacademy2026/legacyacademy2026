@@ -799,8 +799,8 @@ h1, h2, h3, .serif {
   .service-card-body { padding: 3px 4px 4px; }
   .service-card-title { font-size: 0.66rem; margin-bottom: 1px; line-height: 1.15; }
   .service-card-body p { 
-    font-size: 0.52rem; line-height: 1.22; 
-    margin-bottom: 2px;
+    font-size: 0.48rem; line-height: 1.2; 
+    margin-bottom: 2px; text-align: left;
   }
   .service-explore { font-size: 0.5rem; letter-spacing: 0.5px; margin-top: 1px; }
   .service-price-rows { margin-bottom: 4px; }
@@ -932,7 +932,7 @@ h1, h2, h3, .serif {
   .service-card-img { height: 62px; object-fit: cover; object-position: center 30%; display: block; }
   .service-card-body { padding: 3px 4px 4px; }
   .service-card-title { font-size: 0.58rem; line-height: 1.1; }
-  .service-card-body p { font-size: 0.46rem; line-height: 1.15; }
+  .service-card-body p { font-size: 0.42rem; line-height: 1.15; text-align: left; }
   .service-price-row { padding: 1px 0; font-size: 0.44rem; }
   .service-card .btn-book { padding: 3px 2px; font-size: 0.42rem; }
 
