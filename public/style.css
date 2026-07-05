@@ -265,41 +265,41 @@ h1, h2, h3, .serif {
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  gap: 18px;
 }
 
 .service-card {
   background: var(--white);
-  border-radius: 8px;
+  border-radius: 6px;
   overflow: hidden;
   border: 1px solid var(--border);
 }
 .service-card-img {
   width: 100%;
-  height: 220px;
+  height: 180px;
   object-fit: cover;
   display: block;
 }
 .service-card-body {
-  padding: 24px 22px 22px;
+  padding: 18px 16px 16px;
 }
 .service-card-title {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 1.7rem;
+  font-size: 1.5rem;
   font-weight: 400;
   font-style: italic;
   color: var(--brown);
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   line-height: 1.2;
 }
-.service-price-rows { margin-bottom: 20px; }
+.service-price-rows { margin-bottom: 12px; }
 .service-price-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 0;
+  padding: 7px 0;
   border-bottom: 1px solid var(--border);
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: var(--brown-light);
 }
 .service-price-row:first-child { border-top: 1px solid var(--border); }
@@ -308,14 +308,16 @@ h1, h2, h3, .serif {
   font-weight: 700;
 }
 .service-explore {
-  display: block;
-  font-size: 0.72rem;
+  display: inline-block;
+  font-size: 0.68rem;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--brown-light);
   text-decoration: none;
   transition: color 0.2s;
+  margin-top: auto;
+  padding-top: 8px;
 }
 .service-explore:hover { color: var(--brown); }
 
@@ -324,16 +326,16 @@ h1, h2, h3, .serif {
   width: 100%;
   background: var(--btn-bg);
   color: #fff;
-  font-size: 0.72rem;
+  font-size: 0.65rem;
   font-weight: 700;
   letter-spacing: 2px;
   text-transform: uppercase;
   text-align: center;
-  padding: 14px;
+  padding: 12px;
   text-decoration: none;
   border: none;
   cursor: pointer;
-  margin-top: 16px;
+  margin-top: 10px;
 }
 .service-card .btn-book:hover { opacity: 0.85; }
 
@@ -793,19 +795,19 @@ h1, h2, h3, .serif {
 
   /* ---- HOME SERVICES — 3-column grid, readable text ---- */
   .services { padding: 8px 0 4px; }
-  .services-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
+  .services-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
   .service-card { border-radius: 5px; }
-  .service-card-img { height: 75px; object-fit: cover; object-position: center 30%; display: block; }
-  .service-card-body { padding: 3px 4px 4px; }
-  .service-card-title { font-size: 0.62rem; margin-bottom: 2px; line-height: 1.1; }
+  .service-card-img { height: 65px; object-fit: cover; object-position: center 30%; display: block; }
+  .service-card-body { padding: 4px 5px 5px; display: flex; flex-direction: column; }
+  .service-card-title { font-size: 0.6rem; margin-bottom: 4px; line-height: 1.1; }
   .service-desc { 
-    font-size: 0.38rem; line-height: 1.15; 
-    margin-bottom: 1px; text-align: left;
+    font-size: 0.38rem; line-height: 1.2; 
+    margin-bottom: 3px; text-align: left;
   }
-  .service-explore { font-size: 0.45rem; letter-spacing: 0.5px; margin-top: 0; }
-  .service-price-rows { margin-bottom: 2px; }
-  .service-price-row { padding: 1px 0; font-size: 0.45rem; }
-  .service-card .btn-book { padding: 3px 2px; font-size: 0.42rem; letter-spacing: 0.5px; margin-top: 1px; }
+  .service-explore { font-size: 0.45rem; letter-spacing: 0.5px; margin-top: auto; padding-top: 4px; display: inline-block; }
+  .service-price-rows { margin-bottom: 3px; }
+  .service-price-row { padding: 2px 0; font-size: 0.45rem; }
+  .service-card .btn-book { padding: 4px; font-size: 0.42rem; letter-spacing: 0.5px; margin-top: auto; }
 
   /* ---- PRICING ---- */
   .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -928,13 +930,14 @@ h1, h2, h3, .serif {
   .services { padding: 8px 0 4px; }
   .section-heading { font-size: 1.05rem; margin-bottom: 6px; }
   .section-eyebrow { font-size: 0.5rem; }
-  .services-grid { gap: 3px; }
-  .service-card-img { height: 56px; object-fit: cover; object-position: center 30%; display: block; }
-  .service-card-body { padding: 3px 4px 4px; }
-  .service-card-title { font-size: 0.54rem; margin-bottom: 1px; line-height: 1.05; }
-  .service-desc { font-size: 0.32rem; line-height: 1.1; text-align: left; margin: 0; }
-  .service-price-row { padding: 0; font-size: 0.38rem; }
-  .service-card .btn-book { padding: 2px; font-size: 0.36rem; }
+  .services-grid { gap: 4px; }
+  .service-card-img { height: 50px; object-fit: cover; object-position: center 30%; display: block; }
+  .service-card-body { padding: 2px 3px 4px; display: flex; flex-direction: column; }
+  .service-card-title { font-size: 0.52rem; margin-bottom: 3px; line-height: 1.05; }
+  .service-desc { font-size: 0.32rem; line-height: 1.15; text-align: left; margin-bottom: 2px; }
+  .service-price-row { padding: 1px 0; font-size: 0.38rem; }
+  .service-card .btn-book { padding: 3px; font-size: 0.38rem; margin-top: auto; }
+  .service-explore { margin-top: auto; padding-top: 2px; }
 
   /* Pricing single column */
   .pricing-grid { grid-template-columns: 1fr; gap: 6px; }
