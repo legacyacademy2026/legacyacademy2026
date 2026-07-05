@@ -273,26 +273,33 @@ h1, h2, h3, .serif {
   border-radius: 6px;
   overflow: hidden;
   border: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
 }
 .service-card-img {
   width: 100%;
   height: 180px;
   object-fit: cover;
+  object-position: center center;
   display: block;
+  flex-shrink: 0;
 }
 .service-card-body {
   padding: 18px 16px 16px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 .service-card-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.5rem;
-  font-weight: 400;
-  font-style: italic;
+  font-weight: 600;
+  font-style: normal;
   color: var(--brown);
   margin-bottom: 12px;
   line-height: 1.2;
 }
-.service-price-rows { margin-bottom: 12px; }
+.service-price-rows { margin-bottom: 12px; flex-shrink: 0; }
 .service-price-row {
   display: flex;
   justify-content: space-between;
@@ -318,6 +325,7 @@ h1, h2, h3, .serif {
   transition: color 0.2s;
   margin-top: auto;
   padding-top: 8px;
+  flex-shrink: 0;
 }
 .service-explore:hover { color: var(--brown); }
 
@@ -335,7 +343,8 @@ h1, h2, h3, .serif {
   text-decoration: none;
   border: none;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: auto;
+  flex-shrink: 0;
 }
 .service-card .btn-book:hover { opacity: 0.85; }
 
@@ -465,7 +474,7 @@ h1, h2, h3, .serif {
   letter-spacing: 2px;
   text-transform: uppercase;
   text-align: center;
-  padding: 16px;
+  padding: 14px;
   text-decoration: none;
   border: none;
   cursor: pointer;
@@ -796,18 +805,18 @@ h1, h2, h3, .serif {
   /* ---- HOME SERVICES — 3-column grid, readable text ---- */
   .services { padding: 8px 0 4px; }
   .services-grid { grid-template-columns: repeat(3, 1fr); gap: 6px; }
-  .service-card { border-radius: 5px; }
-  .service-card-img { height: 65px; object-fit: cover; object-position: center 30%; display: block; }
-  .service-card-body { padding: 4px 5px 5px; display: flex; flex-direction: column; }
-  .service-card-title { font-size: 0.6rem; margin-bottom: 4px; line-height: 1.1; }
+  .service-card { border-radius: 5px; display: flex; flex-direction: column; }
+  .service-card-img { height: 65px; object-fit: cover; object-position: center center; display: block; flex-shrink: 0; }
+  .service-card-body { padding: 4px 5px 5px; flex: 1; display: flex; flex-direction: column; }
+  .service-card-title { font-size: 0.6rem; margin-bottom: 3px; line-height: 1.1; font-weight: 700; font-style: normal; }
   .service-desc { 
     font-size: 0.38rem; line-height: 1.2; 
-    margin-bottom: 3px; text-align: left;
+    margin-bottom: 3px; text-align: left; flex-shrink: 0;
   }
-  .service-explore { font-size: 0.45rem; letter-spacing: 0.5px; margin-top: auto; padding-top: 4px; display: inline-block; }
-  .service-price-rows { margin-bottom: 3px; }
+  .service-explore { font-size: 0.45rem; letter-spacing: 0.5px; margin-top: auto; padding-top: 2px; display: inline-block; flex-shrink: 0; }
+  .service-price-rows { margin-bottom: 3px; flex-shrink: 0; }
   .service-price-row { padding: 2px 0; font-size: 0.45rem; }
-  .service-card .btn-book { padding: 4px; font-size: 0.42rem; letter-spacing: 0.5px; margin-top: auto; }
+  .service-card .btn-book { padding: 4px; font-size: 0.42rem; letter-spacing: 0.5px; margin-top: auto; flex-shrink: 0; }
 
   /* ---- PRICING ---- */
   .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -927,17 +936,18 @@ h1, h2, h3, .serif {
   .container { padding: 0 6px; }
 
   /* Services */
+  .service-card { display: flex; flex-direction: column; }
   .services { padding: 8px 0 4px; }
   .section-heading { font-size: 1.05rem; margin-bottom: 6px; }
   .section-eyebrow { font-size: 0.5rem; }
   .services-grid { gap: 4px; }
-  .service-card-img { height: 50px; object-fit: cover; object-position: center 30%; display: block; }
-  .service-card-body { padding: 2px 3px 4px; display: flex; flex-direction: column; }
-  .service-card-title { font-size: 0.52rem; margin-bottom: 3px; line-height: 1.05; }
-  .service-desc { font-size: 0.32rem; line-height: 1.15; text-align: left; margin-bottom: 2px; }
-  .service-price-row { padding: 1px 0; font-size: 0.38rem; }
-  .service-card .btn-book { padding: 3px; font-size: 0.38rem; margin-top: auto; }
-  .service-explore { margin-top: auto; padding-top: 2px; }
+  .service-card-img { height: 50px; object-fit: cover; object-position: center center; display: block; flex-shrink: 0; }
+  .service-card-body { padding: 2px 3px 4px; flex: 1; display: flex; flex-direction: column; }
+  .service-card-title { font-size: 0.52rem; margin-bottom: 2px; line-height: 1.05; font-weight: 700; font-style: normal; }
+  .service-desc { font-size: 0.32rem; line-height: 1.15; text-align: left; margin-bottom: 2px; flex-shrink: 0; }
+  .service-price-row { padding: 1px 0; font-size: 0.38rem; flex-shrink: 0; }
+  .service-card .btn-book { padding: 3px; font-size: 0.38rem; margin-top: auto; flex-shrink: 0; }
+  .service-explore { margin-top: auto; padding-top: 1px; flex-shrink: 0; }
 
   /* Pricing single column */
   .pricing-grid { grid-template-columns: 1fr; gap: 6px; }
