@@ -8,41 +8,79 @@ body {
   position: relative;
   overflow-x: hidden;
 }
-/* Faded horse background */
+/* Faded horse background — more visible now */
 body::before {
   content:'';
   position:fixed; inset:0;
   background: url('assets/hero-horse.png') center center / cover no-repeat;
-  opacity:0.10;
+  opacity:0.22;
   z-index:-2;
 }
 body::after {
   content:'';
   position:fixed; inset:0;
-  background: radial-gradient(circle at 50% 20%, rgba(240,236,224,0.5), rgba(240,236,224,0.92) 70%);
+  background: linear-gradient(180deg, rgba(240,236,224,0.45), rgba(240,236,224,0.82) 55%, rgba(240,236,224,0.9));
   z-index:-1;
 }
 .track-container { width:100%; max-width:480px; position:relative; z-index:1; }
+
+/* ===== HERO BANNER with visible horse photo ===== */
+.track-hero {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  height: 200px;
+  margin-bottom: 18px;
+  background: url('assets/hero-horse.png') center 30% / cover no-repeat;
+  box-shadow: 0 16px 40px rgba(44,36,32,0.22);
+  animation: cardRise 0.7s cubic-bezier(0.22,1,0.36,1) both;
+}
+.track-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(44,36,32,0.25) 0%, rgba(44,36,32,0.55) 100%);
+}
+.track-hero-content {
+  position: relative; z-index: 1;
+  height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  color: #fff;
+  text-align: center;
+  animation: fadeDown 0.9s ease both;
+}
+.track-hero .horse-badge {
+  width: 52px; height: 52px; margin-bottom: 10px;
+  background: rgba(255,255,255,0.15);
+  border: 2px solid rgba(255,255,255,0.6);
+  backdrop-filter: blur(4px);
+}
+.track-hero .running-horse { font-size: 1.5rem; }
+.track-hero .track-brand-name {
+  font-family:'Cormorant Garamond', serif;
+  font-size: 2.4rem; font-weight: 600; letter-spacing: 5px; line-height: 1; color: #fff;
+}
+.track-hero .track-brand-sub {
+  font-size: 0.65rem; letter-spacing: 5px; text-transform: uppercase;
+  color: rgba(255,255,255,0.85); margin-top: 6px;
+}
+.track-hero-tag {
+  font-family:'Cormorant Garamond', serif; font-style: italic;
+  font-size: 1rem; color: rgba(255,255,255,0.9); margin-top: 12px;
+  padding-top: 12px; position: relative;
+}
+.track-hero-tag::before {
+  content:''; position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width: 40px; height: 1px; background: rgba(255,255,255,0.5);
+}
+@keyframes fadeDown { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:translateY(0); } }
+
+/* legacy brand fallback (kept for safety) */
 .track-brand {
   display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2px;
-  color:#2c2420;
-  margin-bottom:22px;
-  animation: fadeDown 0.7s ease both;
+  color:#2c2420; margin-bottom:22px;
 }
-.track-brand-name {
-  font-family:'Cormorant Garamond', serif;
-  font-size:2rem; font-weight:600; letter-spacing:4px; line-height:1;
-}
-.track-brand-sub {
-  font-size:0.62rem; letter-spacing:4px; text-transform:uppercase; color:#6b7a5a; margin-top:4px;
-}
-.track-brand .horse-badge {
-  width:48px; height:48px; margin-bottom:8px;
-  background: radial-gradient(circle at 35% 30%, rgba(107,122,90,0.3), rgba(107,122,90,0.08));
-  border:2px solid rgba(107,122,90,0.5);
-}
-.track-brand .running-horse { font-size:1.4rem; }
-@keyframes fadeDown { from { opacity:0; transform:translateY(-14px); } to { opacity:1; transform:translateY(0); } }
+.track-brand-name { font-family:'Cormorant Garamond', serif; font-size:2rem; font-weight:600; letter-spacing:4px; line-height:1; }
+.track-brand-sub { font-size:0.62rem; letter-spacing:4px; text-transform:uppercase; color:#6b7a5a; margin-top:4px; }
 
 .track-card {
   background: rgba(255,255,255,0.94);
