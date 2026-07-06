@@ -395,3 +395,140 @@ tr:hover { background: #fef9f3; }
 /* Delete package button */
 .btn-delete-pkg { background:#fdecea; color:#a71d2a; border:1px solid #f3c6c0; }
 .btn-delete-pkg:hover { background:#f8d7da; }
+
+/* ===================================================================
+   DASHBOARD DESIGN PASS — Legacy brand elevation (CSS only)
+   =================================================================== */
+
+/* --- Login: horse backdrop + elegant emblem card --- */
+.login-screen {
+  position: relative;
+  overflow: hidden;
+}
+.login-screen::before {
+  content:'';
+  position:absolute; inset:0;
+  background: url('assets/hero-horse.png') center 30% / cover no-repeat;
+  opacity: 0.28;
+}
+.login-screen::after {
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(180deg, rgba(240,236,224,0.55), rgba(240,236,224,0.92));
+}
+.login-box {
+  position: relative; z-index: 1;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(229,221,207,0.9);
+  border-radius: 18px;
+  box-shadow: 0 20px 50px rgba(44,36,32,0.18);
+  padding: 44px 40px;
+  animation: loginRise 0.6s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes loginRise { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+.login-badge {
+  width: 54px; height: 54px;
+  margin: 0 auto 12px;
+  display: inline-flex;
+  background: radial-gradient(circle at 35% 30%, rgba(107,122,90,0.28), rgba(107,122,90,0.08));
+  border: 2px solid rgba(107,122,90,0.5);
+}
+.login-badge .running-horse { font-size: 1.5rem; }
+.login-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 600; letter-spacing: 5px;
+  color: #2c2420; line-height: 1;
+}
+.login-brand-sub {
+  font-size: 0.6rem; letter-spacing: 4px; text-transform: uppercase;
+  color: #6b7a5a; margin: 6px 0 18px;
+}
+.login-box p { font-size: 0.85rem; }
+.login-box input {
+  border-radius: 10px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.login-box input:focus {
+  outline: none;
+  border-color: #6b7a5a;
+  box-shadow: 0 0 0 3px rgba(107,122,90,0.15);
+}
+.login-box button {
+  border-radius: 10px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+.login-box button:active { transform: scale(0.98); }
+
+/* --- Header: serif brand --- */
+.admin-brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  letter-spacing: 4px;
+}
+.admin-brand-sub {
+  font-size: 0.62rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: #8a9b74;
+  vertical-align: middle;
+  margin-left: 6px;
+}
+.admin-header {
+  box-shadow: 0 4px 18px rgba(44,36,32,0.15);
+}
+
+/* --- Tabs: elegant pills --- */
+.view-tabs { gap: 8px; }
+.view-tabs .tab-btn {
+  border-radius: 22px;
+  border: 1px solid #e5ddcf;
+  background: #fff;
+  transition: all 0.18s ease;
+  letter-spacing: 0.3px;
+}
+.view-tabs .tab-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(44,36,32,0.08); }
+.view-tabs .tab-btn.active {
+  background: #2c2420;
+  color: #f0ece0;
+  border-color: #2c2420;
+  box-shadow: 0 6px 16px rgba(44,36,32,0.22);
+}
+
+/* --- Cards: soft depth + hover lift --- */
+.package-card, .booking-mini-card, .customer-card, .livery-card, .table-wrap, .report-card {
+  border-radius: 14px;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.package-card:hover, .livery-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 26px rgba(44,36,32,0.1);
+}
+
+/* --- Section titles in serif --- */
+.table-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-size: 1.5rem;
+  letter-spacing: 0.4px;
+}
+
+/* --- Buttons: subtle press + rounded --- */
+.btn-small { border-radius: 8px; transition: opacity 0.15s ease, transform 0.12s ease; }
+.btn-small:active { transform: scale(0.97); }
+.sub-tab-btn { transition: all 0.15s ease; }
+.sub-tab-btn:hover { transform: translateY(-1px); }
+
+/* --- Approval badges refined --- */
+.approval-badge { border-radius: 14px; letter-spacing: 0.3px; }
+
+/* --- Frozen tab intro text --- */
+#frozenView .sub-label { font-style: italic; color: #6b7a5a; }
+
+@media (prefers-reduced-motion: reduce) {
+  .login-box { animation: none; }
+}
