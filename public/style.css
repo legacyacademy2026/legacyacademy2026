@@ -1382,14 +1382,10 @@ html { scroll-behavior: smooth; }
 
 /* Item 3: hero CTA buttons smaller + evenly aligned */
 @media (max-width: 900px) {
-  .hero-ctas { gap: 8px !important; margin-top: 18px !important; flex-wrap: nowrap; justify-content: center; }
+  .hero-ctas { gap: 10px !important; margin-top: 14px !important; flex-wrap: nowrap; justify-content: center; }
   .hero-ctas a {
-    font-size: 0.56rem !important; padding: 9px 12px !important; letter-spacing: 1px !important;
-    flex: 1 1 0; text-align: center; white-space: nowrap;
+    flex: 0 0 auto !important; text-align: center; white-space: nowrap;
   }
-}
-@media (max-width: 420px) {
-  .hero-ctas a { font-size: 0.5rem !important; padding: 8px 8px !important; letter-spacing: 0.5px !important; }
 }
 
 /* Item 1: footer sits lower with more space above + much smaller copyright line */
