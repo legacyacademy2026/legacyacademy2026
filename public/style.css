@@ -1146,6 +1146,7 @@ html[dir="rtl"] .pkg-breadcrumb-row {
 .service-card:hover .service-card-img { transform: scale(1.05); }
 
 .pricing-card {
+  cursor: pointer;
   transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 .pricing-card:hover {
@@ -1189,7 +1190,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* Clickable card affordance */
-.service-card { position: relative; }
+.service-card { cursor: pointer; position: relative; }
 .service-card:focus-visible { outline: 2px solid var(--olive); outline-offset: 3px; }
 
 /* Explore arrow slides on card hover */
@@ -1286,7 +1287,7 @@ html { scroll-behavior: smooth; }
 }
 
 /* Service card image: subtle gradient veil for depth */
-.service-card { position: relative; }
+.service-card { cursor: pointer; position: relative; }
 .service-card-img { position: relative; }
 .service-card-body { position: relative; z-index: 1; background: var(--white); }
 

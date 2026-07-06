@@ -563,3 +563,44 @@ document.querySelectorAll('.reveal-card').forEach(card => cardObserver.observe(c
   // Apply on load
   setLang(currentLang);
 })();
+
+/* =============================================================
+   CLICKABLE CARDS — tap anywhere on card = follow first link
+   ============================================================= */
+(function () {
+  function makeClickable(selector) {
+    document.querySelectorAll(selector).forEach(card => {
+      // Don't add if already handled
+      if (card.dataset.clickable === 'true') return;
+      card.dataset.clickable = 'true';
+      
+      card.addEventListener('click', function (e) {
+        // Don't fire if user clicked a button, link, input, or select directly
+        const tag = e.target.tagName.toLowerCase();
+        if (tag === 'a' || tag === 'button' || tag === 'input' || tag === 'select' || tag === 'textarea') return;
+        // Don't fire if clicking inside a form element
+        if (e.target.closest('a, button, input, select, textarea, .btn-book, .btn-whatsapp, .btn-book-now, .btn-submit')) return;
+        
+        const link = card.querySelector('a');
+        if (link) {
+          const href = link.getAttribute('href');
+          if (href && href !== '#') {
+            // Open in same tab for internal, new tab for external
+            if (href.startsWith('http') || href.startsWith('//')) {
+              window.open(href, '_blank');
+            } else {
+              window.location.href = href;
+            }
+          }
+        }
+      });
+    });
+  }
+  
+  // Make service cards clickable
+  makeClickable('.service-card');
+  // Make pricing cards clickable  
+  makeClickable('.pricing-card');
+  // Make single price cards clickable
+  makeClickable('.single-price-card');
+})();
