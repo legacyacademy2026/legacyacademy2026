@@ -31,7 +31,13 @@ app.use('/api/livery', liveryRoutes);
 
 // Connect to Database
 mongoose.connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ Database connected!'))
+  .then(() => {
+    console.log('✅ Database connected!');
+    // Start scheduled jobs (reminders, package expiry, auto-unfreeze, session auto-complete)
+    const { startReminderJob } = require('./src/cron/reminder');
+    startReminderJob();
+    console.log('✅ Scheduled jobs started');
+  })
   .catch((err) => console.log('❌ DB Error:', err));
 
 // Start Server
