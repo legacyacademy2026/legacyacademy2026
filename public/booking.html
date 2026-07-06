@@ -25,7 +25,7 @@
       <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language" data-aria-label-ar="تغيير اللغة">
       <span class="lang-btn-en" style="display:none"><i class="fas fa-globe"></i> English</span>
       <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
     </button>
@@ -70,23 +70,23 @@
             <div style="display:flex; gap:8px;">
               <select id="title" style="max-width:90px;">
                 <option value="">-</option>
-                <option value="Mr">Mr</option>
-                <option value="Mrs">Mrs</option>
-                <option value="Ms">Ms</option>
+                <option value="Mr"><span class="lang-en">Mr</span><span class="lang-ar" style="display:none">السيد</span></option>
+                <option value="Mrs"><span class="lang-en">Mrs</span><span class="lang-ar" style="display:none">السيدة</span></option>
+                <option value="Ms"><span class="lang-en">Ms</span><span class="lang-ar" style="display:none">الآنسة</span></option>
               </select>
-              <input type="text" id="name" placeholder="Your full name" required style="flex:1;"/>
+              <input type="text" id="name" placeholder="Your full name" data-placeholder-ar="الاسم الكامل" required style="flex:1;"/>
             </div>
           </div>
           <div class="form-group">
             <label><span class="lang-en">Email Address *</span><span class="lang-ar" style="display:none">البريد الإلكتروني *</span></label>
-            <input type="email" id="email" placeholder="your@email.com" required/>
+            <input type="email" id="email" placeholder="your@email.com" data-placeholder-ar="بريدك الإلكتروني" required/>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
             <label><span class="lang-en">Phone Number *</span><span class="lang-ar" style="display:none">رقم الهاتف *</span></label>
-            <input type="tel" id="phone" placeholder="+971 XX XXX XXXX" required/>
+            <input type="tel" id="phone" placeholder="+971 XX XXX XXXX" data-placeholder-ar="+971 XX XXX XXXX" required/>
           </div>
           <div class="form-group" id="dateFieldGroup">
             <label><span class="lang-en">Preferred Date *</span><span class="lang-ar" style="display:none">التاريخ المفضل *</span></label>
@@ -121,7 +121,7 @@
         <div class="form-row" id="horseNameRow" style="display:none;">
           <div class="form-group">
             <label><span class="lang-en">Horse Name *</span><span class="lang-ar" style="display:none">اسم الحصان *</span></label>
-            <input type="text" id="horseName" placeholder="Your horse's name"/>
+            <input type="text" id="horseName" placeholder="Your horse's name" data-placeholder-ar="اسم حصانك"/>
           </div>
           <div class="form-group"></div>
         </div>
@@ -176,26 +176,26 @@
 
         <div class="form-group full-width" style="margin-bottom:22px;">
           <label><span class="lang-en">Message / Special Request</span><span class="lang-ar" style="display:none">رسالة / طلب خاص</span></label>
-          <textarea id="message" rows="4" placeholder="Any special requests or questions..."></textarea>
+          <textarea id="message" rows="4" placeholder="Any special requests or questions..." data-placeholder-ar="أي طلبات أو أسئلة خاصة..."></textarea>
         </div>
 
         <button type="submit" class="btn-submit">
-          <i class="fas fa-paper-plane"></i> Confirm Booking
+          <i class="fas fa-paper-plane"></i> <span class="lang-en">Confirm Booking</span><span class="lang-ar" style="display:none">تأكيد الحجز</span>
         </button>
 
         <div class="form-success" id="formSuccess">
-          ✅ Your booking has been received! We will contact you shortly.
+          <span class="lang-en">✅ Your booking has been received! We will contact you shortly.</span><span class="lang-ar" style="display:none">✅ تم استلام حجزك! سنتواصل معك قريباً.</span>
         </div>
 
         <div class="form-success" id="packageSuccess" style="display:none;">
-          ✅ Your package request has been submitted for approval!<br>
-          📌 Save this link to track your sessions and book classes once approved:<br>
+          <span class="lang-en">✅ Your package request has been submitted for approval!</span><span class="lang-ar" style="display:none">✅ تم تقديم طلب باقتك للموافقة!</span><br>
+          <span class="lang-en">📌 Save this link to track your sessions and book classes once approved:</span><span class="lang-ar" style="display:none">📌 احفظ هذا الرابط لتتبع جلساتك وحجز الحصص بعد الموافقة:</span><br>
           <a href="#" id="trackingLinkDisplay" target="_blank" style="word-break:break-all;"></a>
         </div>
 
         <div class="form-success" id="liverySuccess" style="display:none;">
-          ✅ Your livery request has been submitted! Our team will review it shortly.<br>
-          📌 Save this link to track your horse's livery status:<br>
+          <span class="lang-en">✅ Your livery request has been submitted! Our team will review it shortly.</span><span class="lang-ar" style="display:none">✅ تم تقديم طلب الإسطبل! سيراجعه فريقنا قريباً.</span><br>
+          <span class="lang-en">📌 Save this link to track your horse's livery status:</span><span class="lang-ar" style="display:none">📌 احفظ هذا الرابط لتتبع حالة إسطبل حصانك:</span><br>
           <a href="#" id="liveryLinkDisplay" target="_blank" style="word-break:break-all;"></a>
         </div>
 
