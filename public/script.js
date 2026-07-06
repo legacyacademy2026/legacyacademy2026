@@ -74,12 +74,13 @@ function showSubPackage() {
   const category = document.getElementById('category').value;
   const isTraining = category === 'Riding Packages';
   const isLivery   = category === 'Livery Horse';
+  const isHorseTraining = category === 'Horse Training';
 
   document.getElementById('subPackageGroup').style.display = isTraining ? 'flex' : 'none';
   document.getElementById('paymentMethodRow').style.display = isTraining ? 'flex' : 'none';
   document.getElementById('dateFieldGroup').style.display = isTraining ? 'none' : 'flex';
-  // Livery shows only date + horse name — session scheduling happens AFTER admin approval
-  document.getElementById('schedulingRow').style.display = (isTraining || isLivery) ? 'none' : 'flex';
+  // Livery + Horse Training = date only (no session time/duration)
+  document.getElementById('schedulingRow').style.display = (isTraining || isLivery || isHorseTraining) ? 'none' : 'flex';
   const horseRow = document.getElementById('horseNameRow');
   if (horseRow) horseRow.style.display = isLivery ? 'flex' : 'none';
 
@@ -389,27 +390,39 @@ if (bookingFormEl) {
     const duration  = document.getElementById('duration').value;
     const startTime = document.getElementById('startTime').value;
 
-    if (!date || !duration) {
-      timeStatus.textContent = '⚠️ Please fill in all required fields above.';
+    const isDateOnly = (category === 'Horse Training');
+
+    if (!date) {
+      timeStatus.textContent = '⚠️ Please choose a date.';
       timeStatus.className = 'time-status error';
       window.scrollTo({ top: document.getElementById('booking').offsetTop - 80, behavior: 'smooth' });
       return;
     }
 
-    if (!startTime) {
-      timeStatus.textContent = '⚠️ Please select an available Start Time.';
-      timeStatus.className = 'time-status error';
-      return;
+    if (!isDateOnly) {
+      if (!duration) {
+        timeStatus.textContent = '⚠️ Please fill in all required fields above.';
+        timeStatus.className = 'time-status error';
+        window.scrollTo({ top: document.getElementById('booking').offsetTop - 80, behavior: 'smooth' });
+        return;
+      }
+      if (!startTime) {
+        timeStatus.textContent = '⚠️ Please select an available Start Time.';
+        timeStatus.className = 'time-status error';
+        return;
+      }
     }
 
-    const bookingData = {
-      name, email, phone, category,
-      subPackage: '',
-      date, startTime,
-      duration: parseInt(duration),
-      price: 0,
-      message: document.getElementById('message').value
-    };
+    const bookingData = isDateOnly
+      ? { name, email, phone, category, subPackage: '', date, price: 0, message: document.getElementById('message').value }
+      : {
+          name, email, phone, category,
+          subPackage: '',
+          date, startTime,
+          duration: parseInt(duration),
+          price: 0,
+          message: document.getElementById('message').value
+        };
 
     try {
       const response = await fetch('/api/bookings', {

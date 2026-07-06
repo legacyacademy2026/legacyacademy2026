@@ -77,6 +77,7 @@ function todayStr() {
 }
 
 function timeToMinutes(timeStr) {
+  if (!timeStr) return 0;
   const [time, period] = timeStr.split(' ');
   let [hours, minutes] = time.split(':').map(Number);
   if (period === 'PM' && hours !== 12) hours += 12;
@@ -103,7 +104,7 @@ function escapeHtml(text) {
 
 // Show duration readably: 45-min package sessions were stored as 0.75 -> "45 min"; 1/2/4 -> "1h"
 function durationLabel(d) {
-  if (d == null || isNaN(d)) return '-';
+  if (!d || isNaN(d)) return '—';
   if (d < 1) return `${Math.round(d * 60)} min`;
   return `${d % 1 === 0 ? d : d.toFixed(2)}h`;
 }
@@ -354,7 +355,7 @@ function renderDailyBookings(dateStr) {
       card.className = 'mini-booking-card';
       card.innerHTML = `
         <div>
-          <strong>${escapeHtml(b.name)}</strong> — ${b.startTime} (${durationLabel(b.duration)}) — ${priceLabel(b)}
+          <strong>${escapeHtml(b.name)}</strong> — ${b.startTime || 'Time TBA'} (${durationLabel(b.duration)}) — ${priceLabel(b)}
           ${b.subPackage ? `<br><span class="sub-label">${escapeHtml(b.subPackage)}</span>` : ''}
         </div>
         <div class="booking-actions">
@@ -448,7 +449,7 @@ function renderTable() {
       <td>${escapeHtml(b.category)}</td>
       <td>${escapeHtml(b.subPackage || '-')}</td>
       <td>${escapeHtml(b.date)}</td>
-      <td>${escapeHtml(b.startTime)} (${durationLabel(b.duration)})</td>
+      <td>${escapeHtml(b.startTime) || 'Time TBA'} (${durationLabel(b.duration)})</td>
       <td>${priceLabel(b)}</td>
       <td><span class="payment-badge payment-${payment.toLowerCase()}">${payment}</span></td>
       <td><span class="status-badge status-${status.toLowerCase()}">${status}</span></td>

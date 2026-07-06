@@ -1365,3 +1365,40 @@ html { scroll-behavior: smooth; }
   .footer-socials a { font-size: 0.85rem !important; }
   .footer-bottom { padding: 6px 0 !important; font-size: 0.46rem !important; }
 }
+
+/* ===================================================================
+   CLIENT BATCH 2 — footer spacing, smaller buttons, nav grouping
+   =================================================================== */
+
+/* Item 5: group Book Now + language toggle near the hamburger (mobile) */
+@media (max-width: 900px) {
+  .navbar { justify-content: flex-end; gap: 8px; }
+  .nav-logo { margin-right: auto; }
+  .nav-right { gap: 7px; }
+  .hamburger { margin-left: 2px; }
+  .lang-toggle { font-size: 0.58rem !important; padding: 5px 8px !important; }
+  .btn-book-now { font-size: 0.58rem; padding: 7px 12px; letter-spacing: 1px; }
+}
+
+/* Item 3: hero CTA buttons smaller + evenly aligned */
+@media (max-width: 900px) {
+  .hero-ctas { gap: 8px !important; margin-top: 18px !important; flex-wrap: nowrap; justify-content: center; }
+  .hero-ctas a {
+    font-size: 0.56rem !important; padding: 9px 12px !important; letter-spacing: 1px !important;
+    flex: 1 1 0; text-align: center; white-space: nowrap;
+  }
+}
+@media (max-width: 420px) {
+  .hero-ctas a { font-size: 0.5rem !important; padding: 8px 8px !important; letter-spacing: 0.5px !important; }
+}
+
+/* Item 1: footer sits lower with more space above + much smaller copyright line */
+.footer { margin-top: 44px !important; padding-top: 30px !important; }
+.footer-bottom { font-size: 0.58rem !important; }
+@media (max-width: 900px) {
+  .footer { margin-top: 30px !important; padding-top: 14px !important; }
+  .footer-bottom { font-size: 0.4rem !important; padding: 5px 0 !important; letter-spacing: 0 !important; line-height: 1.4; }
+}
+@media (max-width: 420px) {
+  .footer-bottom { font-size: 0.36rem !important; }
+}

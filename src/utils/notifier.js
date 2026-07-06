@@ -29,12 +29,44 @@ function adminActionLines(actions) {
   return '\n\n' + actions.map(a => `${a.label}: ${a.url}`).join('\n');
 }
 
-// Prepend a small admin banner to the customer email HTML for the admin copy
+// Prepend a small admin banner to the customer email HTML (fallback path)
 function adminWrap(name, phone, email, html) {
   const banner = `<div style="background:#2c2420;color:#f0ece0;padding:12px 18px;font-family:Helvetica,Arial,sans-serif;font-size:13px;">
     📋 <strong>ADMIN COPY</strong> — Customer: ${name || '-'} • ${phone || '-'} • ${email || '-'}
   </div>`;
   return banner + (html || '');
+}
+
+// Clean admin-focused email: customer + details table + action buttons
+function buildAdminEmail(headline, rows, actions) {
+  const T = { cream:'#f0ece0', card:'#fff', soft:'#f5f2e8', brown:'#2c2420', border:'#e5ddcf', light:'#6b6560' };
+  const rowsHtml = (rows || []).map(r =>
+    `<tr>
+       <td style="padding:8px 0; color:${T.light}; font-size:13px; width:38%;">${r[0]}</td>
+       <td style="padding:8px 0; color:${T.brown}; font-size:14px; font-weight:600;">${r[1] || '-'}</td>
+     </tr>`).join('');
+  return `
+  <div style="font-family:Helvetica,Arial,sans-serif; background:${T.cream}; padding:24px 0;">
+    <div style="max-width:520px; margin:0 auto; background:${T.card}; border-radius:14px; overflow:hidden; border:1px solid ${T.border};">
+      <div style="background:${T.brown}; padding:20px 26px;">
+        <div style="color:${T.cream}; font-size:12px; letter-spacing:2px; text-transform:uppercase;">📋 Admin Notification</div>
+        <div style="color:#fff; font-family:Georgia,serif; font-size:20px; margin-top:4px;">${headline}</div>
+      </div>
+      <div style="padding:24px 26px;">
+        <table style="width:100%; border-collapse:collapse;">${rowsHtml}</table>
+        ${adminActionButtons(actions)}
+        ${actions && actions.length ? `<p style="text-align:center; color:${T.light}; font-size:12px; margin-top:4px;">Tap a button above — no login required.</p>` : ''}
+      </div>
+      <div style="background:${T.soft}; padding:14px; text-align:center; border-top:1px solid ${T.border};">
+        <p style="color:${T.light}; font-size:12px; margin:0;">Legacy — Admin</p>
+      </div>
+    </div>
+  </div>`;
+}
+
+function buildAdminWa(headline, rows, actions) {
+  const lines = (rows || []).map(r => `• ${r[0]}: ${r[1] || '-'}`).join('\n');
+  return `📋 *ADMIN — ${headline}*\n\n${lines}${adminActionLines(actions)}`;
 }
 
 /**
@@ -49,7 +81,7 @@ function adminWrap(name, phone, email, html) {
  * @param {boolean} opts.toCustomer default true — send to the customer
  * @param {boolean} opts.toAdmin    default true — send an admin copy
  */
-async function notifyAll({ customer = {}, subject, emailHtml, waText, adminActions = null, toCustomer = true, toAdmin = true }) {
+async function notifyAll({ customer = {}, subject, emailHtml, waText, adminActions = null, adminInfo = null, toCustomer = true, toAdmin = true }) {
   const name = customer.name || 'Customer';
   const phone = customer.phone || '';
   const email = customer.email || '';
@@ -60,10 +92,18 @@ async function notifyAll({ customer = {}, subject, emailHtml, waText, adminActio
     if (phone) jobs.push(sendWhatsApp(`whatsapp:${phone}`, waText).catch(log('customer whatsapp')));
   }
   if (toAdmin) {
-    const adminEmail = adminWrap(name, phone, email, adminActionButtons(adminActions) + (emailHtml || ''));
-    const adminWa = `📋 *ADMIN COPY*\nCustomer: ${name} (${phone})\n\n${waText}${adminActionLines(adminActions)}`;
-    if (ADMIN_EMAIL) jobs.push(sendEmail(ADMIN_EMAIL, `📋 [Admin] ${subject}`, adminEmail).catch(log('admin email')));
-    if (ADMIN_PHONE) jobs.push(sendWhatsApp(`whatsapp:${ADMIN_PHONE}`, adminWa).catch(log('admin whatsapp')));
+    let adminSubject, adminEmailHtml, adminWaText;
+    if (adminInfo) {
+      adminSubject = adminInfo.subject || `🔔 [Admin] ${adminInfo.headline}`;
+      adminEmailHtml = buildAdminEmail(adminInfo.headline, adminInfo.rows, adminActions);
+      adminWaText = buildAdminWa(adminInfo.headline, adminInfo.rows, adminActions);
+    } else {
+      adminSubject = `📋 [Admin] ${subject}`;
+      adminEmailHtml = adminWrap(name, phone, email, adminActionButtons(adminActions) + (emailHtml || ''));
+      adminWaText = `📋 *ADMIN COPY*\nCustomer: ${name} (${phone})\n\n${waText}${adminActionLines(adminActions)}`;
+    }
+    if (ADMIN_EMAIL) jobs.push(sendEmail(ADMIN_EMAIL, adminSubject, adminEmailHtml).catch(log('admin email')));
+    if (ADMIN_PHONE) jobs.push(sendWhatsApp(`whatsapp:${ADMIN_PHONE}`, adminWaText).catch(log('admin whatsapp')));
   }
 
   await Promise.allSettled(jobs);

@@ -35,7 +35,18 @@ function startReminderJob() {
             customer: { name: booking.name, email: booking.email, phone: booking.phone },
             subject: '🐴 Reminder: Your session is tomorrow!',
             emailHtml: buildReminderEmailHtml(booking),
-            waText: buildReminderWhatsAppText(booking)
+            waText: buildReminderWhatsAppText(booking),
+            adminInfo: {
+              subject: '🔔 Session Reminder — Tomorrow',
+              headline: 'Session Tomorrow',
+              rows: [
+                ['Customer', booking.name],
+                ['Phone', booking.phone],
+                ['Date', booking.date],
+                ['Time', booking.startTime || 'Time TBA'],
+                ['Service', booking.category + (booking.subPackage ? ' — ' + booking.subPackage : '')]
+              ]
+            }
           });
 
           booking.reminderSent = true;

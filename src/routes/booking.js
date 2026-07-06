@@ -95,7 +95,20 @@ router.post('/', async (req, res) => {
         name: booking.name, title: booking.title,
         statusLine: 'We received your booking request 📩',
         bodyText: `${booking.category}${booking.subPackage ? ' — ' + booking.subPackage : ''}${booking.date ? '\n📅 ' + booking.date : ''}${booking.startTime ? '\n🕐 ' + booking.startTime : ''}\n\nOur team will confirm it shortly.`
-      })
+      }),
+      adminInfo: {
+        subject: '🔔 New Booking Received',
+        headline: 'New Booking',
+        rows: [
+          ['Customer', `${booking.title ? booking.title + ' ' : ''}${booking.name}`],
+          ['Phone', booking.phone],
+          ['Email', booking.email],
+          ['Service', booking.category + (booking.subPackage ? ' — ' + booking.subPackage : '')],
+          ['Date', booking.date || '-'],
+          ...(booking.startTime ? [['Time', booking.startTime]] : []),
+          ...(booking.message ? [['Message', booking.message]] : [])
+        ]
+      }
     });
   } catch (err) {
     res.status(500).json({ message: '❌ Error saving booking', error: err.message });

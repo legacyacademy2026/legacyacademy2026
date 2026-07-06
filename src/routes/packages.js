@@ -60,9 +60,22 @@ router.post('/', async (req, res) => {
       subject: '🐴 Your Legacy Équestre Package Request',
       emailHtml,
       waText,
+      adminInfo: {
+        subject: '🔔 New Package Request — Approval Needed',
+        headline: 'New Package Request',
+        rows: [
+          ['Customer', `${pkg.title ? pkg.title + ' ' : ''}${pkg.name}`],
+          ['Phone', pkg.phone],
+          ['Email', pkg.email],
+          ['Package', pkg.packageType],
+          ['Tier', pkg.tierLabel],
+          ['Price', `AED ${pkg.price}`],
+          ['Payment', pkg.paymentMethod || '-']
+        ]
+      },
       adminActions: [
         { label: '✅ Approve', url: actionUrl(`/api/packages/${pkg._id}/approve`), color: '#1e7e34' },
-        { label: '❌ Reject', url: actionUrl(`/api/packages/${pkg._id}/reject`), color: '#a71d2a' }
+        { label: '❌ Not Approve', url: actionUrl(`/api/packages/${pkg._id}/reject`), color: '#a71d2a' }
       ]
     });
   } catch (err) {
@@ -162,13 +175,17 @@ router.post('/:id/book-session', async (req, res) => {
     notifyAll({
       customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
       subject: '🐴 New Session Booked',
-      emailHtml: buildStatusUpdateEmailHtml({
-        name: pkg.name, title: pkg.title,
-        statusBadge: { bg: '#e6ede0', color: '#4a5c39', text: '📅 New Session Booked' },
-        bodyText: `A new session was booked for <strong>${date} at ${startTime}</strong> (${pkg.packageType} — ${pkg.tierLabel}).`,
-        trackingUrl: null
-      }),
-      waText: `📅 New session booked\n${date} at ${startTime}\n${pkg.packageType} — ${pkg.tierLabel}`,
+      adminInfo: {
+        subject: '🔔 New Session Booked — Confirm?',
+        headline: 'New Session Booked',
+        rows: [
+          ['Customer', `${pkg.title ? pkg.title + ' ' : ''}${pkg.name}`],
+          ['Phone', pkg.phone],
+          ['Date', date],
+          ['Time', startTime],
+          ['Package', `${pkg.packageType} — ${pkg.tierLabel}`]
+        ]
+      },
       adminActions: [
         { label: '✅ Confirm', url: actionUrl(`/api/bookings/${booking._id}/confirm`), color: '#1e7e34' },
         { label: '❌ Decline', url: actionUrl(`/api/bookings/${booking._id}/decline`), color: '#a71d2a' }
@@ -243,13 +260,16 @@ router.post('/:id/request-freeze', async (req, res) => {
     notifyAll({
       customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
       subject: '🐴 Freeze Request',
-      emailHtml: buildStatusUpdateEmailHtml({
-        name: pkg.name, title: pkg.title,
-        statusBadge: { bg: '#e4ecf2', color: '#2f5975', text: '❄️ Freeze Requested' },
-        bodyText: `A freeze has been requested for the <strong>${pkg.packageType} — ${pkg.tierLabel}</strong> package (${Math.floor(freezeDaysLeft(pkg))} freeze-day(s) remaining).`,
-        trackingUrl: null
-      }),
-      waText: `❄️ Freeze requested for ${pkg.packageType} — ${pkg.tierLabel}\nFreeze days remaining: ${Math.floor(freezeDaysLeft(pkg))}`,
+      adminInfo: {
+        subject: '🔔 Freeze Request — Approve?',
+        headline: 'Freeze Requested',
+        rows: [
+          ['Customer', `${pkg.title ? pkg.title + ' ' : ''}${pkg.name}`],
+          ['Phone', pkg.phone],
+          ['Package', `${pkg.packageType} — ${pkg.tierLabel}`],
+          ['Freeze days left', `${Math.floor(freezeDaysLeft(pkg))} of 14`]
+        ]
+      },
       adminActions: [{ label: '❄️ Approve Freeze', url: actionUrl(`/api/packages/${pkg._id}/freeze`), color: '#2f5975' }],
       toCustomer: false
     });
