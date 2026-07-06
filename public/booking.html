@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title-en" content="Book a Session — Legacy Equestrian School">
+  <meta name="title-ar" content="احجز جلسة — مدرسة ليجاسي للفروسية">
   <title>Book a Session — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -16,15 +18,18 @@
       <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a></li>
+      <li><a href="#"><span class="lang-en">Gallery</span><span class="lang-ar" style="display:none">المعرض</span></a></li>
+      <li><a href="about.html"><span class="lang-en">About</span><span class="lang-ar" style="display:none">من نحن</span></a></li>
+      <li><a href="index.html#services"><span class="lang-en">Services</span><span class="lang-ar" style="display:none">الخدمات</span></a></li>
+      <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
-      <a href="booking.html" class="btn-book-now">Book Now</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <span class="lang-btn-en" style="display:none"><i class="fas fa-globe"></i> English</span>
+      <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
+    </button>
+      <a href="booking.html" class="btn-book-now"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
@@ -32,17 +37,17 @@
   <section class="pkg-breadcrumb">
     <div class="container">
       <div class="pkg-breadcrumb-row">
-        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.55rem;"></i>
-        <span class="current">Book a Session</span>
+        <a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a> <i class="fas fa-chevron-right" style="font-size:0.55rem;"></i>
+        <span class="current"><span class="lang-en">Book a Session</span><span class="lang-ar" style="display:none">احجز جلسة</span></span>
       </div>
     </div>
   </section>
 
   <section style="background: var(--cream); padding: 34px 0 10px; text-align:center;">
     <div class="container">
-      <span class="section-tag">Reserve Your Spot</span>
-      <h1 class="section-title">Book a Session</h1>
-      <p class="services-intro">Choose your service below and we'll take care of the rest.</p>
+      <span class="section-tag"><span class="lang-en">Reserve Your Spot</span><span class="lang-ar" style="display:none">احجز مكانك</span></span>
+      <h1 class="section-title"><span class="lang-en">Book a Session</span><span class="lang-ar" style="display:none">احجز جلسة</span></h1>
+      <p class="services-intro"><span class="lang-en">Choose your service below and we'll take care of the rest.</span><span class="lang-ar" style="display:none">اختر خدمتك وسنتولى الباقي.</span></p>
     </div>
   </section>
 
@@ -51,17 +56,17 @@
 
       <div class="selected-package-banner" id="selectedPackageBanner" style="display:none;">
         <div>
-          <p class="spb-label">You're Booking</p>
+          <p class="spb-label"><span class="lang-en">You're Booking</span><span class="lang-ar" style="display:none">أنت تحجز</span></p>
           <p class="spb-name" id="spbName">—</p>
         </div>
-        <a href="booking.html" class="spb-change">Change service</a>
+        <a href="booking.html" class="spb-change"><span class="lang-en">Change service</span><span class="lang-ar" style="display:none">تغيير الخدمة</span></a>
       </div>
 
       <form class="booking-form" id="bookingForm" novalidate>
 
         <div class="form-row">
           <div class="form-group">
-            <label>Full Name *</label>
+            <label><span class="lang-en">Full Name *</span><span class="lang-ar" style="display:none">الاسم الكامل *</span></label>
             <div style="display:flex; gap:8px;">
               <select id="title" style="max-width:90px;">
                 <option value="">-</option>
@@ -73,49 +78,49 @@
             </div>
           </div>
           <div class="form-group">
-            <label>Email Address *</label>
+            <label><span class="lang-en">Email Address *</span><span class="lang-ar" style="display:none">البريد الإلكتروني *</span></label>
             <input type="email" id="email" placeholder="your@email.com" required/>
           </div>
         </div>
 
         <div class="form-row">
           <div class="form-group">
-            <label>Phone Number *</label>
+            <label><span class="lang-en">Phone Number *</span><span class="lang-ar" style="display:none">رقم الهاتف *</span></label>
             <input type="tel" id="phone" placeholder="+971 XX XXX XXXX" required/>
           </div>
           <div class="form-group" id="dateFieldGroup">
-            <label>Preferred Date *</label>
+            <label><span class="lang-en">Preferred Date *</span><span class="lang-ar" style="display:none">التاريخ المفضل *</span></label>
             <input type="date" id="date" required/>
           </div>
         </div>
 
         <div class="form-row" id="serviceSelectRow">
           <div class="form-group">
-            <label>Select Service *</label>
+            <label><span class="lang-en">Select Service *</span><span class="lang-ar" style="display:none">اختر الخدمة *</span></label>
             <select id="category" required onchange="showSubPackage()">
-              <option value="">-- Choose a Service --</option>
-              <option value="Riding Packages">🏇 Riding Lessons</option>
-              <option value="Livery Horse">🏠 Horse Livery</option>
-              <option value="Horse Training">🐴 Horse Training</option>
+              <option value=""><span class="lang-en">-- Choose a Service --</span><span class="lang-ar" style="display:none">-- اختر خدمة --</span></option>
+              <option value="Riding Packages"><span class="lang-en">🏇 Riding Lessons</span><span class="lang-ar" style="display:none">🏇 دروس الركوب</span></option>
+              <option value="Livery Horse"><span class="lang-en">🏠 Horse Livery</span><span class="lang-ar" style="display:none">🏠 إسطبلات</span></option>
+              <option value="Horse Training"><span class="lang-en">🐴 Horse Training</span><span class="lang-ar" style="display:none">🐴 تدريب الخيل</span></option>
             </select>
           </div>
           <div class="form-group" id="subPackageGroup" style="display:none;">
-            <label>Select Lesson Type *</label>
+            <label><span class="lang-en">Select Lesson Type *</span><span class="lang-ar" style="display:none">اختر نوع الدرس *</span></label>
             <select id="packageType" onchange="updatePackageTiers()">
-              <option value="">-- Choose Lesson Type --</option>
-              <option value="Private Lessons">Private Lessons</option>
-              <option value="Group Lessons">Group Lessons</option>
-              <option value="Outdoor Lessons">Outdoor Lessons</option>
-              <option value="Jumping Lessons">Jumping Lessons</option>
-              <option value="Special Needs Lessons">Special Needs Lessons</option>
-              <option value="Hand Ride">Hand Ride</option>
+              <option value=""><span class="lang-en">-- Choose Lesson Type --</span><span class="lang-ar" style="display:none">-- اختر نوع الدرس --</span></option>
+              <option value="Private Lessons"><span class="lang-en">Private Lessons</span><span class="lang-ar" style="display:none">دروس خاصة</span></option>
+              <option value="Group Lessons"><span class="lang-en">Group Lessons</span><span class="lang-ar" style="display:none">دروس جماعية</span></option>
+              <option value="Outdoor Lessons"><span class="lang-en">Outdoor Lessons</span><span class="lang-ar" style="display:none">دروس خارجية</span></option>
+              <option value="Jumping Lessons"><span class="lang-en">Jumping Lessons</span><span class="lang-ar" style="display:none">دروس القفز</span></option>
+              <option value="Special Needs Lessons"><span class="lang-en">Special Needs Lessons</span><span class="lang-ar" style="display:none">دروس ذوي الاحتياجات الخاصة</span></option>
+              <option value="Hand Ride"><span class="lang-en">Hand Ride</span><span class="lang-ar" style="display:none">ركوب بقيادة</span></option>
             </select>
           </div>
         </div>
 
         <div class="form-row" id="horseNameRow" style="display:none;">
           <div class="form-group">
-            <label>Horse Name *</label>
+            <label><span class="lang-en">Horse Name *</span><span class="lang-ar" style="display:none">اسم الحصان *</span></label>
             <input type="text" id="horseName" placeholder="Your horse's name"/>
           </div>
           <div class="form-group"></div>
@@ -123,28 +128,28 @@
 
         <div class="form-row" id="packageTierRow" style="display:none;">
           <div class="form-group">
-            <label>Select Package *</label>
+            <label><span class="lang-en">Select Package *</span><span class="lang-ar" style="display:none">اختر الباقة *</span></label>
             <select id="packageTier" onchange="updatePackageInfo()">
-              <option value="">-- Choose Package --</option>
+              <option value=""><span class="lang-en">-- Choose Package --</span><span class="lang-ar" style="display:none">-- اختر الباقة --</span></option>
             </select>
           </div>
           <div class="form-group" id="packageInfoBox" style="display:none;">
-            <label>Package Details</label>
+            <label><span class="lang-en">Package Details</span><span class="lang-ar" style="display:none">تفاصيل الباقة</span></label>
             <div class="package-info-card">
-              <p>💰 <strong>Price:</strong> <span id="packagePrice">-</span></p>
-              <p>📅 <strong>Validity:</strong> <span id="packageValidity">-</span></p>
-              <p>🧊 <strong>Freeze Policy:</strong> <span id="packageFreeze">-</span></p>
+              <p>💰 <strong><span class="lang-en">Price:</span><span class="lang-ar" style="display:none">السعر:</span></strong> <span id="packagePrice">-</span></p>
+              <p>📅 <strong><span class="lang-en">Validity:</span><span class="lang-ar" style="display:none">الصلاحية:</span></strong> <span id="packageValidity">-</span></p>
+              <p>🧊 <strong><span class="lang-en">Freeze Policy:</span><span class="lang-ar" style="display:none">سياسة التجميد:</span></strong> <span id="packageFreeze">-</span></p>
             </div>
           </div>
         </div>
 
         <div class="form-row" id="paymentMethodRow" style="display:none;">
           <div class="form-group">
-            <label>Payment Method *</label>
+            <label><span class="lang-en">Payment Method *</span><span class="lang-ar" style="display:none">طريقة الدفع *</span></label>
             <select id="paymentMethod">
-              <option value="">-- Choose Payment Method --</option>
-              <option value="Cash">💵 Cash</option>
-              <option value="Card">💳 Card</option>
+              <option value=""><span class="lang-en">-- Choose Payment Method --</span><span class="lang-ar" style="display:none">-- اختر طريقة الدفع --</span></option>
+              <option value="Cash"><span class="lang-en">💵 Cash</span><span class="lang-ar" style="display:none">💵 نقداً</span></option>
+              <option value="Card"><span class="lang-en">💳 Card</span><span class="lang-ar" style="display:none">💳 بطاقة</span></option>
             </select>
           </div>
           <div class="form-group"></div>
@@ -152,25 +157,25 @@
 
         <div class="form-row" id="schedulingRow">
           <div class="form-group">
-            <label>Session Duration *</label>
+            <label><span class="lang-en">Session Duration *</span><span class="lang-ar" style="display:none">مدة الجلسة *</span></label>
             <select id="duration" required>
-              <option value="">-- Choose Duration --</option>
-              <option value="1">1 Hour</option>
-              <option value="2">2 Hours</option>
-              <option value="4">4 Hours</option>
+              <option value=""><span class="lang-en">-- Choose Duration --</span><span class="lang-ar" style="display:none">-- اختر المدة --</span></option>
+              <option value="1"><span class="lang-en">1 Hour</span><span class="lang-ar" style="display:none">ساعة واحدة</span></option>
+              <option value="2"><span class="lang-en">2 Hours</span><span class="lang-ar" style="display:none">ساعتان</span></option>
+              <option value="4"><span class="lang-en">4 Hours</span><span class="lang-ar" style="display:none">٤ ساعات</span></option>
             </select>
           </div>
           <div class="form-group">
-            <label>Start Time * (6:00 AM – 5:00 PM)</label>
+            <label><span class="lang-en">Start Time * (6:00 AM – 5:00 PM)</span><span class="lang-ar" style="display:none">وقت البدء * (٦ ص – ٥ م)</span></label>
             <select id="startTime" required disabled>
-              <option value="">-- Choose Duration First --</option>
+              <option value=""><span class="lang-en">-- Choose Duration First --</span><span class="lang-ar" style="display:none">-- اختر المدة أولاً --</span></option>
             </select>
             <p class="time-status" id="timeStatus"></p>
           </div>
         </div>
 
         <div class="form-group full-width" style="margin-bottom:22px;">
-          <label>Message / Special Request</label>
+          <label><span class="lang-en">Message / Special Request</span><span class="lang-ar" style="display:none">رسالة / طلب خاص</span></label>
           <textarea id="message" rows="4" placeholder="Any special requests or questions..."></textarea>
         </div>
 
@@ -200,27 +205,26 @@
 
   <footer class="footer">
     <div class="container">
-      <div class="footer-row">
-        <div class="footer-col footer-left">
-          <p class="footer-contact-label">Phone</p>
-          <p>+971 XX XXX XXXX</p>
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
-        <div class="footer-col footer-mid">
-          <div class="footer-socials">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        <div class="footer-col footer-right">
-          <p class="footer-contact-label">Contact</p>
+        <div class="footer-contact">
+          <p class="footer-contact-label"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></p>
+          <p><span class="lang-en">+971 XX XXX XXXX</span><span class="lang-ar" style="display:none">XXX XXXX XX 971+</span></p>
           <p>hello@coachmervat.com</p>
-          <p>Dubai, UAE</p>
+          <p><span class="lang-en">Dubai, UAE</span><span class="lang-ar" style="display:none">دبي، الإمارات</span></p>
         </div>
       </div>
       <div class="footer-divider"></div>
       <div class="footer-bottom">
-        <span>© 2026 Legacy. All rights reserved. · Privacy Policy · Terms of Use</span>
+        <span><span class="lang-en">© 2026 Legacy. All rights reserved.</span><span class="lang-ar" style="display:none">© ٢٠٢٦ ليجاسي. جميع الحقوق محفوظة.</span></span>
+        <div class="footer-bottom-links">
+          <a href="#"><span class="lang-en">Privacy Policy</span><span class="lang-ar" style="display:none">سياسة الخصوصية</span></a>
+          <a href="#"><span class="lang-en">Terms of Use</span><span class="lang-ar" style="display:none">شروط الاستخدام</span></a>
+        </div>
       </div>
     </div>
   </footer>

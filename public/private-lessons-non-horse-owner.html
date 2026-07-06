@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title-en" content="Private Lessons — Legacy Equestrian School">
+  <meta name="title-ar" content="دروس خاصة — مدرسة ليجاسي للفروسية">
   <title>Private Lessons — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -16,15 +18,18 @@
       <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services" class="active">Services</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a></li>
+      <li><a href="#"><span class="lang-en">Gallery</span><span class="lang-ar" style="display:none">المعرض</span></a></li>
+      <li><a href="about.html"><span class="lang-en">About</span><span class="lang-ar" style="display:none">من نحن</span></a></li>
+      <li><a href="index.html#services" class="active"><span class="lang-en">Services</span><span class="lang-ar" style="display:none">الخدمات</span></a></li>
+      <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
-      <a href="booking.html" class="btn-book-now">Book Now</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <span class="lang-btn-en" style="display:none"><i class="fas fa-globe"></i> English</span>
+      <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
+    </button>
+      <a href="booking.html" class="btn-book-now"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
@@ -35,46 +40,42 @@
     <div class="hero-overlay"></div>
     <div class="hero-content">
       <p class="hero-breadcrumb">
-        <a href="index.html">Home</a> &gt;
+        <a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a> &gt;
         <a href="training-programs.html">Riding</a> &gt;
         Private Lessons
       </p>
-      <h1>Private Lessons</h1>
+      <h1><span class="lang-en">Private Lessons</span><span class="lang-ar" style="display:none">دروس خاصة</span></h1>
     </div>
   </section>
 
   <!-- Choose Your Package — white background -->
   <section style="background: var(--white); padding: 70px 0;">
     <div class="container">
-      <h2 style="font-family:'Cormorant Garamond',serif; font-size:2.6rem; font-weight:400; color:var(--brown); text-align:center; margin-bottom:48px;">Choose Your Package</h2>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:2.6rem; font-weight:400; color:var(--brown); text-align:center; margin-bottom:48px;"><span class="lang-en">Choose Your Package</span><span class="lang-ar" style="display:none">اختر باقتك</span></h2>
       <div class="pricing-grid">
 
         <div class="pricing-card">
-          <p class="pricing-sessions">1 Session</p>
-          <p class="pricing-amount">250<span class="pricing-currency">AED</span></p>
+          <p class="pricing-sessions"><span class="lang-en">1 Session</span><span class="lang-ar" style="display:none">جلسة واحدة</span></p>
+          <p class="pricing-amount">250<span class="pricing-currency"><span class="lang-en">AED</span><span class="lang-ar" style="display:none">درهم</span></span></p>
           <div class="pricing-divider"></div>
-          <a href="booking.html?service=Private+Lessons&tier=Single" class="btn-book">Book Now</a>
+          <a href="booking.html?service=Private+Lessons&tier=Single" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
         </div>
 
         <div class="pricing-card best-value">
-          <p class="pricing-sessions">10 Sessions</p>
-          <p class="pricing-amount">2,500<span class="pricing-currency">AED</span></p>
+          <p class="pricing-sessions"><span class="lang-en">10 Sessions</span><span class="lang-ar" style="display:none">١٠ جلسات</span></p>
+          <p class="pricing-amount">2,500<span class="pricing-currency"><span class="lang-en">AED</span><span class="lang-ar" style="display:none">درهم</span></span></p>
           <div class="pricing-divider"></div>
-          <a href="booking.html?service=Private+Lessons&tier=10+Sessions" class="btn-book">Book Now</a>
+          <a href="booking.html?service=Private+Lessons&tier=10+Sessions" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
         </div>
 
       </div>
     </div>
-  
-      <div style="text-align:center; margin-top:28px;">
-        <a href="https://wa.me/971585953807" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Enquire on WhatsApp</a>
-      </div>
-    </section>
+  </section>
 
   <!-- About This Program — cream background -->
   <section style="background: var(--cream); padding: 80px 32px;">
     <div style="max-width: 780px; margin: 0 auto; text-align: center;">
-      <p class="section-eyebrow" style="margin-bottom:16px;">About This Program</p>
+      <p class="section-eyebrow" style="margin-bottom:16px;"><span class="lang-en">About This Program</span><span class="lang-ar" style="display:none">عن هذا البرنامج</span></p>
       <h2 style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:400; color:var(--brown); margin-bottom:26px; line-height:1.2;">Private Horse Riding Sessions</h2>
       <p style="font-size:1.02rem; color:var(--brown-light); line-height:1.8; margin-bottom:22px;">
         Experience the personal attention and focused progress that comes with one-on-one riding. Our private sessions are tailored entirely to you — your pace, your goals, and your level. Whether you are a first-time rider or looking to refine your technique, our expert instructors provide dedicated guidance in a calm and supportive environment.
@@ -99,27 +100,26 @@
   <!-- Footer -->
   <footer class="footer">
     <div class="container">
-      <div class="footer-row">
-        <div class="footer-col footer-left">
-          <p class="footer-contact-label">Phone</p>
-          <p>+971 XX XXX XXXX</p>
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
-        <div class="footer-col footer-mid">
-          <div class="footer-socials">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        <div class="footer-col footer-right">
-          <p class="footer-contact-label">Contact</p>
+        <div class="footer-contact">
+          <p class="footer-contact-label"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></p>
+          <p>+212 555 123 456</p>
           <p>hello@coachmervat.com</p>
-          <p>Dubai, UAE</p>
+          <p>Desert Oasis, Route 42</p>
         </div>
       </div>
       <div class="footer-divider"></div>
       <div class="footer-bottom">
-        <span>© 2026 Legacy. All rights reserved. · Privacy Policy · Terms of Use</span>
+        <span>© 2024 Legacy. All rights reserved.</span>
+        <div class="footer-bottom-links">
+          <a href="#"><span class="lang-en">Privacy Policy</span><span class="lang-ar" style="display:none">سياسة الخصوصية</span></a>
+          <a href="#"><span class="lang-en">Terms of Use</span><span class="lang-ar" style="display:none">شروط الاستخدام</span></a>
+        </div>
       </div>
     </div>
   </footer>

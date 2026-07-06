@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title-en" content="Riding Lessons — Legacy Equestrian School">
+  <meta name="title-ar" content="دروس الركوب — مدرسة ليجاسي للفروسية">
   <title>Riding Lessons — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -16,15 +18,18 @@
       <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services" class="active">Services</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a></li>
+      <li><a href="#"><span class="lang-en">Gallery</span><span class="lang-ar" style="display:none">المعرض</span></a></li>
+      <li><a href="about.html"><span class="lang-en">About</span><span class="lang-ar" style="display:none">من نحن</span></a></li>
+      <li><a href="index.html#services" class="active"><span class="lang-en">Services</span><span class="lang-ar" style="display:none">الخدمات</span></a></li>
+      <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
-      <a href="booking.html" class="btn-book-now">Book Now</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <span class="lang-btn-en" style="display:none"><i class="fas fa-globe"></i> English</span>
+      <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
+    </button>
+      <a href="booking.html" class="btn-book-now"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
@@ -34,16 +39,16 @@
     <img src="assets/desert-hero.png" alt="Riding Lessons">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">Elevate Your Performance</p>
-      <h1>Riding Lessons</h1>
+      <p class="hero-eyebrow"><span class="lang-en">Elevate Your Performance</span><span class="lang-ar" style="display:none">ارتقِ بأدائك</span></p>
+      <h1><span class="lang-en">Riding Lessons</span><span class="lang-ar" style="display:none">دروس الركوب</span></h1>
     </div>
   </section>
 
   <!-- Riding Packages Grid -->
   <section class="services" style="padding: 70px 0;">
     <div class="container">
-      <p class="section-eyebrow">Our Expertise</p>
-      <h2 class="section-heading">Our Riding Packages</h2>
+      <p class="section-eyebrow"><span class="lang-en">Our Expertise</span><span class="lang-ar" style="display:none">خبراتنا</span></p>
+      <h2 class="section-heading"><span class="lang-en">Our Riding Packages</span><span class="lang-ar" style="display:none">باقات ركوب الخيل</span></h2>
 
       <div class="services-grid">
 
@@ -51,12 +56,12 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/private-lessons-hero.png" alt="Private Lessons">
           <div class="service-card-body">
-            <h3 class="service-card-title">Private Lessons</h3>
+            <h3 class="service-card-title"><span class="lang-en">Private Lessons</span><span class="lang-ar" style="display:none">دروس خاصة</span></h3>
             <div class="service-price-rows">
-              <div class="service-price-row"><span>1 session</span><strong>250 AED</strong></div>
-              <div class="service-price-row"><span>10 sessions</span><strong>2,500 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">1 session</span><span class="lang-ar" style="display:none">جلسة واحدة</span></span><strong>250 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">10 sessions</span><span class="lang-ar" style="display:none">١٠ جلسات</span></span><strong>2,500 AED</strong></div>
             </div>
-            <a href="private-lessons-non-horse-owner.html" class="btn-book">Book Now</a>
+            <a href="private-lessons-non-horse-owner.html" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
           </div>
         </div>
 
@@ -64,12 +69,12 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/group-card.png" alt="Group Lessons">
           <div class="service-card-body">
-            <h3 class="service-card-title">Group Lessons</h3>
+            <h3 class="service-card-title"><span class="lang-en">Group Lessons</span><span class="lang-ar" style="display:none">دروس جماعية</span></h3>
             <div class="service-price-rows">
-              <div class="service-price-row"><span>1 session</span><strong>170 AED</strong></div>
-              <div class="service-price-row"><span>10 sessions</span><strong>1,700 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">1 session</span><span class="lang-ar" style="display:none">جلسة واحدة</span></span><strong>170 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">10 sessions</span><span class="lang-ar" style="display:none">١٠ جلسات</span></span><strong>1,700 AED</strong></div>
             </div>
-            <a href="group-lessons.html" class="btn-book">Book Now</a>
+            <a href="group-lessons.html" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
           </div>
         </div>
 
@@ -77,12 +82,12 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/outdoor-lessons-hero.png" alt="Outdoor Lessons">
           <div class="service-card-body">
-            <h3 class="service-card-title">Outdoor Lessons</h3>
+            <h3 class="service-card-title"><span class="lang-en">Outdoor Lessons</span><span class="lang-ar" style="display:none">دروس خارجية</span></h3>
             <div class="service-price-rows">
-              <div class="service-price-row"><span>1 private session</span><strong>200 AED</strong></div>
-              <div class="service-price-row"><span>1 group session</span><strong>100 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">1 private session</span><span class="lang-ar" style="display:none">جلسة خاصة واحدة</span></span><strong>200 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">1 group session</span><span class="lang-ar" style="display:none">جلسة جماعية واحدة</span></span><strong>100 AED</strong></div>
             </div>
-            <a href="outdoor-lessons.html" class="btn-book">Book Now</a>
+            <a href="outdoor-lessons.html" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
           </div>
         </div>
 
@@ -90,12 +95,12 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/jumping-card.png" alt="Jumping Lessons">
           <div class="service-card-body">
-            <h3 class="service-card-title">Jumping Lessons</h3>
+            <h3 class="service-card-title"><span class="lang-en">Jumping Lessons</span><span class="lang-ar" style="display:none">دروس القفز</span></h3>
             <div class="service-price-rows">
-              <div class="service-price-row"><span>1 session</span><strong>300 AED</strong></div>
-              <div class="service-price-row"><span>10 sessions</span><strong>3000 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">1 session</span><span class="lang-ar" style="display:none">جلسة واحدة</span></span><strong>300 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">10 sessions</span><span class="lang-ar" style="display:none">١٠ جلسات</span></span><strong>3000 AED</strong></div>
             </div>
-            <a href="jumping-lessons.html" class="btn-book">Book Now</a>
+            <a href="jumping-lessons.html" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
           </div>
         </div>
 
@@ -103,12 +108,12 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/private-lessons-hero.png" alt="Special Needs Lessons">
           <div class="service-card-body">
-            <h3 class="service-card-title">Special Needs Lessons</h3>
+            <h3 class="service-card-title"><span class="lang-en">Special Needs Lessons</span><span class="lang-ar" style="display:none">دروس ذوي الاحتياجات الخاصة</span></h3>
             <div class="service-price-rows">
-              <div class="service-price-row"><span>1 session</span><strong>100 AED</strong></div>
-              <div class="service-price-row"><span>10 sessions</span><strong>400 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">1 session</span><span class="lang-ar" style="display:none">جلسة واحدة</span></span><strong>100 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">10 sessions</span><span class="lang-ar" style="display:none">١٠ جلسات</span></span><strong>400 AED</strong></div>
             </div>
-            <a href="special-needs-lessons.html" class="btn-book">Book Now</a>
+            <a href="special-needs-lessons.html" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
           </div>
         </div>
 
@@ -116,11 +121,11 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/hand-ride-card.png" alt="Hand Ride">
           <div class="service-card-body">
-            <h3 class="service-card-title">Hand Ride</h3>
+            <h3 class="service-card-title"><span class="lang-en">Hand Ride</span><span class="lang-ar" style="display:none">ركوب بقيادة</span></h3>
             <div class="service-price-rows">
-              <div class="service-price-row"><span>1 session</span><strong>50 AED</strong></div>
+              <div class="service-price-row"><span><span class="lang-en">1 session</span><span class="lang-ar" style="display:none">جلسة واحدة</span></span><strong>50 AED</strong></div>
             </div>
-            <a href="hand-ride.html" class="btn-book">Book Now</a>
+            <a href="hand-ride.html" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
           </div>
         </div>
 
@@ -134,7 +139,7 @@
       <div class="footer-row">
         <div class="footer-col footer-left">
           <p class="footer-contact-label">Phone</p>
-          <p>+971 XX XXX XXXX</p>
+          <p><span class="lang-en">+971 XX XXX XXXX</span><span class="lang-ar" style="display:none">XXX XXXX XX 971+</span></p>
         </div>
         <div class="footer-col footer-mid">
           <div class="footer-socials">
@@ -144,9 +149,9 @@
           </div>
         </div>
         <div class="footer-col footer-right">
-          <p class="footer-contact-label">Contact</p>
+          <p class="footer-contact-label"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></p>
           <p>hello@coachmervat.com</p>
-          <p>Dubai, UAE</p>
+          <p><span class="lang-en">Dubai, UAE</span><span class="lang-ar" style="display:none">دبي، الإمارات</span></p>
         </div>
       </div>
       <div class="footer-divider"></div>

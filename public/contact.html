@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title-en" content="Contact — Legacy Equestrian School">
+  <meta name="title-ar" content="اتصل بنا — مدرسة ليجاسي للفروسية">
   <title>Contact — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -16,15 +18,18 @@
       <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a></li>
+      <li><a href="#"><span class="lang-en">Gallery</span><span class="lang-ar" style="display:none">المعرض</span></a></li>
+      <li><a href="about.html"><span class="lang-en">About</span><span class="lang-ar" style="display:none">من نحن</span></a></li>
+      <li><a href="index.html#services"><span class="lang-en">Services</span><span class="lang-ar" style="display:none">الخدمات</span></a></li>
+      <li><a href="contact.html" class="active"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
-      <a href="booking.html" class="btn-book-now">Book Now</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <span class="lang-btn-en" style="display:none"><i class="fas fa-globe"></i> English</span>
+      <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
+    </button>
+      <a href="booking.html" class="btn-book-now"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
@@ -32,24 +37,24 @@
   <section class="pkg-breadcrumb">
     <div class="container">
       <div class="pkg-breadcrumb-row">
-        <a href="index.html">Home</a> <i class="fas fa-chevron-right" style="font-size:0.55rem;"></i>
-        <span class="current">Contact</span>
+        <a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a> <i class="fas fa-chevron-right" style="font-size:0.55rem;"></i>
+        <span class="current"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></span>
       </div>
     </div>
   </section>
 
   <section style="background: var(--white); padding: 50px 32px 90px; text-align:center;">
     <div class="container" style="max-width:680px;">
-      <span class="section-tag">Get In Touch</span>
-      <h1 class="section-title" style="margin-bottom:18px;">Contact Us</h1>
+      <span class="section-tag"><span class="lang-en">Get In Touch</span><span class="lang-ar" style="display:none">تواصل معنا</span></span>
+      <h1 class="section-title" style="margin-bottom:18px;"><span class="lang-en">Contact Us</span><span class="lang-ar" style="display:none">اتصل بنا</span></h1>
       <p style="color:var(--brown-light); line-height:1.8; margin-bottom:40px;">
         Have a question about our lessons, livery, or events? We'd love to hear from you. Reach out through any of the channels below.
       </p>
 
       <div style="display:flex; flex-direction:column; gap:18px; max-width:420px; margin:0 auto 40px; text-align:left;">
-        <div class="package-info-card"><p><i class="fas fa-phone" style="color:var(--olive); margin-right:10px;"></i><strong>Phone:</strong> +971 XX XXX XXXX</p></div>
-        <div class="package-info-card"><p><i class="fas fa-envelope" style="color:var(--olive); margin-right:10px;"></i><strong>Email:</strong> hello@coachmervat.com</p></div>
-        <div class="package-info-card"><p><i class="fas fa-location-dot" style="color:var(--olive); margin-right:10px;"></i><strong>Location:</strong> Dubai, UAE</p></div>
+        <div class="package-info-card"><p><i class="fas fa-phone" style="color:var(--olive); margin-right:10px;"></i><strong><span class="lang-en">Phone:</span><span class="lang-ar" style="display:none">هاتف:</span></strong> +971 XX XXX XXXX</p></div>
+        <div class="package-info-card"><p><i class="fas fa-envelope" style="color:var(--olive); margin-right:10px;"></i><strong><span class="lang-en">Email:</span><span class="lang-ar" style="display:none">بريد إلكتروني:</span></strong> hello@coachmervat.com</p></div>
+        <div class="package-info-card"><p><i class="fas fa-location-dot" style="color:var(--olive); margin-right:10px;"></i><strong><span class="lang-en">Location:</span><span class="lang-ar" style="display:none">الموقع:</span></strong> Dubai, UAE</p></div>
       </div>
 
       <a href="https://wa.me/971585953807" class="btn-whatsapp"><i class="fab fa-whatsapp"></i> Chat on WhatsApp</a>
@@ -58,27 +63,26 @@
 
   <footer class="footer">
     <div class="container">
-      <div class="footer-row">
-        <div class="footer-col footer-left">
-          <p class="footer-contact-label">Phone</p>
-          <p>+971 XX XXX XXXX</p>
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
-        <div class="footer-col footer-mid">
-          <div class="footer-socials">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        <div class="footer-col footer-right">
-          <p class="footer-contact-label">Contact</p>
+        <div class="footer-contact">
+          <p class="footer-contact-label"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></p>
+          <p><span class="lang-en">+971 XX XXX XXXX</span><span class="lang-ar" style="display:none">XXX XXXX XX 971+</span></p>
           <p>hello@coachmervat.com</p>
-          <p>Dubai, UAE</p>
+          <p><span class="lang-en">Dubai, UAE</span><span class="lang-ar" style="display:none">دبي، الإمارات</span></p>
         </div>
       </div>
       <div class="footer-divider"></div>
       <div class="footer-bottom">
-        <span>© 2026 Legacy. All rights reserved. · Privacy Policy · Terms of Use</span>
+        <span><span class="lang-en">© 2026 Legacy. All rights reserved.</span><span class="lang-ar" style="display:none">© ٢٠٢٦ ليجاسي. جميع الحقوق محفوظة.</span></span>
+        <div class="footer-bottom-links">
+          <a href="#"><span class="lang-en">Privacy Policy</span><span class="lang-ar" style="display:none">سياسة الخصوصية</span></a>
+          <a href="#"><span class="lang-en">Terms of Use</span><span class="lang-ar" style="display:none">شروط الاستخدام</span></a>
+        </div>
       </div>
     </div>
   </footer>

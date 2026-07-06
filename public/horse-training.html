@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title-en" content="Horse Training — Legacy Equestrian School">
+  <meta name="title-ar" content="تدريب الخيل — مدرسة ليجاسي للفروسية">
   <title>Horse Training — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -16,15 +18,18 @@
       <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services" class="active">Services</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a></li>
+      <li><a href="#"><span class="lang-en">Gallery</span><span class="lang-ar" style="display:none">المعرض</span></a></li>
+      <li><a href="about.html"><span class="lang-en">About</span><span class="lang-ar" style="display:none">من نحن</span></a></li>
+      <li><a href="index.html#services" class="active"><span class="lang-en">Services</span><span class="lang-ar" style="display:none">الخدمات</span></a></li>
+      <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
-      <a href="booking.html" class="btn-book-now">Book Now</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <span class="lang-btn-en" style="display:none"><i class="fas fa-globe"></i> English</span>
+      <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
+    </button>
+      <a href="booking.html" class="btn-book-now"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
@@ -33,20 +38,20 @@
     <img src="assets/hero-horse.png" alt="Horse Training">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-breadcrumb"><a href="index.html">Home</a> &gt; Horse Training</p>
-      <h1>Horse Training</h1>
+      <p class="hero-breadcrumb"><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a> &gt; Horse Training</p>
+      <h1><span class="lang-en">Horse Training</span><span class="lang-ar" style="display:none">تدريب الخيل</span></h1>
     </div>
   </section>
 
   <section class="pkg-pricing" style="background: var(--cream);">
     <div class="container">
-      <h2>Our Services</h2>
+      <h2><span class="lang-en">Our Services</span><span class="lang-ar" style="display:none">خدماتنا</span></h2>
       <div class="single-price-wrap">
         <div class="single-price-card">
-          <p class="sp-label">Horse Training</p>
-          <p class="sp-amount">2,000<span>AED</span></p>
+          <p class="sp-label"><span class="lang-en">Horse Training</span><span class="lang-ar" style="display:none">تدريب الخيل</span></p>
+          <p class="sp-amount">2,000<span><span class="lang-en">AED</span><span class="lang-ar" style="display:none">درهم</span></span></p>
           <div class="pricing-divider"></div>
-          <a href="booking.html?service=Horse+Training" class="btn-book">Enquire Now</a>
+          <a href="booking.html?service=Horse+Training" class="btn-book"><span class="lang-en">Enquire Now</span><span class="lang-ar" style="display:none">استفسر الآن</span></a>
         </div>
       </div>
     </div>
@@ -58,8 +63,8 @@
 
   <section style="background: var(--white); padding: 80px 32px;">
     <div style="max-width: 780px; margin: 0 auto; text-align: center;">
-      <p class="section-eyebrow" style="margin-bottom:16px;">About This Program</p>
-      <h2 style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:400; color:var(--brown); margin-bottom:26px; line-height:1.2;">Horse Training</h2>
+      <p class="section-eyebrow" style="margin-bottom:16px;"><span class="lang-en">About This Program</span><span class="lang-ar" style="display:none">عن هذا البرنامج</span></p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:400; color:var(--brown); margin-bottom:26px; line-height:1.2;"><span class="lang-en">Horse Training</span><span class="lang-ar" style="display:none">تدريب الخيل</span></h2>
       <p style="font-size:1.02rem; color:var(--brown-light); line-height:1.8;">
         At Legacy Equestrian, we offer professional horse training programs designed to unlock the full potential of every horse. Whether refining responsiveness, building discipline, or advancing performance, our certified trainers craft a plan tailored to each horse's temperament and stage.<br><br>
         We also specialize in breaking young and unhandled horses — using a gentle, patient approach that introduces each horse to the saddle and rider with care, building lasting confidence and trust from the very first session.
@@ -72,7 +77,7 @@
       <div class="footer-row">
         <div class="footer-col footer-left">
           <p class="footer-contact-label">Phone</p>
-          <p>+971 XX XXX XXXX</p>
+          <p><span class="lang-en">+971 XX XXX XXXX</span><span class="lang-ar" style="display:none">XXX XXXX XX 971+</span></p>
         </div>
         <div class="footer-col footer-mid">
           <div class="footer-socials">
@@ -82,9 +87,9 @@
           </div>
         </div>
         <div class="footer-col footer-right">
-          <p class="footer-contact-label">Contact</p>
+          <p class="footer-contact-label"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></p>
           <p>hello@coachmervat.com</p>
-          <p>Dubai, UAE</p>
+          <p><span class="lang-en">Dubai, UAE</span><span class="lang-ar" style="display:none">دبي، الإمارات</span></p>
         </div>
       </div>
       <div class="footer-divider"></div>

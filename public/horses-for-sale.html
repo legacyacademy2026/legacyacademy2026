@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title-en" content="Horses for Sale — Legacy Equestrian School">
+  <meta name="title-ar" content="خيول للبيع — مدرسة ليجاسي للفروسية">
   <title>Horses for Sale — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -14,15 +16,18 @@
       <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a></li>
+      <li><a href="#"><span class="lang-en">Gallery</span><span class="lang-ar" style="display:none">المعرض</span></a></li>
+      <li><a href="about.html"><span class="lang-en">About</span><span class="lang-ar" style="display:none">من نحن</span></a></li>
+      <li><a href="index.html#services"><span class="lang-en">Services</span><span class="lang-ar" style="display:none">الخدمات</span></a></li>
+      <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
-      <a href="booking.html" class="btn-book-now">Book Now</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <span class="lang-btn-en" style="display:none"><i class="fas fa-globe"></i> English</span>
+      <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
+    </button>
+      <a href="booking.html" class="btn-book-now"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
@@ -30,46 +35,45 @@
     <img src="assets/horses-for-sale-hero.png" alt="Horses for Sale">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-breadcrumb"><a href="index.html">Home</a> &gt; Horses for Sale</p>
-      <h1>Horses for Sale</h1>
+      <p class="hero-breadcrumb"><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a> &gt; Horses for Sale</p>
+      <h1><span class="lang-en">Horses for Sale</span><span class="lang-ar" style="display:none">خيول للبيع</span></h1>
     </div>
   </section>
   <section style="background:var(--white); padding:80px 32px;">
     <div style="max-width:780px; margin:0 auto; text-align:center;">
-      <p class="section-eyebrow" style="margin-bottom:16px;">About This Program</p>
-      <h2 style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:400; color:var(--brown); margin-bottom:26px; line-height:1.2;">Horses for Sale</h2>
+      <p class="section-eyebrow" style="margin-bottom:16px;"><span class="lang-en">About This Program</span><span class="lang-ar" style="display:none">عن هذا البرنامج</span></p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:3rem; font-weight:400; color:var(--brown); margin-bottom:26px; line-height:1.2;"><span class="lang-en">Horses for Sale</span><span class="lang-ar" style="display:none">خيول للبيع</span></h2>
       <p style="font-size:1.02rem; color:var(--brown-light); line-height:1.8;">At Legacy Equestrian, we offer a curated selection of horses suited to every rider and ambition — from gentle, well-mannered mounts perfect for beginners and families, to highly trained sport horses ready for competition and advanced disciplines. Each horse in our collection is carefully evaluated for health, temperament, and training level, ensuring the ideal match for rider and horse alike.<br><br>Whether you are looking for your first horse or seeking a performance partner, our team is here to guide you throughout every step of the process. For more information on available horses, pricing, and to arrange a personal viewing, please contact us directly on WhatsApp.</p>
       
     </div>
   </section>
   <section style="background:var(--white); padding:40px 32px 80px; text-align:center;">
-    <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:400; color:var(--brown); margin-bottom:8px;">Interested? Get in Touch</h3>
+    <h3 style="font-family:'Cormorant Garamond',serif; font-size:1.8rem; font-weight:400; color:var(--brown); margin-bottom:8px;"><span class="lang-en">Interested? Get in Touch</span><span class="lang-ar" style="display:none">مهتم؟ تواصل معنا</span></h3>
     <a href="https://wa.me/971585953807" class="btn-whatsapp">
       <i class="fab fa-whatsapp"></i> Chat on WhatsApp
     </a>
   </section>  <footer class="footer">
     <div class="container">
-      <div class="footer-row">
-        <div class="footer-col footer-left">
-          <p class="footer-contact-label">Phone</p>
-          <p>+971 XX XXX XXXX</p>
+      <div class="footer-top">
+        <div class="footer-socials">
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-youtube"></i></a>
         </div>
-        <div class="footer-col footer-mid">
-          <div class="footer-socials">
-            <a href="#"><i class="fab fa-instagram"></i></a>
-            <a href="#"><i class="fab fa-facebook"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
-        <div class="footer-col footer-right">
-          <p class="footer-contact-label">Contact</p>
+        <div class="footer-contact">
+          <p class="footer-contact-label"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></p>
+          <p><span class="lang-en">+971 XX XXX XXXX</span><span class="lang-ar" style="display:none">XXX XXXX XX 971+</span></p>
           <p>hello@coachmervat.com</p>
-          <p>Dubai, UAE</p>
+          <p><span class="lang-en">Dubai, UAE</span><span class="lang-ar" style="display:none">دبي، الإمارات</span></p>
         </div>
       </div>
       <div class="footer-divider"></div>
       <div class="footer-bottom">
-        <span>© 2026 Legacy. All rights reserved. · Privacy Policy · Terms of Use</span>
+        <span><span class="lang-en">© 2026 Legacy. All rights reserved.</span><span class="lang-ar" style="display:none">© ٢٠٢٦ ليجاسي. جميع الحقوق محفوظة.</span></span>
+        <div class="footer-bottom-links">
+          <a href="#"><span class="lang-en">Privacy Policy</span><span class="lang-ar" style="display:none">سياسة الخصوصية</span></a>
+          <a href="#"><span class="lang-en">Terms of Use</span><span class="lang-ar" style="display:none">شروط الاستخدام</span></a>
+        </div>
       </div>
     </div>
   </footer>  <script src="script.js"></script>

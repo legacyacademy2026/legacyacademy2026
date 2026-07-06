@@ -416,6 +416,8 @@ h1, h2, h3, .serif {
   padding: 46px 32px 28px;
   position: relative;
   text-align: center;
+  display: flex;
+  flex-direction: column;
 }
 /* Card without badge needs same top padding as card with badge */
 .pricing-card:not(.best-value) {
@@ -775,7 +777,7 @@ h1, h2, h3, .serif {
   /* ---- HERO — as small as possible ---- */
   .hero { height: 22vh; min-height: 150px; margin-top: 50px; }
   .hero.hero-centered { height: 24vh; min-height: 170px; }
-  .hero img { object-fit: cover; object-position: center 30%; }
+  .hero img { object-fit: cover; object-position: center center; }
   .hero-overlay { background: linear-gradient(to bottom, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.35) 60%, rgba(0,0,0,0.5) 100%); }
   .hero-content { bottom: 12px; left: 12px; right: 12px; }
   .hero-content h1 { font-size: 1.5rem; }
@@ -804,11 +806,10 @@ h1, h2, h3, .serif {
   .service-card { border-radius: 7px; display: flex; flex-direction: column; box-shadow: 0 2px 8px rgba(44,36,32,0.06); }
   .service-card-img { height: 82px; object-fit: cover; object-position: center center; display: block; flex-shrink: 0; }
   .service-card-body { padding: 7px 8px 9px; flex: 1; display: flex; flex-direction: column; }
-  .service-card-title { font-size: 0.78rem; margin-bottom: 4px; line-height: 1.12; font-weight: 400; font-style: italic; }
+  .service-card-title { font-size: 0.78rem; margin-bottom: 4px; line-height: 1.12; font-weight: 700; font-style: normal; }
   .service-desc {
     font-size: 0.5rem; line-height: 1.28;
     margin-bottom: 6px; text-align: left; flex-shrink: 0;
-    display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
   }
   .service-explore { font-size: 0.52rem; letter-spacing: 0.5px; margin-top: auto; padding-top: 3px; display: inline-block; flex-shrink: 0; }
   .service-price-rows { margin-bottom: 6px; flex-shrink: 0; }
@@ -817,7 +818,7 @@ h1, h2, h3, .serif {
 
   /* ---- PRICING ---- */
   .pricing-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
-  .pricing-card { padding: 28px 10px 14px; }
+  .pricing-card { padding: 28px 10px 14px; display: flex; flex-direction: column; }
   .pricing-card:not(.best-value) { padding-top: 28px; }
   .pricing-amount { font-size: 1.8rem; }
   .pricing-sessions { font-size: 0.58rem; letter-spacing: 0.5px; margin-bottom: 4px; }
@@ -917,7 +918,7 @@ h1, h2, h3, .serif {
   .navbar { padding: 0 6px; height: 46px; }
   .nav-logo-name { font-size: 0.8rem; letter-spacing: 1px; }
   .btn-book-now { padding: 5px 8px; font-size: 0.52rem; }
-  .nav-links.open { top: 50px; top: 48px; }
+  .nav-links.open { top: 46px; }
   .hamburger { font-size: 1.1rem; }
 
   /* Hero — barely there, just for brand feel */
@@ -942,15 +943,15 @@ h1, h2, h3, .serif {
   .services-grid { grid-template-columns: repeat(3, 1fr); gap: 5px; }
   .service-card-img { height: 68px; object-fit: cover; object-position: center center; display: block; flex-shrink: 0; }
   .service-card-body { padding: 5px 6px 7px; flex: 1; display: flex; flex-direction: column; }
-  .service-card-title { font-size: 0.68rem; margin-bottom: 3px; line-height: 1.08; font-weight: 400; font-style: italic; }
-  .service-desc { font-size: 0.44rem; line-height: 1.2; text-align: left; margin-bottom: 4px; flex-shrink: 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .service-card-title { font-size: 0.68rem; margin-bottom: 3px; line-height: 1.08; font-weight: 700; font-style: normal; }
+  .service-desc { font-size: 0.44rem; line-height: 1.2; text-align: left; margin-bottom: 4px; flex-shrink: 0; }
   .service-price-row { padding: 2px 0; font-size: 0.48rem; flex-shrink: 0; }
   .service-card .btn-book { padding: 6px; font-size: 0.46rem; margin-top: auto; flex-shrink: 0; }
   .service-explore { font-size: 0.46rem; margin-top: auto; padding-top: 2px; flex-shrink: 0; }
 
   /* Pricing single column */
   .pricing-grid { grid-template-columns: 1fr; gap: 6px; }
-  .pricing-card { padding: 22px 10px 12px; }
+  .pricing-card { padding: 22px 10px 12px; display: flex; flex-direction: column; }
   .pricing-card:not(.best-value) { padding-top: 22px; }
   .pricing-amount { font-size: 1.5rem; }
   .best-value-badge { font-size: 0.45rem; padding: 2px 6px; top: -8px; }
@@ -1011,6 +1012,123 @@ h1, h2, h3, .serif {
   .hero-centered .hero-content p[style] { font-size: 0.55rem !important; max-width: 92% !important; }
 
 
+}
+
+
+/* ===================================================================
+   RTL — Arabic language support
+   =================================================================== */
+html[dir="rtl"] .navbar {
+  direction: rtl;
+}
+html[dir="rtl"] .nav-links {
+  left: auto;
+  right: 50%;
+  transform: translateX(50%);
+}
+html[dir="rtl"] .nav-right {
+  direction: ltr; /* keep btn-book readable */
+}
+html[dir="rtl"] .nav-logo {
+  text-align: right;
+}
+
+/* Language toggle button */
+.lang-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--brown-light);
+  cursor: pointer;
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 5px 10px;
+  font-family: 'Inter', sans-serif;
+  transition: color 0.2s, border-color 0.2s;
+}
+.lang-toggle:hover { color: var(--brown); border-color: var(--brown); }
+.lang-toggle i { font-size: 0.75rem; }
+
+/* RTL adjustments */
+html[dir="rtl"] .services-grid,
+html[dir="rtl"] .pricing-grid,
+html[dir="rtl"] .about-grid,
+html[dir="rtl"] .stable-gallery {
+  direction: rtl;
+}
+html[dir="rtl"] .hero-content {
+  text-align: right;
+  left: 60px;
+  right: 60px;
+}
+html[dir="rtl"] .hero-centered .hero-content {
+  text-align: center;
+}
+html[dir="rtl"] .service-card-body {
+  text-align: right;
+}
+html[dir="rtl"] .service-desc,
+html[dir="rtl"] .pricing-sessions,
+html[dir="rtl"] .section-eyebrow,
+html[dir="rtl"] .section-heading,
+html[dir="rtl"] .pkg-description,
+html[dir="rtl"] .about-grid p,
+html[dir="rtl"] .footer-contact,
+html[dir="rtl"] .footer-bottom {
+  direction: rtl;
+}
+html[dir="rtl"] .btn-book-now {
+  direction: ltr;
+}
+html[dir="rtl"] .form-row {
+  direction: rtl;
+}
+html[dir="rtl"] .booking-form label {
+  text-align: right;
+}
+html[dir="rtl"] .booking-form input,
+html[dir="rtl"] .booking-form select,
+html[dir="rtl"] .booking-form textarea {
+  text-align: right;
+}
+html[dir="rtl"] .pkg-breadcrumb-row {
+  direction: rtl;
+}
+
+/* RTL mobile */
+@media (max-width: 900px) {
+  html[dir="rtl"] .nav-links.open {
+    left: 0;
+    right: 0;
+    text-align: right;
+  }
+  html[dir="rtl"] .nav-links {
+    left: auto;
+    right: auto;
+    transform: none;
+  }
+  html[dir="rtl"] .hero-content {
+    left: 12px;
+    right: 12px;
+  }
+  .lang-toggle { 
+    font-size: 0.58rem; 
+    padding: 4px 7px; 
+    gap: 2px;
+  }
+  .lang-toggle i { font-size: 0.6rem; }
+}
+@media (max-width: 420px) {
+  html[dir="rtl"] .hero-content {
+    left: 8px;
+    right: 8px;
+  }
+  .lang-toggle { font-size: 0.5rem; padding: 3px 5px; }
+  .lang-toggle i { font-size: 0.5rem; }
 }
 
 /* ===================================================================

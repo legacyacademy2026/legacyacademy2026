@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title-en" content="About — Legacy Equestrian School">
+  <meta name="title-ar" content="من نحن — مدرسة ليجاسي للفروسية">
   <title>About — Legacy Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -16,15 +18,18 @@
       <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="about.html" class="active">About</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a></li>
+      <li><a href="#"><span class="lang-en">Gallery</span><span class="lang-ar" style="display:none">المعرض</span></a></li>
+      <li><a href="about.html" class="active"><span class="lang-en">About</span><span class="lang-ar" style="display:none">من نحن</span></a></li>
+      <li><a href="index.html#services"><span class="lang-en">Services</span><span class="lang-ar" style="display:none">الخدمات</span></a></li>
+      <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
-      <a href="booking.html" class="btn-book-now">Book Now</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+      <span class="lang-btn-en" style="display:none"><i class="fas fa-globe"></i> English</span>
+      <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
+    </button>
+      <a href="booking.html" class="btn-book-now"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
@@ -33,7 +38,7 @@
     <img src="assets/hero-horse.png" alt="About Legacy">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-breadcrumb"><a href="index.html">Home</a> &gt; About</p>
+      <p class="hero-breadcrumb"><a href="index.html"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a> &gt; About</p>
       <h1>About Us</h1>
     </div>
   </section>
@@ -43,7 +48,7 @@
       <div class="about-grid">
         <img src="assets/hero-horse.png" alt="Coach Mervat with horse">
         <div>
-          <p class="section-eyebrow" style="margin-bottom:12px;">Our Story</p>
+          <p class="section-eyebrow" style="margin-bottom:12px;"><span class="lang-en">Our Story</span><span class="lang-ar" style="display:none">قصتنا</span></p>
           <h2>A Lifelong Love for the Horse</h2>
           <p>Legacy Equestrian was founded on a simple belief: that the bond between horse and rider transforms lives. Under the guidance of Coach Mervat, our academy blends disciplined, world-class instruction with genuine warmth and care for every rider who walks through our gates.</p>
           <p>From first-time riders taking their very first hand-led steps to advanced competitors refining their craft, we meet each student where they are — nurturing confidence, skill, and a deep respect for these remarkable animals.</p>
@@ -54,8 +59,8 @@
 
   <section style="background: var(--cream); padding: 70px 32px;">
     <div class="container" style="max-width:900px; text-align:center;">
-      <p class="section-eyebrow" style="margin-bottom:14px;">What We Stand For</p>
-      <h2 style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:400; color:var(--brown); margin-bottom:40px;">Our Values</h2>
+      <p class="section-eyebrow" style="margin-bottom:14px;"><span class="lang-en">What We Stand For</span><span class="lang-ar" style="display:none">ما نمثله</span></p>
+      <h2 style="font-family:'Cormorant Garamond',serif; font-size:2.4rem; font-weight:400; color:var(--brown); margin-bottom:40px;"><span class="lang-en">Our Values</span><span class="lang-ar" style="display:none">قيمنا</span></h2>
       <div class="services-grid about-values-grid" style="grid-template-columns:repeat(3,1fr);">
         <div class="service-card" style="padding:30px 24px;">
           <h3 class="service-card-title" style="margin-bottom:10px;">Care</h3>
@@ -78,7 +83,7 @@
       <div class="footer-row">
         <div class="footer-col footer-left">
           <p class="footer-contact-label">Phone</p>
-          <p>+971 XX XXX XXXX</p>
+          <p><span class="lang-en">+971 XX XXX XXXX</span><span class="lang-ar" style="display:none">XXX XXXX XX 971+</span></p>
         </div>
         <div class="footer-col footer-mid">
           <div class="footer-socials">
@@ -88,9 +93,9 @@
           </div>
         </div>
         <div class="footer-col footer-right">
-          <p class="footer-contact-label">Contact</p>
+          <p class="footer-contact-label"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></p>
           <p>hello@coachmervat.com</p>
-          <p>Dubai, UAE</p>
+          <p><span class="lang-en">Dubai, UAE</span><span class="lang-ar" style="display:none">دبي، الإمارات</span></p>
         </div>
       </div>
       <div class="footer-divider"></div>

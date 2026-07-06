@@ -3,6 +3,10 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="title-en" content="Legacy — Equestrian School">
+  <meta name="title-ar" content="ليجاسي — مدرسة الفروسية">
+  <meta name="title-en" content="Legacy — Equestrian School">
+  <meta name="title-ar" content="ليجاسي — مدرسة الفروسية">
   <title>Legacy — Equestrian School</title>
   <link rel="stylesheet" href="style.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
@@ -16,15 +20,18 @@
       <span class="nav-logo-sub">Ecole Equestre</span>
     </div>
     <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" class="active">Home</a></li>
-      <li><a href="#">Gallery</a></li>
-      <li><a href="about.html">About</a></li>
-      <li><a href="index.html#services">Services</a></li>
-      <li><a href="contact.html">Contact</a></li>
+      <li><a href="index.html" class="active"><span class="lang-en">Home</span><span class="lang-ar" style="display:none">الرئيسية</span></a></li>
+      <li><a href="#"><span class="lang-en">Gallery</span><span class="lang-ar" style="display:none">المعرض</span></a></li>
+      <li><a href="about.html"><span class="lang-en">About</span><span class="lang-ar" style="display:none">من نحن</span></a></li>
+      <li><a href="index.html#services"><span class="lang-en">Services</span><span class="lang-ar" style="display:none">الخدمات</span></a></li>
+      <li><a href="contact.html"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></a></li>
     </ul>
     <div class="nav-right">
-      <span class="nav-lang"><i class="fas fa-globe"></i> FR</span>
-      <a href="booking.html" class="btn-book-now">Book Now</a>
+      <button class="lang-toggle" id="langToggle" type="button" aria-label="Switch language">
+        <span class="lang-btn-en" style="display:none;"><i class="fas fa-globe"></i> English</span>
+        <span class="lang-btn-ar"><i class="fas fa-globe"></i> عربي</span>
+      </button>
+      <a href="booking.html" class="btn-book-now"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
     </div>
     <button class="hamburger" id="hamburger">&#9776;</button>
   </nav>
@@ -34,14 +41,14 @@
     <img src="assets/hero-horse.png" alt="Black stallion galloping">
     <div class="hero-overlay"></div>
     <div class="hero-content">
-      <p class="hero-eyebrow">Welcome To</p>
+      <p class="hero-eyebrow"><span class="lang-en">Welcome To</span><span class="lang-ar" style="display:none">مرحباً بكم في</span></p>
       <h1 style="font-style:normal; font-size:5.5rem; letter-spacing:-1px;">Legacy</h1>
       <p style="color:rgba(255,255,255,0.9); font-size:1.05rem; max-width:560px; margin:18px auto 0; line-height:1.7;">
-        Elevating equestrian excellence through expert coaching,<br>disciplined training, and a lifelong love for the horse.
+        <span class="lang-en">Elevating equestrian excellence through expert coaching,<br>disciplined training, and a lifelong love for the horse.</span><span class="lang-ar" style="display:none">نرتقي بتميز الفروسية من خلال التدريب المتخصص،<br>والانضباط، وحب الخيل مدى الحياة.</span>
       </p>
       <div class="hero-ctas" style="margin-top:32px;">
-        <a href="training-programs.html" class="btn-book-now" style="display:inline-block; padding:14px 28px; text-decoration:none; font-size:0.72rem; letter-spacing:2px;">Discover Our Lessons</a>
-        <a href="#" class="btn-ghost-white" style="padding:14px 28px; font-size:0.72rem; letter-spacing:2px;">View Gallery</a>
+        <a href="training-programs.html" class="btn-book-now" style="display:inline-block; padding:14px 28px; text-decoration:none; font-size:0.72rem; letter-spacing:2px;"><span class="lang-en">Discover Our Lessons</span><span class="lang-ar" style="display:none">اكتشف دروسنا</span></a>
+        <a href="#" class="btn-ghost-white" style="padding:14px 28px; font-size:0.72rem; letter-spacing:2px;"><span class="lang-en">View Gallery</span><span class="lang-ar" style="display:none">شاهد المعرض</span></a>
       </div>
     </div>
   </section>
@@ -49,8 +56,8 @@
   <!-- Services -->
   <section class="services" id="services">
     <div class="container">
-      <p class="section-eyebrow">Our Services</p>
-      <h2 class="section-heading">Our Services</h2>
+      <p class="section-eyebrow"><span class="lang-en">Our Services</span><span class="lang-ar" style="display:none">خدماتنا</span></p>
+      <h2 class="section-heading"><span class="lang-en">Our Services</span><span class="lang-ar" style="display:none">خدماتنا</span></h2>
 
       <div class="services-grid">
 
@@ -58,9 +65,9 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/private-lessons-hero.png" alt="Riding Lessons">
           <div class="service-card-body">
-            <h3 class="service-card-title">Riding Lessons</h3>
-            <p class="service-desc">Structured training for all levels from beginner to advanced competitive disciplines.</p>
-            <a href="training-programs.html" class="service-explore">Explore →</a>
+            <h3 class="service-card-title"><span class="lang-en">Riding Lessons</span><span class="lang-ar" style="display:none">دروس الركوب</span></h3>
+            <p class="service-desc"><span class="lang-en">Structured training for all levels from beginner to advanced competitive disciplines.</span><span class="lang-ar" style="display:none">تدريب منظم لجميع المستويات من المبتدئين إلى المتقدمين.</span></p>
+            <a href="training-programs.html" class="service-explore"><span class="lang-en">Explore →</span><span class="lang-ar" style="display:none">← استكشف</span></a>
           </div>
         </div>
 
@@ -68,9 +75,9 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/livery-stable.png" alt="Horse Livery">
           <div class="service-card-body">
-            <h3 class="service-card-title">Horse Livery</h3>
-            <p class="service-desc">Full boarding services with premium nutrition and daily care in our state-of-the-art stables.</p>
-            <a href="livery-services.html" class="service-explore">Explore →</a>
+            <h3 class="service-card-title"><span class="lang-en">Horse Livery</span><span class="lang-ar" style="display:none">إسطبلات الخيل</span></h3>
+            <p class="service-desc"><span class="lang-en">Full boarding services with premium nutrition and daily care in our state-of-the-art stables.</span><span class="lang-ar" style="display:none">خدمات إقامة كاملة مع تغذية ممتازة وعناية يومية في إسطبلاتنا الحديثة.</span></p>
+            <a href="livery-services.html" class="service-explore"><span class="lang-en">Explore →</span><span class="lang-ar" style="display:none">← استكشف</span></a>
           </div>
         </div>
 
@@ -78,9 +85,9 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/hero-horse.png" alt="Horse Training">
           <div class="service-card-body">
-            <h3 class="service-card-title">Horse Training</h3>
-            <p class="service-desc">Specialized gentle methods for starting young horses and advancing performance goals.</p>
-            <a href="horse-training.html" class="service-explore">Explore →</a>
+            <h3 class="service-card-title"><span class="lang-en">Horse Training</span><span class="lang-ar" style="display:none">تدريب الخيل</span></h3>
+            <p class="service-desc"><span class="lang-en">Specialized gentle methods for starting young horses and advancing performance goals.</span><span class="lang-ar" style="display:none">أساليب متخصصة ولطيفة لبدء الخيول الصغيرة وتطوير أدائها.</span></p>
+            <a href="horse-training.html" class="service-explore"><span class="lang-en">Explore →</span><span class="lang-ar" style="display:none">← استكشف</span></a>
           </div>
         </div>
 
@@ -88,9 +95,9 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/desert-hero.png" alt="Desert & Beach Riding">
           <div class="service-card-body">
-            <h3 class="service-card-title">Desert &amp; Beach Riding</h3>
-            <p class="service-desc">Unforgettable excursions through the dunes and along the pristine shoreline.</p>
-            <a href="desert-beach-riding.html" class="service-explore">Explore →</a>
+            <h3 class="service-card-title"><span class="lang-en">Desert <h3 class="service-card-title">Desert &amp; Beach Riding</h3>amp; Beach Riding</span><span class="lang-ar" style="display:none">ركوب الصحراء والشاطئ</span></h3>
+            <p class="service-desc"><span class="lang-en">Unforgettable excursions through the dunes and along the pristine shoreline.</span><span class="lang-ar" style="display:none">رحلات لا تُنسى عبر الكثبان الرملية وعلى طول الشواطئ البكر.</span></p>
+            <a href="desert-beach-riding.html" class="service-explore"><span class="lang-en">Explore →</span><span class="lang-ar" style="display:none">← استكشف</span></a>
           </div>
         </div>
 
@@ -98,9 +105,9 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/horses-for-sale-hero.png" alt="Horses for Sale">
           <div class="service-card-body">
-            <h3 class="service-card-title">Horses for Sale</h3>
-            <p class="service-desc">Find your perfect equine companion — from trained sport horses to gentle leisure mounts.</p>
-            <a href="horses-for-sale.html" class="service-explore">Explore →</a>
+            <h3 class="service-card-title"><span class="lang-en">Horses for Sale</span><span class="lang-ar" style="display:none">خيول للبيع</span></h3>
+            <p class="service-desc"><span class="lang-en">Find your perfect equine companion — from trained sport horses to gentle leisure mounts.</span><span class="lang-ar" style="display:none">اعثر على رفيقك المثالي — من خيول الرياضة المدربة إلى خيول الركوب الهادئة.</span></p>
+            <a href="horses-for-sale.html" class="service-explore"><span class="lang-en">Explore →</span><span class="lang-ar" style="display:none">← استكشف</span></a>
           </div>
         </div>
 
@@ -108,9 +115,9 @@
         <div class="service-card">
           <img class="service-card-img" src="assets/horse-rental-hero.png" alt="Horse Rental for Events">
           <div class="service-card-body">
-            <h3 class="service-card-title">Horse Rental for Events</h3>
-            <p class="service-desc">Add a touch of majestic elegance to your weddings, film shoots, or celebrations.</p>
-            <a href="horse-rental-events.html" class="service-explore">Explore →</a>
+            <h3 class="service-card-title"><span class="lang-en">Horse Rental for Events</span><span class="lang-ar" style="display:none">تأجير الخيل للمناسبات</span></h3>
+            <p class="service-desc"><span class="lang-en">Add a touch of majestic elegance to your weddings, film shoots, or celebrations.</span><span class="lang-ar" style="display:none">أضف لمسة من الأناقة الملكية لحفلات الزفاف أو التصوير السينمائي أو الاحتفالات.</span></p>
+            <a href="horse-rental-events.html" class="service-explore"><span class="lang-en">Explore →</span><span class="lang-ar" style="display:none">← استكشف</span></a>
           </div>
         </div>
 
@@ -124,7 +131,7 @@
       <div class="footer-row">
         <div class="footer-col footer-left">
           <p class="footer-contact-label">Phone</p>
-          <p>+971 XX XXX XXXX</p>
+          <p><span class="lang-en">+971 XX XXX XXXX</span><span class="lang-ar" style="display:none">XXX XXXX XX 971+</span></p>
         </div>
         <div class="footer-col footer-mid">
           <div class="footer-socials">
@@ -134,9 +141,9 @@
           </div>
         </div>
         <div class="footer-col footer-right">
-          <p class="footer-contact-label">Contact</p>
+          <p class="footer-contact-label"><span class="lang-en">Contact</span><span class="lang-ar" style="display:none">اتصل بنا</span></p>
           <p>hello@coachmervat.com</p>
-          <p>Dubai, UAE</p>
+          <p><span class="lang-en">Dubai, UAE</span><span class="lang-ar" style="display:none">دبي، الإمارات</span></p>
         </div>
       </div>
       <div class="footer-divider"></div>

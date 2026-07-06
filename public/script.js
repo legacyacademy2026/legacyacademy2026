@@ -520,63 +520,46 @@ const cardObserver = new IntersectionObserver((entries) => {
 }, { threshold: 0.15 });
 
 document.querySelectorAll('.reveal-card').forEach(card => cardObserver.observe(card));
-// ===== Make entire service/package cards clickable =====
-document.querySelectorAll('.service-card').forEach(card => {
-  const link = card.querySelector('.service-explore, .btn-book, a[href]');
-  if (!link) return;
-  const href = link.getAttribute('href');
-  if (!href || href === '#') return;
-  card.style.cursor = 'pointer';
-  card.setAttribute('role', 'link');
-  card.setAttribute('tabindex', '0');
-  const go = (e) => {
-    if (e.target.closest('a')) return; // let real links/buttons work normally
-    window.location.href = href;
-  };
-  card.addEventListener('click', go);
-  card.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter') window.location.href = href;
-  });
-});
 
-// ===== Scroll-reveal for service + pricing cards =====
-const revealObserver = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      setTimeout(() => entry.target.classList.add('revealed'), (i % 6) * 80);
-      revealObserver.unobserve(entry.target);
-    }
-  });
-}, { threshold: 0.12 });
-
-document.querySelectorAll('.service-card, .pricing-card, .single-price-card, .stable-gallery img').forEach(el => {
-  el.classList.add('reveal-up');
-  revealObserver.observe(el);
-});
-
-// ===== Back-to-top floating button =====
+/* =============================================================
+   LANGUAGE TOGGLE — English / Arabic
+   ============================================================= */
 (function () {
-  const btn = document.createElement('button');
-  btn.id = 'backToTop';
-  btn.setAttribute('aria-label', 'Back to top');
-  btn.innerHTML = '↑';
-  document.body.appendChild(btn);
-  btn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  window.addEventListener('scroll', () => {
-    btn.classList.toggle('show', window.scrollY > 400);
-  }, { passive: true });
-})();
+  const langBtn = document.getElementById('langToggle');
+  if (!langBtn) return;
 
-// ===== Reveal section headings on scroll =====
-(function () {
-  const headingObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('revealed');
-        headingObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.2 });
-  document.querySelectorAll('.section-heading, .pkg-pricing h2, .pkg-description h2, .section-title, .about-grid h2')
-    .forEach(el => { el.classList.add('reveal-up'); headingObserver.observe(el); });
+  const STORAGE_KEY = 'legacy-lang';
+  let currentLang = localStorage.getItem(STORAGE_KEY) || 'en';
+
+  function setLang(lang) {
+    currentLang = lang;
+    localStorage.setItem(STORAGE_KEY, lang);
+    
+    // Update HTML dir & lang
+    document.documentElement.lang = lang;
+    document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+    document.body.classList.toggle('rtl', lang === 'ar');
+
+    // Toggle visibility classes
+    document.querySelectorAll('.lang-en').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
+    document.querySelectorAll('.lang-ar').forEach(el => el.style.display = lang === 'ar' ? '' : 'none');
+
+    // Update button text
+    const enSpan = langBtn.querySelector('.lang-btn-en');
+    const arSpan = langBtn.querySelector('.lang-btn-ar');
+    if (enSpan) enSpan.style.display = lang === 'en' ? 'none' : '';
+    if (arSpan) arSpan.style.display = lang === 'ar' ? 'none' : '';
+
+    // Update title
+    document.title = lang === 'ar' 
+      ? (document.querySelector('meta[name="title-ar"]')?.content || document.title)
+      : (document.querySelector('meta[name="title-en"]')?.content || document.title);
+  }
+
+  langBtn.addEventListener('click', () => {
+    setLang(currentLang === 'en' ? 'ar' : 'en');
+  });
+
+  // Apply on load
+  setLang(currentLang);
 })();
