@@ -1402,3 +1402,44 @@ html { scroll-behavior: smooth; }
 @media (max-width: 420px) {
   .footer-bottom { font-size: 0.36rem !important; }
 }
+
+/* ===================================================================
+   CLIENT BATCH 3 — footer to bottom, card spacing, smaller hero buttons
+   =================================================================== */
+
+/* 1) Push footer to the very bottom (fills the empty space on short pages) */
+body { min-height: 100vh; display: flex; flex-direction: column; }
+body > .footer { margin-top: auto !important; }
+/* keep hero/sections from stretching oddly in the flex column */
+body > section, body > div { flex-shrink: 0; }
+
+/* 2) Service cards: nicer, roomier spacing */
+.services-grid { gap: 14px; }
+@media (max-width: 900px) {
+  .services-grid { gap: 12px !important; row-gap: 14px !important; }
+  .services { padding: 18px 0 22px !important; }
+}
+@media (max-width: 420px) {
+  .services-grid { gap: 9px !important; row-gap: 11px !important; }
+}
+
+/* 3) Hero buttons — small & tidy (desktop + mobile) */
+.hero-btn {
+  display: inline-block;
+  padding: 11px 22px;
+  font-size: 0.66rem;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+}
+@media (max-width: 900px) {
+  .hero-ctas { gap: 8px !important; margin-top: 16px !important; justify-content: center; flex-wrap: nowrap; }
+  .hero-btn {
+    padding: 8px 12px !important;
+    font-size: 0.52rem !important;
+    letter-spacing: 0.8px !important;
+    flex: 1 1 0; text-align: center; white-space: nowrap;
+  }
+}
+@media (max-width: 420px) {
+  .hero-btn { padding: 7px 8px !important; font-size: 0.46rem !important; letter-spacing: 0.4px !important; }
+}
