@@ -9,7 +9,7 @@ const { sendWhatsApp } = require('../utils/whatsapp');
 const { sendSMS } = require('../utils/sms');
 const { buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText } = require('../utils/messageTemplates');
 const { notifyAll, actionUrl, ADMIN_ACTION_KEY } = require('../utils/notifier');
-const { actionPage } = require('../utils/actionPage');
+const { actionPage, confirmPage } = require('../utils/actionPage');
 
 function timeToMinutes(timeStr) {
   const [time, period] = timeStr.split(' ');
@@ -266,22 +266,50 @@ async function applyBookingStatus(booking, status) {
   }
 }
 
-// One-click admin session actions (from email / WhatsApp, no login)
-async function oneClickBookingAction(req, res, status, title, msgVerb) {
+// One-click admin session actions — GET shows a confirm page, POST executes
+// (prevents email/WhatsApp link scanners from auto-triggering the action).
+const BOOKING_ACTIONS = {
+  confirm:  { status: 'Confirmed', title: 'Session Confirmed', verb: 'confirmed', q: 'Confirm this session?', btn: '✅ Confirm Session', color: '#1e7e34' },
+  decline:  { status: 'Cancelled', title: 'Session Declined', verb: 'declined', q: 'Decline this session?', btn: '❌ Confirm Decline', color: '#a71d2a' },
+  complete: { status: 'Completed', title: 'Session Completed', verb: 'marked completed', q: 'Mark this session complete?', btn: '🎉 Confirm Complete', color: '#5c3d1a' }
+};
+
+async function showBookingConfirm(req, res, action) {
+  const cfg = BOOKING_ACTIONS[action];
   if (req.query.key !== ADMIN_ACTION_KEY) return res.status(403).send(actionPage({ ok: false, title: 'Unauthorized', message: 'Invalid or missing security key.' }));
   try {
     const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).send(actionPage({ ok: false, title: 'Not Found', message: 'This session no longer exists.' }));
-    await applyBookingStatus(booking, status);
-    res.send(actionPage({ ok: true, title, message: `${booking.name}'s session on ${booking.date} at ${booking.startTime} has been ${msgVerb}. The customer has been notified.` }));
+    res.send(confirmPage({
+      title: cfg.q,
+      message: `${booking.name}'s session — ${booking.date}${booking.startTime ? ' at ' + booking.startTime : ''}. Click below to ${cfg.verb === 'marked completed' ? 'mark it complete' : cfg.verb} and notify the customer.`,
+      actionUrl: `/api/bookings/${booking._id}/${action}?key=${encodeURIComponent(req.query.key)}`,
+      buttonLabel: cfg.btn, color: cfg.color, icon: '📅'
+    }));
   } catch (err) {
     res.status(500).send(actionPage({ ok: false, title: 'Error', message: 'Something went wrong. Please use the dashboard.' }));
   }
 }
 
-router.get('/:id/confirm', (req, res) => oneClickBookingAction(req, res, 'Confirmed', 'Session Confirmed', 'confirmed'));
-router.get('/:id/decline', (req, res) => oneClickBookingAction(req, res, 'Cancelled', 'Session Declined', 'declined'));
-router.get('/:id/complete', (req, res) => oneClickBookingAction(req, res, 'Completed', 'Session Completed', 'marked completed'));
+async function execBookingAction(req, res, action) {
+  const cfg = BOOKING_ACTIONS[action];
+  if (req.query.key !== ADMIN_ACTION_KEY) return res.status(403).send(actionPage({ ok: false, title: 'Unauthorized', message: 'Invalid or missing security key.' }));
+  try {
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) return res.status(404).send(actionPage({ ok: false, title: 'Not Found', message: 'This session no longer exists.' }));
+    await applyBookingStatus(booking, cfg.status);
+    res.send(actionPage({ ok: true, title: cfg.title, message: `${booking.name}'s session on ${booking.date}${booking.startTime ? ' at ' + booking.startTime : ''} has been ${cfg.verb}. The customer has been notified.` }));
+  } catch (err) {
+    res.status(500).send(actionPage({ ok: false, title: 'Error', message: 'Something went wrong. Please use the dashboard.' }));
+  }
+}
+
+router.get('/:id/confirm',  (req, res) => showBookingConfirm(req, res, 'confirm'));
+router.post('/:id/confirm', (req, res) => execBookingAction(req, res, 'confirm'));
+router.get('/:id/decline',  (req, res) => showBookingConfirm(req, res, 'decline'));
+router.post('/:id/decline', (req, res) => execBookingAction(req, res, 'decline'));
+router.get('/:id/complete',  (req, res) => showBookingConfirm(req, res, 'complete'));
+router.post('/:id/complete', (req, res) => execBookingAction(req, res, 'complete'));
 
 router.patch('/:id/status', async (req, res) => {
   try {

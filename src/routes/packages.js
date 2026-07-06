@@ -8,7 +8,7 @@ const { sendEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
 const { sendSMS } = require('../utils/sms');
 const { notifyAll, actionUrl, ADMIN_ACTION_KEY } = require('../utils/notifier');
-const { actionPage } = require('../utils/actionPage');
+const { actionPage, confirmPage } = require('../utils/actionPage');
 const {
   buildPackageEmailHtml, buildPackageWhatsAppText,
   buildStatusUpdateEmailHtml, buildStatusUpdateWhatsAppText
@@ -288,24 +288,32 @@ router.get('/:id/freeze', async (req, res) => {
     if (!pkg) return res.status(404).send(actionPage({ ok: false, title: 'Not Found', message: 'This package no longer exists.' }));
     if (pkg.frozen) return res.send(actionPage({ ok: true, title: 'Already Frozen', message: `${pkg.name}'s package is already frozen.` }));
     if (freezeDaysLeft(pkg) <= 0) return res.send(actionPage({ ok: false, title: 'No Freeze Days Left', message: `${pkg.name} has used the full 14-day freeze allowance.` }));
-    await applyFreeze(pkg);
-    res.send(actionPage({ ok: true, title: 'Package Frozen', message: `${pkg.name}'s package is now frozen and moved to the Frozen tab. The customer has been notified.` }));
+    res.send(confirmPage({
+      title: 'Approve this freeze?',
+      message: `${pkg.name} — ${pkg.packageType} (${pkg.tierLabel}). ${Math.floor(freezeDaysLeft(pkg))} freeze-day(s) left. Click below to freeze and pause the validity.`,
+      actionUrl: `/api/packages/${pkg._id}/freeze?key=${encodeURIComponent(req.query.key)}&ui=1`,
+      buttonLabel: '❄️ Confirm Freeze', color: '#2f5975', icon: '❄️'
+    }));
   } catch (err) {
     res.status(500).send(actionPage({ ok: false, title: 'Error', message: 'Something went wrong. Please use the dashboard.' }));
   }
 });
 
-// ===== Admin freeze / unfreeze from dashboard =====
+// ===== Admin freeze from dashboard (JSON) OR one-click confirm (HTML, ?ui=1) =====
 router.post('/:id/freeze', async (req, res) => {
+  const uiMode = req.query.ui === '1';
+  if (uiMode && req.query.key !== ADMIN_ACTION_KEY) return res.status(403).send(actionPage({ ok: false, title: 'Unauthorized', message: 'Invalid or missing security key.' }));
   try {
     const pkg = await PackagePurchase.findById(req.params.id);
-    if (!pkg) return res.status(404).json({ message: 'Package not found' });
-    if (pkg.frozen) return res.status(400).json({ message: 'Already frozen.' });
-    if (freezeDaysLeft(pkg) <= 0) return res.status(403).json({ message: '❌ Full 14-day freeze allowance used.' });
+    if (!pkg) return uiMode ? res.status(404).send(actionPage({ ok: false, title: 'Not Found', message: 'This package no longer exists.' })) : res.status(404).json({ message: 'Package not found' });
+    if (pkg.frozen) return uiMode ? res.send(actionPage({ ok: true, title: 'Already Frozen', message: `${pkg.name}'s package is already frozen.` })) : res.status(400).json({ message: 'Already frozen.' });
+    if (freezeDaysLeft(pkg) <= 0) return uiMode ? res.send(actionPage({ ok: false, title: 'No Freeze Days Left', message: `${pkg.name} has used the full 14-day allowance.` })) : res.status(403).json({ message: '❌ Full 14-day freeze allowance used.' });
     await applyFreeze(pkg);
-    res.json({ message: '❄️ Package frozen.', package: pkg });
+    return uiMode
+      ? res.send(actionPage({ ok: true, title: 'Package Frozen', message: `${pkg.name}'s package is now frozen and moved to the Frozen tab. The customer has been notified.` }))
+      : res.json({ message: '❄️ Package frozen.', package: pkg });
   } catch (err) {
-    res.status(500).json({ message: '❌ Error freezing package' });
+    return uiMode ? res.status(500).send(actionPage({ ok: false, title: 'Error', message: 'Something went wrong.' })) : res.status(500).json({ message: '❌ Error freezing package' });
   }
 });
 
@@ -380,6 +388,23 @@ router.get('/:id/approve', async (req, res) => {
     const pkg = await PackagePurchase.findById(req.params.id);
     if (!pkg) return res.status(404).send(actionPage({ ok: false, title: 'Not Found', message: 'This package no longer exists.' }));
     if (pkg.approvalStatus === 'Approved') return res.send(actionPage({ ok: true, title: 'Already Approved', message: `${pkg.name}'s ${pkg.packageType} — ${pkg.tierLabel} package is already approved.` }));
+    res.send(confirmPage({
+      title: 'Approve this package?',
+      message: `${pkg.name} — ${pkg.packageType} (${pkg.tierLabel}), AED ${pkg.price}. Click below to approve and notify the customer.`,
+      actionUrl: `/api/packages/${pkg._id}/approve?key=${encodeURIComponent(req.query.key)}`,
+      buttonLabel: '✅ Confirm Approval', color: '#1e7e34', icon: '📦'
+    }));
+  } catch (err) {
+    res.status(500).send(actionPage({ ok: false, title: 'Error', message: 'Something went wrong. Please use the dashboard.' }));
+  }
+});
+
+router.post('/:id/approve', async (req, res) => {
+  if (req.query.key !== ADMIN_ACTION_KEY) return res.status(403).send(actionPage({ ok: false, title: 'Unauthorized', message: 'Invalid or missing security key.' }));
+  try {
+    const pkg = await PackagePurchase.findById(req.params.id);
+    if (!pkg) return res.status(404).send(actionPage({ ok: false, title: 'Not Found', message: 'This package no longer exists.' }));
+    if (pkg.approvalStatus === 'Approved') return res.send(actionPage({ ok: true, title: 'Already Approved', message: `${pkg.name}'s package is already approved.` }));
     await applyPackageApproval(pkg);
     res.send(actionPage({ ok: true, title: 'Package Approved', message: `${pkg.name}'s ${pkg.packageType} — ${pkg.tierLabel} package is now approved. The customer has been notified and can book sessions.` }));
   } catch (err) {
@@ -388,6 +413,23 @@ router.get('/:id/approve', async (req, res) => {
 });
 
 router.get('/:id/reject', async (req, res) => {
+  if (req.query.key !== ADMIN_ACTION_KEY) return res.status(403).send(actionPage({ ok: false, title: 'Unauthorized', message: 'Invalid or missing security key.' }));
+  try {
+    const pkg = await PackagePurchase.findById(req.params.id);
+    if (!pkg) return res.status(404).send(actionPage({ ok: false, title: 'Not Found', message: 'This package no longer exists.' }));
+    if (pkg.approvalStatus === 'Rejected') return res.send(actionPage({ ok: true, title: 'Already Rejected', message: `This request was already rejected.` }));
+    res.send(confirmPage({
+      title: 'Reject this request?',
+      message: `${pkg.name} — ${pkg.packageType} (${pkg.tierLabel}). Click below to reject and notify the customer.`,
+      actionUrl: `/api/packages/${pkg._id}/reject?key=${encodeURIComponent(req.query.key)}`,
+      buttonLabel: '❌ Confirm Rejection', color: '#a71d2a', icon: '📦'
+    }));
+  } catch (err) {
+    res.status(500).send(actionPage({ ok: false, title: 'Error', message: 'Something went wrong. Please use the dashboard.' }));
+  }
+});
+
+router.post('/:id/reject', async (req, res) => {
   if (req.query.key !== ADMIN_ACTION_KEY) return res.status(403).send(actionPage({ ok: false, title: 'Unauthorized', message: 'Invalid or missing security key.' }));
   try {
     const pkg = await PackagePurchase.findById(req.params.id);
