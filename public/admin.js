@@ -45,18 +45,21 @@ function logout() {
 
 async function switchView(view) {
   document.getElementById('bookingsView').style.display = view === 'bookings' ? 'block' : 'none';
+  document.getElementById('allBookingsView').style.display = view === 'allbookings' ? 'block' : 'none';
   document.getElementById('customersView').style.display = view === 'customers' ? 'block' : 'none';
   document.getElementById('reportsView').style.display = view === 'reports' ? 'block' : 'none';
   document.getElementById('packagesView').style.display = view === 'packages' ? 'block' : 'none';
   document.getElementById('frozenView').style.display = view === 'frozen' ? 'block' : 'none';
   document.getElementById('liveryView').style.display = view === 'livery' ? 'block' : 'none';
   document.getElementById('tabBookings').classList.toggle('active', view === 'bookings');
+  document.getElementById('tabAllBookings').classList.toggle('active', view === 'allbookings');
   document.getElementById('tabCustomers').classList.toggle('active', view === 'customers');
   document.getElementById('tabReports').classList.toggle('active', view === 'reports');
   document.getElementById('tabPackages').classList.toggle('active', view === 'packages');
   document.getElementById('tabFrozen').classList.toggle('active', view === 'frozen');
   document.getElementById('tabLivery').classList.toggle('active', view === 'livery');
 
+  if (view === 'allbookings') { await loadBookings(); renderTable(); }
   if (view === 'customers') await loadCustomers();
   if (view === 'reports') {
     await loadCustomers();
@@ -115,6 +118,17 @@ function priceLabel(b) {
   return `AED ${(b.price || 0).toFixed(0)}`;
 }
 
+// A package session's payment status follows the PACKAGE (pay once -> covers all sessions)
+function effectivePayment(b) {
+  if (b.packagePurchaseId) {
+    const pkg = (allPackagesCache || []).find(p => p._id === b.packagePurchaseId);
+    if (pkg) return { label: pkg.paymentStatus === 'Paid' ? 'Paid (package)' : 'Unpaid (package)', cls: (pkg.paymentStatus || 'Unpaid').toLowerCase(), fromPackage: true };
+    return { label: 'Package', cls: 'unpaid', fromPackage: true };
+  }
+  const p = b.paymentStatus || 'Unpaid';
+  return { label: p, cls: p.toLowerCase(), fromPackage: false };
+}
+
 function openModal(html) {
   document.getElementById('modalContent').innerHTML = html;
   document.getElementById('modalOverlay').style.display = 'flex';
@@ -129,6 +143,11 @@ async function loadBookings() {
     await loadClosedDays();
     const response = await fetch('/api/bookings');
     allBookingsCache = await response.json();
+    // Load packages too so package sessions can show the PACKAGE payment status
+    try {
+      const pkgRes = await fetch('/api/packages');
+      allPackagesCache = await pkgRes.json();
+    } catch (e) { /* non-fatal */ }
     renderStats();
     renderCalendar();
     renderDayControls(selectedDay);
@@ -207,7 +226,9 @@ function renderCalendar() {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
 
   const countsByDate = {};
-  allBookingsCache.forEach(b => { countsByDate[b.date] = (countsByDate[b.date] || 0) + 1; });
+  allBookingsCache
+    .filter(b => b.status !== 'Completed' && b.status !== 'Cancelled')
+    .forEach(b => { countsByDate[b.date] = (countsByDate[b.date] || 0) + 1; });
 
   const grid = document.getElementById('calendarGrid');
   grid.innerHTML = '';
@@ -350,19 +371,22 @@ function renderDailyBookings(dateStr) {
 
     inCat.forEach(b => {
       const status = b.status || 'Pending';
-      const payment = b.paymentStatus || 'Unpaid';
+      const pay = effectivePayment(b);
       const card = document.createElement('div');
       card.className = 'mini-booking-card';
+      const paymentControl = pay.fromPackage
+        ? `<span class="payment-badge payment-${pay.cls}">${pay.label}</span>`
+        : `<select class="payment-select payment-${pay.cls}" onchange="updatePaymentStatus('${b._id}', this.value)">
+            <option value="Unpaid" ${pay.label === 'Unpaid' ? 'selected' : ''}>💰 Unpaid</option>
+            <option value="Paid" ${pay.label === 'Paid' ? 'selected' : ''}>✅ Paid</option>
+          </select>`;
       card.innerHTML = `
         <div>
           <strong>${escapeHtml(b.name)}</strong> — ${b.startTime || 'Time TBA'} (${durationLabel(b.duration)}) — ${priceLabel(b)}
           ${b.subPackage ? `<br><span class="sub-label">${escapeHtml(b.subPackage)}</span>` : ''}
         </div>
         <div class="booking-actions">
-          <select class="payment-select payment-${payment.toLowerCase()}" onchange="updatePaymentStatus('${b._id}', this.value)">
-            <option value="Unpaid" ${payment === 'Unpaid' ? 'selected' : ''}>💰 Unpaid</option>
-            <option value="Paid" ${payment === 'Paid' ? 'selected' : ''}>✅ Paid</option>
-          </select>
+          ${paymentControl}
           <select class="status-select status-${status.toLowerCase()}" onchange="updateStatus('${b._id}', this.value)">
             <option value="Pending" ${status === 'Pending' ? 'selected' : ''}>Pending</option>
             <option value="Confirmed" ${status === 'Confirmed' ? 'selected' : ''}>Confirmed</option>
@@ -380,10 +404,15 @@ function renderDailyBookings(dateStr) {
 
 async function updateStatus(id, status) {
   try {
+    let reason;
+    if (status === 'Cancelled') {
+      reason = prompt('Reason for cancelling (this will be sent to the customer, and their session returns to their package):', '');
+      if (reason === null) { loadBookings(); return; } // admin pressed Cancel — abort
+    }
     await fetch(`/api/bookings/${id}/status`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ status })
+      body: JSON.stringify({ status, reason })
     });
     loadBookings();
   } catch (err) {
@@ -439,7 +468,7 @@ function renderTable() {
 
   bookings.forEach(b => {
     const status = b.status || 'Pending';
-    const payment = b.paymentStatus || 'Unpaid';
+    const pay = effectivePayment(b);
     const row = document.createElement('tr');
     const submitted = new Date(b.createdAt).toLocaleString();
     row.innerHTML = `
@@ -451,7 +480,7 @@ function renderTable() {
       <td>${escapeHtml(b.date)}</td>
       <td>${escapeHtml(b.startTime) || 'Time TBA'} (${durationLabel(b.duration)})</td>
       <td>${priceLabel(b)}</td>
-      <td><span class="payment-badge payment-${payment.toLowerCase()}">${payment}</span></td>
+      <td><span class="payment-badge payment-${pay.cls}">${pay.label}</span></td>
       <td><span class="status-badge status-${status.toLowerCase()}">${status}</span></td>
       <td>${submitted}</td>
       <td class="booking-actions">

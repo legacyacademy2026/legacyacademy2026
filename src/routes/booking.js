@@ -222,7 +222,7 @@ router.delete('/:id', async (req, res) => {
   }
 });
 
-async function applyBookingStatus(booking, status) {
+async function applyBookingStatus(booking, status, opts = {}) {
   const previousStatus = booking.status;
   if (previousStatus === status) return;
   booking.status = status;
@@ -235,10 +235,11 @@ async function applyBookingStatus(booking, status) {
   let notifyData = null;
   if (status === 'Cancelled' && previousStatus !== 'Cancelled') {
     pkg.sessionsBooked = Math.max(0, pkg.sessionsBooked - 1);
+    const reasonLine = opts.reason ? `<br><br><strong>Reason:</strong> ${opts.reason}` : '';
     notifyData = {
-      statusBadge: { bg: '#f8d7da', color: '#a71d2a', text: '❌ Session Not Approved' },
-      bodyText: `Your session on <strong>${booking.date} at ${booking.startTime}</strong> could not be confirmed. Please select another date using the link below.`,
-      statusLine: 'Your session was declined — please pick another date.',
+      statusBadge: { bg: '#f8d7da', color: '#a71d2a', text: '❌ Session Cancelled' },
+      bodyText: `We're sorry — your session on <strong>${booking.date}${booking.startTime ? ' at ' + booking.startTime : ''}</strong> has been cancelled by the academy.${reasonLine}<br><br>Your session has been <strong>returned to your package</strong> — please choose another day using the link below.`,
+      statusLine: `Your session was cancelled${opts.reason ? ' — ' + opts.reason : ''}. Your session is returned — please pick another date.`,
       ctaLabel: 'Choose Another Date'
     };
   }
@@ -320,10 +321,10 @@ router.post('/:id/complete', (req, res) => execBookingAction(req, res, 'complete
 
 router.patch('/:id/status', async (req, res) => {
   try {
-    const { status } = req.body;
+    const { status, reason } = req.body;
     const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ message: 'Booking not found' });
-    await applyBookingStatus(booking, status);
+    await applyBookingStatus(booking, status, { reason });
     res.json({ message: '✅ Status updated', booking });
   } catch (err) {
     res.status(500).json({ message: '❌ Error updating status' });

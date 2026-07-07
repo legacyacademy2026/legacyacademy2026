@@ -32,6 +32,7 @@
 
     <div class="view-tabs">
       <button class="tab-btn active" id="tabBookings" onclick="switchView('bookings')">📅 Bookings</button>
+      <button class="tab-btn" id="tabAllBookings" onclick="switchView('allbookings')">📋 All Bookings</button>
       <button class="tab-btn" id="tabCustomers" onclick="switchView('customers')">👥 Customers</button>
       <button class="tab-btn" id="tabReports" onclick="switchView('reports')">📊 Reports</button>
       <button class="tab-btn" id="tabPackages" onclick="switchView('packages')">📦 Packages</button>
@@ -66,6 +67,12 @@
         </div>
       </div>
 
+      </div>
+
+    
+
+    <!-- ===== ALL BOOKINGS VIEW (history) ===== -->
+    <div id="allBookingsView" style="display:none;">
       <h3 class="table-title">All Bookings</h3>
       <div class="filter-bar">
         <input type="text" id="searchInput" placeholder="Search name, email, phone..." oninput="renderTable()">
@@ -82,6 +89,7 @@
           <option value="">All Status</option>
           <option value="Pending">Pending</option>
           <option value="Confirmed">Confirmed</option>
+          <option value="Completed">Completed</option>
           <option value="Cancelled">Cancelled</option>
         </select>
         <span class="count-text" id="countText"></span>
