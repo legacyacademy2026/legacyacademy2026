@@ -121,6 +121,9 @@ router.post('/', async (req, res) => {
 
 router.get('/', async (req, res) => {
   try {
+    // Lazily complete past sessions so the dashboard is always up to date,
+    // even right after the server wakes from sleep (throttled inside).
+    try { await require('../cron/reminder').sweepPastSessions(); } catch (e) { /* non-fatal */ }
     const bookings = await Booking.find().sort({ createdAt: -1 });
     res.json(bookings);
   } catch (err) {

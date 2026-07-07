@@ -9,14 +9,42 @@ const { buildReminderWhatsAppText, buildLiveryStatusEmailHtml, buildLiveryStatus
 const { notifyAll } = require('../utils/notifier');
 require('dotenv').config();
 
+// Academy local timezone: Dubai (UTC+4). The server runs in UTC, so we must
+// interpret booking times as Dubai time or sessions complete 4 hours late.
+const TZ_OFFSET_HOURS = 4;
+
 function parseBookingDateTime(dateStr, timeStr) {
   const [time, period] = timeStr.split(' ');
   let [hours, minutes] = time.split(':').map(Number);
   if (period === 'PM' && hours !== 12) hours += 12;
   if (period === 'AM' && hours === 12) hours = 0;
-  const dt = new Date(dateStr);
-  dt.setHours(hours, minutes, 0, 0);
-  return dt;
+  const [y, m, d] = dateStr.split('-').map(Number);
+  // Build the true moment: Dubai wall-clock time -> UTC instant
+  return new Date(Date.UTC(y, m - 1, d, hours - TZ_OFFSET_HOURS, minutes, 0, 0));
+}
+
+// ===== Sweep: auto-complete sessions whose end time has passed =====
+// Called on boot, hourly by cron, and lazily when the dashboard loads bookings.
+let lastSweepAt = 0;
+async function sweepPastSessions(force = false) {
+  const now = new Date();
+  if (!force && now.getTime() - lastSweepAt < 5 * 60 * 1000) return; // throttle 5 min
+  lastSweepAt = now.getTime();
+  try {
+    const bookingsRouter = require('../routes/booking');
+    const activeSessions = await Booking.find({ status: { $in: ['Pending', 'Confirmed'] } });
+    for (const b of activeSessions) {
+      if (!b.date || !b.startTime || !b.duration) continue; // date-only bookings are manual
+      const start = parseBookingDateTime(b.date, b.startTime);
+      const end = new Date(start.getTime() + b.duration * 60 * 60 * 1000);
+      if (now >= end) {
+        await bookingsRouter.applyBookingStatus(b, 'Completed');
+        console.log(`✅ Session ${b._id} auto-completed (time passed).`);
+      }
+    }
+  } catch (err) {
+    console.log('❌ Session sweep error:', err.message);
+  }
 }
 
 function startReminderJob() {
@@ -209,23 +237,18 @@ function startReminderJob() {
       }
 
       // Auto-complete sessions whose end time has passed (no-show / not cancelled -> counts as done)
-      const bookingsRouter = require('../routes/booking');
-      const activeSessions = await Booking.find({ status: { $in: ['Pending', 'Confirmed'] } });
-      for (const b of activeSessions) {
-        if (!b.date || !b.startTime || typeof b.duration !== 'number') continue;
-        const start = parseBookingDateTime(b.date, b.startTime);
-        const end = new Date(start.getTime() + b.duration * 60 * 60 * 1000);
-        if (now >= end) {
-          await bookingsRouter.applyBookingStatus(b, 'Completed');
-          console.log(`✅ Session ${b._id} auto-completed (time passed).`);
-        }
-      }
+      // Auto-complete sessions whose end time has passed
+      await sweepPastSessions(true);
     } catch (err) {
       console.log('❌ Package expiry/freeze job error:', err);
     }
   });
 
   console.log('⏰ Package expiry + freeze system is active (checks hourly)');
+
+  // Catch-up sweep immediately on boot (Render free tier sleeps — this makes
+  // past sessions complete the moment the server wakes, not an hour later)
+  setTimeout(() => sweepPastSessions(true), 5000);
 }
 
-module.exports = { startReminderJob, parseBookingDateTime };
+module.exports = { startReminderJob, parseBookingDateTime, sweepPastSessions };
