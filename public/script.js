@@ -554,8 +554,8 @@ document.querySelectorAll('.reveal-card').forEach(card => cardObserver.observe(c
     document.body.classList.toggle('rtl', lang === 'ar');
 
     // Toggle visibility classes
-    document.querySelectorAll('.lang-en').forEach(el => el.style.display = lang === 'en' ? '' : 'none');
-    document.querySelectorAll('.lang-ar').forEach(el => el.style.display = lang === 'ar' ? '' : 'none');
+    document.querySelectorAll('.lang-en').forEach(el => { if (lang === 'en') el.style.removeProperty('display'); else el.style.display = 'none'; });
+    document.querySelectorAll('.lang-ar').forEach(el => { if (lang === 'ar') el.style.removeProperty('display'); else el.style.display = 'none'; });
     // Swap alt, placeholder, aria-label attributes
     document.querySelectorAll('[data-alt-ar]').forEach(el => {
       el.setAttribute('alt', lang === 'ar' ? el.getAttribute('data-alt-ar') : el.getAttribute('alt').replace(el.getAttribute('data-alt-ar'), ''));

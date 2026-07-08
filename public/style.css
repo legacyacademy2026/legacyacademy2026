@@ -1033,6 +1033,14 @@ html[dir="rtl"] .nav-logo {
   text-align: right;
 }
 
+/* ===================================================================
+   LANGUAGE VISIBILITY — CSS fallback (works even without JS)
+   =================================================================== */
+.lang-ar, .lang-btn-ar { display: none; }
+html[dir="rtl"] .lang-en, html[dir="rtl"] .lang-btn-en { display: none; }
+html[dir="rtl"] .lang-ar, html[dir="rtl"] .lang-btn-ar { display: inline; }
+html[dir="rtl"] .lang-ar.block, html[dir="rtl"] .lang-btn-ar.block { display: block; }
+
 /* Language toggle button */
 .lang-toggle {
   display: inline-flex;
