@@ -268,7 +268,7 @@ async function refreshSessionTimes() {
   timeSelect.innerHTML = '<option value="">-- Choose a Time --</option>';
 
   const workStart = 6 * 60;
-  const duration = 45;
+  const duration = currentPackage.sessionDuration || 45; // actual package duration (20, 30, 45, etc.)
 
   function todayStr() {
     const d = new Date();
