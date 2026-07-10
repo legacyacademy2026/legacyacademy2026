@@ -948,6 +948,7 @@ function packageCardHtml(p) {
             <div class="package-card-title">${escapeHtml(p.name)}</div>
             <div class="package-card-sub">${escapeHtml(p.packageType)} — ${escapeHtml(p.tierLabel)}</div>
             <div class="package-card-contact">${escapeHtml(p.email)} • ${escapeHtml(p.phone)}</div>
+            ${p.requestedSessions && p.requestedSessions.length ? `<div class="package-card-sub" style="color:#6b7a5a; margin-top:4px;">📅 Requested: ${p.requestedSessions.map((s,i) => `#${i+1} ${s.date} ${s.startTime}`).join(' · ')}</div>` : ''}
           </div>
           <div>
             <span class="approval-badge approval-${approvalClass}">${p.approvalStatus}</span>

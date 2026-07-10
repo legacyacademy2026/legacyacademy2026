@@ -1489,3 +1489,23 @@ body { min-height: auto; display: block; }
 @media (max-width: 420px) {
   .hero-btn { padding: 7px 11px !important; font-size: 0.46rem !important; letter-spacing: 0.3px !important; }
 }
+
+/* ===== Multi-session picker ===== */
+.session-picker-header { margin-bottom: 14px; }
+.session-picker-header h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--brown); }
+.session-picker-count { font-size: 0.85rem; color: var(--olive); font-weight: 600; margin-top: 4px; }
+.session-picker-add { background: #f5f2e8; border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.session-picker-add .form-row { margin-bottom: 0; gap: 10px; }
+.btn-add-session { background: var(--olive); color: #fff; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: 600; font-size: 0.82rem; white-space: nowrap; }
+.btn-add-session:hover { opacity: 0.9; }
+.btn-add-session:disabled { opacity: 0.4; cursor: not-allowed; }
+.picked-sessions-list { display: flex; flex-direction: column; gap: 6px; }
+.picked-session-item { display: flex; align-items: center; justify-content: space-between; background: #fff; border: 1px solid #e5ddcf; border-radius: 10px; padding: 10px 14px; font-size: 0.85rem; }
+.picked-session-item .session-num { color: var(--olive); font-weight: 700; margin-right: 10px; }
+.picked-session-item .session-info { flex: 1; }
+.picked-session-item .btn-remove-session { background: none; border: none; color: #a71d2a; cursor: pointer; font-size: 1rem; padding: 4px 8px; }
+.picked-session-item .btn-remove-session:hover { background: #f8d7da; border-radius: 6px; }
+@media (max-width: 600px) {
+  .session-picker-add .form-row { flex-direction: column; }
+  .btn-add-session { width: 100%; text-align: center; }
+}

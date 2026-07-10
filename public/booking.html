@@ -173,6 +173,32 @@
           </div>
         </div>
 
+        <!-- Multi-session picker for packages -->
+        <div id="sessionPickerArea" style="display:none;">
+          <div class="session-picker-header">
+            <h3><span class="lang-en">Choose Your Session Dates</span><span class="lang-ar" style="display:none">اختر مواعيد جلساتك</span></h3>
+            <p class="session-picker-count"><span id="pickedCount">0</span> / <span id="totalNeeded">0</span> <span class="lang-en">sessions selected</span><span class="lang-ar" style="display:none">جلسات محددة</span></p>
+          </div>
+          <div class="session-picker-add">
+            <div class="form-row">
+              <div class="form-group">
+                <label><span class="lang-en">Date</span><span class="lang-ar" style="display:none">التاريخ</span></label>
+                <input type="date" id="sessionPickDate" />
+              </div>
+              <div class="form-group">
+                <label><span class="lang-en">Time</span><span class="lang-ar" style="display:none">الوقت</span></label>
+                <select id="sessionPickTime" disabled>
+                  <option value="">-- Pick date first --</option>
+                </select>
+              </div>
+              <div class="form-group" style="flex:0 0 auto; align-self:flex-end;">
+                <button type="button" class="btn-add-session" id="btnAddSession" onclick="addPickedSession()"><span class="lang-en">+ Add</span><span class="lang-ar" style="display:none">+ إضافة</span></button>
+              </div>
+            </div>
+          </div>
+          <div id="pickedSessionsList" class="picked-sessions-list"></div>
+        </div>
+
         <div class="form-group full-width" style="margin-bottom:22px;">
           <label><span class="lang-en">Message / Special Request</span><span class="lang-ar" style="display:none">رسالة / طلب خاص</span></label>
           <textarea id="message" rows="4" placeholder="Any special requests or questions..." data-placeholder-ar="أي طلبات أو أسئلة خاصة..."></textarea>

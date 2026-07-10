@@ -12,6 +12,10 @@ const packagePurchaseSchema = new mongoose.Schema({
   validity:        { type: String },
   freeze:          { type: String },
   paymentMethod:   { type: String, enum: ['Cash', 'Card'], required: true },
+  requestedSessions: [{
+    date:      { type: String },
+    startTime: { type: String }
+  }],
   paymentStatus:   { type: String, enum: ['Unpaid', 'Paid'], default: 'Unpaid' },
   approvalStatus:  { type: String, enum: ['Pending', 'Approved', 'Rejected'], default: 'Pending' },
   sessionsTotal:     { type: Number, required: true },

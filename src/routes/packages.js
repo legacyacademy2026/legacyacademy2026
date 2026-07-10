@@ -70,7 +70,8 @@ router.post('/', async (req, res) => {
           ['Package', pkg.packageType],
           ['Tier', pkg.tierLabel],
           ['Price', `AED ${pkg.price}`],
-          ['Payment', pkg.paymentMethod || '-']
+          ['Payment', pkg.paymentMethod || '-'],
+          ...(pkg.requestedSessions && pkg.requestedSessions.length ? [['Sessions', pkg.requestedSessions.map((s, i) => `#${i+1}: ${s.date} at ${s.startTime}`).join(', ')]] : [])
         ]
       },
       adminActions: [
@@ -362,11 +363,68 @@ async function applyPackageApproval(pkg) {
   pkg.expiresAt = exp;
   pkg.expired = false;
   await pkg.save();
+
+  // Auto-book ALL requested sessions
+  let bookedCount = 0;
+  let skippedSlots = [];
+  if (pkg.requestedSessions && pkg.requestedSessions.length) {
+    const Booking = require('../models/Booking');
+    const durationHours = (pkg.sessionDuration || 45) / 60;
+
+    for (const sess of pkg.requestedSessions) {
+      try {
+        // Check if slot is still available
+        const sameDayBookings = await Booking.find({
+          date: sess.date,
+          status: { $nin: ['Cancelled', 'Completed'] }
+        });
+        const newStart = timeToMinutes(sess.startTime);
+        const newEnd = newStart + (pkg.sessionDuration || 45);
+        const conflict = sameDayBookings.find(b => {
+          if (!b.startTime || !b.duration) return false;
+          const bStart = timeToMinutes(b.startTime);
+          const bEnd = bStart + b.duration * 60;
+          return newStart < bEnd && bStart < newEnd;
+        });
+
+        if (conflict) {
+          skippedSlots.push(`${sess.date} at ${sess.startTime}`);
+          continue;
+        }
+
+        const booking = new Booking({
+          name: pkg.name, email: pkg.email, phone: pkg.phone, title: pkg.title,
+          category: 'Riding Packages', subPackage: pkg.packageType,
+          date: sess.date, startTime: sess.startTime,
+          duration: durationHours, price: 0,
+          packagePurchaseId: pkg._id, status: 'Confirmed'
+        });
+        await booking.save();
+        bookedCount++;
+      } catch (err) {
+        console.log(`⚠️ Could not book session ${sess.date} ${sess.startTime}:`, err.message);
+        skippedSlots.push(`${sess.date} at ${sess.startTime}`);
+      }
+    }
+
+    pkg.sessionsBooked = bookedCount;
+    await pkg.save();
+    console.log(`✅ Auto-booked ${bookedCount}/${pkg.requestedSessions.length} sessions for ${pkg.name}`);
+  }
+
+  let sessionDetails = '';
+  if (bookedCount > 0) {
+    sessionDetails = `<br><br><strong>${bookedCount} session(s) confirmed</strong> and added to the calendar.`;
+  }
+  if (skippedSlots.length > 0) {
+    sessionDetails += `<br>⚠️ ${skippedSlots.length} slot(s) were already taken (${skippedSlots.join('; ')}). Please choose replacement times using the link below.`;
+  }
+
   notifyPackage(pkg, {
     statusBadge: { bg: '#d4edda', color: '#1e7e34', text: '✅ Package Approved' },
-    bodyText: `Great news! Your <strong>${pkg.packageType} — ${pkg.tierLabel}</strong> package has been approved. Please select your preferred dates and times for your sessions using the link below.`,
-    statusLine: 'Your package has been approved! ✅',
-    ctaLabel: 'Select My Sessions'
+    bodyText: `Great news! Your <strong>${pkg.packageType} — ${pkg.tierLabel}</strong> package has been approved.${sessionDetails}${pkg.sessionsBooked < pkg.sessionsTotal ? ' Book your remaining sessions using the link below.' : ''}`,
+    statusLine: `Your package has been approved! ✅ ${bookedCount} session(s) confirmed.`,
+    ctaLabel: pkg.sessionsBooked < pkg.sessionsTotal ? 'Book Remaining Sessions' : 'View My Sessions'
   });
 }
 

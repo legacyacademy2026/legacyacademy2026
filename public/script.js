@@ -91,9 +91,10 @@ function showSubPackage() {
 
   document.getElementById('subPackageGroup').style.display = isTraining ? 'flex' : 'none';
   document.getElementById('paymentMethodRow').style.display = isTraining ? 'flex' : 'none';
-  document.getElementById('dateFieldGroup').style.display = isTraining ? 'none' : 'flex';
-  // Livery + Horse Training = date only (no session time/duration)
-  document.getElementById('schedulingRow').style.display = (isTraining || isLivery || isHorseTraining) ? 'none' : 'flex';
+  // Show date for all EXCEPT when no category selected
+  document.getElementById('dateFieldGroup').style.display = category ? 'flex' : 'none';
+  // Show scheduling (time picker) for packages + generic bookings, hide for date-only categories
+  document.getElementById('schedulingRow').style.display = (isLivery || isHorseTraining || !category) ? 'none' : 'flex';
   const horseRow = document.getElementById('horseNameRow');
   if (horseRow) horseRow.style.display = isLivery ? 'flex' : 'none';
 
@@ -164,6 +165,27 @@ function updatePackageInfo() {
   document.getElementById('packageValidity').textContent = tier.validity;
   document.getElementById('packageFreeze').textContent = tier.freeze;
   infoBox.style.display = 'block';
+
+  // Auto-set duration from the tier (customer doesn't choose it — it's fixed per package)
+  const durationSelect = document.getElementById('duration');
+  const durationMinutes = tier.duration || 45;
+  // Set a matching option or create one
+  let found = false;
+  for (const opt of durationSelect.options) {
+    if (parseFloat(opt.value) * 60 === durationMinutes || parseInt(opt.value) === durationMinutes) {
+      opt.selected = true; found = true; break;
+    }
+  }
+  if (!found) {
+    const opt = document.createElement('option');
+    opt.value = (durationMinutes / 60).toString();
+    opt.textContent = durationMinutes + ' min';
+    opt.selected = true;
+    durationSelect.appendChild(opt);
+  }
+  // Show the date field and the multi-session picker
+  document.getElementById('dateFieldGroup').style.display = 'flex';
+  showSessionPicker(tier.sessions, durationMinutes);
 }
 
 const WORK_START_HOUR = 6;
@@ -324,6 +346,14 @@ if (bookingFormEl) {
 
       const tier = TRAINING_PACKAGES[packageType].tiers[packageTierIndex];
       const titleValue = document.getElementById('title').value;
+
+      if (pickedSessions.length < tier.sessions) {
+        timeStatus.textContent = `⚠️ Please select all ${tier.sessions} session dates and times.`;
+        timeStatus.className = 'time-status error';
+        window.scrollTo({ top: document.getElementById('sessionPickerArea').offsetTop - 80, behavior: 'smooth' });
+        return;
+      }
+
       const packageData = {
         title: titleValue, name, email, phone,
         packageType,
@@ -333,7 +363,8 @@ if (bookingFormEl) {
         sessionDuration: tier.duration || 45,
         validity: tier.validity,
         freeze: tier.freeze,
-        paymentMethod
+        paymentMethod,
+        requestedSessions: pickedSessions
       };
 
       try {
@@ -654,3 +685,134 @@ document.querySelectorAll('.reveal-card').forEach(card => cardObserver.observe(c
   // Make single price cards clickable
   makeClickable('.single-price-card');
 })();
+
+// ===== MULTI-SESSION PICKER (for packages) =====
+let pickedSessions = [];
+let packageSessionDuration = 45; // updated when tier is selected
+let packageSessionsTotal = 0;
+
+function showSessionPicker(sessionsNeeded, durationMin) {
+  packageSessionsTotal = sessionsNeeded;
+  packageSessionDuration = durationMin;
+  pickedSessions = [];
+  document.getElementById('sessionPickerArea').style.display = 'block';
+  document.getElementById('totalNeeded').textContent = sessionsNeeded;
+  document.getElementById('pickedCount').textContent = '0';
+  document.getElementById('pickedSessionsList').innerHTML = '';
+  // Hide the old single scheduling row for packages
+  document.getElementById('schedulingRow').style.display = 'none';
+  // Set min date to tomorrow
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  document.getElementById('sessionPickDate').min = tomorrow.toISOString().split('T')[0];
+  document.getElementById('sessionPickDate').value = '';
+  document.getElementById('sessionPickTime').innerHTML = '<option value="">-- Pick date first --</option>';
+  document.getElementById('sessionPickTime').disabled = true;
+}
+
+function hideSessionPicker() {
+  document.getElementById('sessionPickerArea').style.display = 'none';
+  pickedSessions = [];
+}
+
+// Load available times for the picked date
+document.addEventListener('DOMContentLoaded', () => {
+  const pickDate = document.getElementById('sessionPickDate');
+  if (pickDate) {
+    pickDate.addEventListener('change', async function () {
+      const date = this.value;
+      const timeSelect = document.getElementById('sessionPickTime');
+      if (!date) { timeSelect.innerHTML = '<option value="">-- Pick date --</option>'; timeSelect.disabled = true; return; }
+
+      // Fetch booked slots for this date
+      let bookedSlots = [];
+      try {
+        const res = await fetch(`/api/bookings/availability?date=${date}`);
+        const data = await res.json();
+        bookedSlots = data.bookings || [];
+      } catch (e) {}
+
+      // Also exclude already-picked sessions for this date
+      const pickedOnDate = pickedSessions.filter(s => s.date === date);
+
+      const WORK_START = 6 * 60, WORK_END = 17 * 60;
+      const dur = packageSessionDuration;
+      timeSelect.innerHTML = '<option value="">-- Choose Time --</option>';
+
+      for (let startMin = WORK_START; startMin + dur <= WORK_END; startMin += 60) {
+        const endMin = startMin + dur;
+        // Check server bookings
+        const serverBooked = bookedSlots.some(b => {
+          if (!b.startTime || !b.duration) return false;
+          const bStart = timeToMinutes(b.startTime);
+          const bEnd = bStart + b.duration * 60;
+          return startMin < bEnd && bStart < endMin;
+        });
+        // Check already picked
+        const alreadyPicked = pickedOnDate.some(s => {
+          const pStart = timeToMinutes(s.startTime);
+          const pEnd = pStart + dur;
+          return startMin < pEnd && pStart < endMin;
+        });
+
+        const timeLabel = minutesToTime(startMin);
+        const endLabel = minutesToTime(endMin);
+        const opt = document.createElement('option');
+        opt.value = timeLabel;
+        if (serverBooked) {
+          opt.textContent = `${timeLabel} (Already Booked)`;
+          opt.disabled = true;
+        } else if (alreadyPicked) {
+          opt.textContent = `${timeLabel} (Already Selected)`;
+          opt.disabled = true;
+        } else {
+          opt.textContent = `${timeLabel} - ${endLabel}`;
+        }
+        timeSelect.appendChild(opt);
+      }
+      timeSelect.disabled = false;
+    });
+  }
+});
+
+function addPickedSession() {
+  const date = document.getElementById('sessionPickDate').value;
+  const time = document.getElementById('sessionPickTime').value;
+  if (!date || !time) { alert('Please select both a date and time.'); return; }
+  if (pickedSessions.length >= packageSessionsTotal) { alert('All sessions already selected!'); return; }
+
+  pickedSessions.push({ date, startTime: time });
+  renderPickedSessions();
+
+  // Reset for next pick
+  document.getElementById('sessionPickTime').value = '';
+  // Refresh time slots (to mark the just-picked slot)
+  document.getElementById('sessionPickDate').dispatchEvent(new Event('change'));
+
+  // Check if all picked
+  if (pickedSessions.length >= packageSessionsTotal) {
+    document.getElementById('btnAddSession').disabled = true;
+  }
+}
+
+function removePickedSession(index) {
+  pickedSessions.splice(index, 1);
+  renderPickedSessions();
+  document.getElementById('btnAddSession').disabled = false;
+  // Refresh time slots if date is set
+  const d = document.getElementById('sessionPickDate').value;
+  if (d) document.getElementById('sessionPickDate').dispatchEvent(new Event('change'));
+}
+
+function renderPickedSessions() {
+  const list = document.getElementById('pickedSessionsList');
+  document.getElementById('pickedCount').textContent = pickedSessions.length;
+  if (pickedSessions.length === 0) { list.innerHTML = ''; return; }
+  list.innerHTML = pickedSessions.map((s, i) => `
+    <div class="picked-session-item">
+      <span class="session-num">#${i + 1}</span>
+      <span class="session-info">📅 ${s.date} — 🕐 ${s.startTime}</span>
+      <button type="button" class="btn-remove-session" onclick="removePickedSession(${i})">✕</button>
+    </div>
+  `).join('');
+}
