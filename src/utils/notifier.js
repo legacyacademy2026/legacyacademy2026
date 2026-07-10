@@ -4,8 +4,8 @@ const { sendWhatsApp } = require('./whatsapp');
 
 // Admin (your client) contact — override in Render env when handing over.
 // Defaults to the developer's contact for testing.
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'janakaantha@gmail.com';
-const ADMIN_PHONE = process.env.ADMIN_PHONE || '+971585953807';
+const ADMIN_EMAIL = process.env.ADMIN_EMAIL || 'legacyequestrian2026@gmail.com';
+const ADMIN_PHONE = process.env.ADMIN_PHONE || '+971561681156';
 // Secret guarding one-click admin action links. Change via env when handing over.
 const ADMIN_ACTION_KEY = process.env.ADMIN_ACTION_KEY || 'legacy-secret-2026';
 const BASE_URL = process.env.PUBLIC_BASE_URL || '';
