@@ -30,7 +30,8 @@ function parseBookingDateTime(dateStr, timeStr) {
 router.get('/availability', async (req, res) => {
   try {
     const { date } = req.query;
-    const bookings = await Booking.find({ date }).select('startTime duration');
+    // Only active bookings block slots (not Cancelled or Completed)
+    const bookings = await Booking.find({ date, status: { $nin: ['Cancelled', 'Completed'] } }).select('startTime duration');
     res.json({ bookings });
   } catch (err) {
     res.status(500).json({ message: '❌ Error checking availability' });
@@ -58,7 +59,7 @@ router.post('/', async (req, res) => {
         }
       }
 
-      const sameDayBookings = await Booking.find({ date });
+      const sameDayBookings = await Booking.find({ date, status: { $nin: ['Cancelled', 'Completed'] } });
       const conflict = sameDayBookings.find(b => {
         if (!b.startTime || typeof b.duration !== 'number' || !b.duration) return false;
         const bStart = timeToMinutes(b.startTime);
@@ -354,3 +355,33 @@ router.post('/:id/send-reminder', async (req, res) => {
 
 router.applyBookingStatus = applyBookingStatus;
 module.exports = router;
+// ===== Customer cancels their own session (24h before) =====
+router.post('/:id/customer-cancel', async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+    if (!booking) return res.status(404).json({ message: 'Session not found.' });
+    if (booking.status === 'Cancelled' || booking.status === 'Completed') {
+      return res.status(400).json({ message: 'This session is already ' + booking.status.toLowerCase() + '.' });
+    }
+
+    // Check 24-hour rule
+    if (booking.startTime && booking.date) {
+      const TZ = 4; // Dubai UTC+4
+      const [time, period] = booking.startTime.split(' ');
+      let [hours, minutes] = time.split(':').map(Number);
+      if (period === 'PM' && hours !== 12) hours += 12;
+      if (period === 'AM' && hours === 12) hours = 0;
+      const [y, m, d] = booking.date.split('-').map(Number);
+      const sessionStart = new Date(Date.UTC(y, m - 1, d, hours - TZ, minutes));
+      const hoursUntil = (sessionStart - new Date()) / (1000 * 60 * 60);
+      if (hoursUntil < 24) {
+        return res.status(403).json({ message: '❌ Sessions must be cancelled at least 24 hours in advance. Contact the academy for help.' });
+      }
+    }
+
+    await applyBookingStatus(booking, 'Cancelled', { reason: 'Cancelled by customer' });
+    res.json({ message: '✅ Session cancelled. The slot has been returned to your package — you can book another date.' });
+  } catch (err) {
+    res.status(500).json({ message: '❌ Error cancelling session.' });
+  }
+});

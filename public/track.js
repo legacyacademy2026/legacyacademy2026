@@ -398,15 +398,16 @@ async function loadSessions() {
 }
 
 async function cancelSession(bookingId) {
-  if (!confirm('Request cancellation of this session? Our team will review it.')) return;
+  if (!confirm('Cancel this session? It will return to your package and you can book another date.')) return;
 
   try {
-    const res = await fetch(`/api/bookings/${bookingId}/request-cancellation`, { method: 'POST' });
+    const res = await fetch(`/api/bookings/${bookingId}/customer-cancel`, { method: 'POST' });
     const result = await res.json();
     alert(result.message);
     await loadSessions();
+    await loadPackage(); // refresh session counts
   } catch (err) {
-    alert('Could not submit cancellation request.');
+    alert('Could not cancel session.');
   }
 }
 

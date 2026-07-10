@@ -141,7 +141,7 @@ router.post('/:id/book-session', async (req, res) => {
       }
     }
 
-    const sameDayBookings = await Booking.find({ date });
+    const sameDayBookings = await Booking.find({ date, status: { $nin: ['Cancelled', 'Completed'] } });
     const conflict = sameDayBookings.find(b => {
       if (!b.startTime || typeof b.duration !== 'number') return false;
       const bStart = timeToMinutes(b.startTime);

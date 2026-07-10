@@ -17,9 +17,10 @@ const T = {
 };
 
 function getTimeGreeting() {
-  const hour = new Date().getHours();
-  if (hour < 12) return 'Good morning';
-  if (hour < 18) return 'Good afternoon';
+  // Server runs UTC; Dubai is UTC+4
+  const dubaiHour = (new Date().getUTCHours() + 4) % 24;
+  if (dubaiHour < 12) return 'Good morning';
+  if (dubaiHour < 18) return 'Good afternoon';
   return 'Good evening';
 }
 
