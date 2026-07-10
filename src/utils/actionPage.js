@@ -6,7 +6,7 @@ function actionPage({ ok = true, title, message }) {
 <html lang="en"><head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>${title} — Legacy Équestre</title>
+<title>${title} — Legacy</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
   * { margin:0; padding:0; box-sizing:border-box; }
@@ -23,7 +23,7 @@ function actionPage({ ok = true, title, message }) {
 <body>
   <div class="card">
     <div class="brand">LEGACY</div>
-    <div class="brand-sub">École Équestre</div>
+    <div class="brand-sub">Equestrian Academy</div>
     <div class="icon">${icon}</div>
     <h1>${title}</h1>
     <p>${message}</p>

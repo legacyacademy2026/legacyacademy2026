@@ -88,7 +88,7 @@ router.post('/', async (req, res) => {
     const detailsLine = `${booking.category}${booking.subPackage ? ' — ' + booking.subPackage : ''} on <strong>${booking.date || ''}${booking.startTime ? ' at ' + booking.startTime : ''}</strong>`;
     notifyAll({
       customer: { name: booking.name, email: booking.email, phone: booking.phone },
-      subject: '🐴 Legacy Équestre — Booking Received',
+      subject: '🐴 Legacy Equestrian — Booking Received',
       emailHtml: buildStatusUpdateEmailHtml({
         name: booking.name, title: booking.title,
         statusBadge: { bg: '#e6ede0', color: '#4a5c39', text: '📩 Booking Received' },
@@ -267,7 +267,7 @@ async function applyBookingStatus(booking, status, opts = {}) {
     const trackingUrl = `${process.env.PUBLIC_BASE_URL || ''}/track.html?token=${pkg.token}`;
     notifyAll({
       customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
-      subject: '🐴 Legacy Équestre — Update on Your Session',
+      subject: '🐴 Legacy Equestrian — Update on Your Session',
       emailHtml: buildStatusUpdateEmailHtml({ name: pkg.name, title: pkg.title, trackingUrl, ...notifyData }),
       waText: buildStatusUpdateWhatsAppText({ name: pkg.name, title: pkg.title, trackingUrl, statusLine: notifyData.statusLine, bodyText: notifyData.bodyText })
     });

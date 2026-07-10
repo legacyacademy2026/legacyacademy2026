@@ -30,13 +30,13 @@ function emailShell(innerHtml) {
       <div style="max-width:560px; margin:0 auto; background:${T.card}; border-radius:14px; overflow:hidden; border:1px solid ${T.border};">
         <div style="background:${T.brown}; padding:30px; text-align:center;">
           <div style="font-family:Georgia,'Times New Roman',serif; color:${T.cream}; font-size:26px; letter-spacing:3px;">LEGACY</div>
-          <div style="color:${T.olive}; font-size:11px; letter-spacing:4px; text-transform:uppercase; margin-top:4px;">École Équestre</div>
+          <div style="color:${T.olive}; font-size:11px; letter-spacing:4px; text-transform:uppercase; margin-top:4px;">Equestrian Academy</div>
         </div>
         <div style="padding:32px 34px;">
           ${innerHtml}
         </div>
         <div style="background:${T.soft}; padding:18px; text-align:center; border-top:1px solid ${T.border};">
-          <p style="color:${T.brownLt}; font-size:12px; margin:0;">© 2026 Legacy Équestre${process.env.ACADEMY_PHONE ? ' • ' + process.env.ACADEMY_PHONE : ''}${process.env.ACADEMY_EMAIL ? ' • ' + process.env.ACADEMY_EMAIL : ''}</p>
+          <p style="color:${T.brownLt}; font-size:12px; margin:0;">© 2026 Legacy Equestrian${process.env.ACADEMY_PHONE ? ' • ' + process.env.ACADEMY_PHONE : ''}${process.env.ACADEMY_EMAIL ? ' • ' + process.env.ACADEMY_EMAIL : ''}</p>
         </div>
       </div>
     </div>`;
@@ -74,7 +74,7 @@ function buildLiveryRequestWhatsAppText({ name, horseName, trackingUrl }) {
   const greeting = getTimeGreeting();
   return `Hi ${name} 👋
 
-${greeting}! Thank you for requesting *Full Livery* for *${horseName}* at *Legacy Équestre*.
+${greeting}! Thank you for requesting *Full Livery* for *${horseName}* at *Legacy Equestrian*.
 
 🏠 Package: Full Livery
 💰 Monthly Rate: AED 2,500
@@ -110,7 +110,7 @@ function buildPackageEmailHtml({ title, name, packageType, tierLabel, price, tra
   const greeting = getTimeGreeting();
   return emailShell(`
     <p style="font-size:16px; color:${T.brown};">${greeting}, ${title ? title + ' ' : ''}${name},</p>
-    <p style="font-size:15px; color:${T.brownMid}; line-height:1.7;">Thank you for choosing <strong>Legacy Équestre</strong> — we're delighted to welcome you and look forward to making your riding journey unforgettable.</p>
+    <p style="font-size:15px; color:${T.brownMid}; line-height:1.7;">Thank you for choosing <strong>Legacy Equestrian</strong> — we're delighted to welcome you and look forward to making your riding journey unforgettable.</p>
     ${infoBox([['Package',packageType],['Tier',tierLabel],['Price','AED ' + price]])}
     <p style="font-size:15px; color:${T.brownMid};">Your request is now with our team for approval. Once approved, you can book your sessions directly using the link below.</p>
     ${ctaButton(trackingUrl, 'Track My Package')}
@@ -122,7 +122,7 @@ function buildPackageWhatsAppText({ title, name, packageType, tierLabel, price, 
   const greeting = getTimeGreeting();
   return `Hi ${title ? title + ' ' : ''}${name} 👋
 
-${greeting}! Thank you for choosing *Legacy Équestre* 🐴
+${greeting}! Thank you for choosing *Legacy Equestrian* 🐴
 
 Your package request has been received:
 📦 ${packageType} — ${tierLabel}
@@ -156,7 +156,7 @@ function buildReminderWhatsAppText(booking) {
   const greeting = getTimeGreeting();
   return `Hi ${booking.name} 👋
 
-${greeting}! ⏰ Reminder: your session at *Legacy Équestre* is coming up tomorrow.
+${greeting}! ⏰ Reminder: your session at *Legacy Equestrian* is coming up tomorrow.
 
 📅 Date: ${booking.date}
 🕐 Time: ${booking.startTime}
@@ -191,7 +191,7 @@ ${greeting}! ${statusLine}
 ${bodyText}
 ${trackingUrl ? `\n🔗 ${trackingUrl}` : ''}
 
-— Legacy Équestre 🐴`;
+— Legacy Equestrian 🐴`;
 }
 
 module.exports = {

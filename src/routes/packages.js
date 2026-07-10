@@ -27,7 +27,7 @@ function notifyPackage(pkg, { statusBadge, bodyText, detailsHtml, ctaLabel, stat
   const data = { name: pkg.name, title: pkg.title, statusBadge, bodyText, detailsHtml, trackingUrl, ctaLabel };
   notifyAll({
     customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
-    subject: '🐴 Legacy Équestre — Update on Your Package',
+    subject: '🐴 Legacy Equestrian — Update on Your Package',
     emailHtml: buildStatusUpdateEmailHtml(data),
     waText: buildStatusUpdateWhatsAppText({ name: pkg.name, title: pkg.title, statusLine, bodyText, trackingUrl })
   });
@@ -57,7 +57,7 @@ router.post('/', async (req, res) => {
     const waText = buildPackageWhatsAppText(templateData);
     notifyAll({
       customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
-      subject: '🐴 Your Legacy Équestre Package Request',
+      subject: '🐴 Your Legacy Equestrian Package Request',
       emailHtml,
       waText,
       adminInfo: {

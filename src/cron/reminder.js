@@ -110,7 +110,7 @@ function startReminderJob() {
 
           notifyAll({
             customer: { name: booking.name, email: booking.email, phone: booking.phone },
-            subject: '🐴 Legacy Équestre — Livery Renewal Reminder',
+            subject: '🐴 Legacy Equestrian — Livery Renewal Reminder',
             emailHtml: buildLiveryStatusEmailHtml({
               name: booking.name, horseName: booking.horseName,
               statusBadge: { bg: '#fff3cd', color: '#8a6d00', text: '⏳ Renewal Reminder' },
@@ -139,7 +139,7 @@ function startReminderJob() {
         const bodyText = `Your livery month for <strong>${booking.horseName}</strong> has ended. Thank you! To continue, please contact us to start a new period.`;
         notifyAll({
           customer: { name: booking.name, email: booking.email, phone: booking.phone },
-          subject: '🐴 Legacy Équestre — Livery Period Ended',
+          subject: '🐴 Legacy Equestrian — Livery Period Ended',
           emailHtml: buildLiveryStatusEmailHtml({
             name: booking.name, horseName: booking.horseName,
             statusBadge: { bg: '#efe9db', color: '#6b6560', text: '⌛ Livery Ended' },
@@ -207,7 +207,7 @@ function startReminderJob() {
         try {
           notifyAll({
             customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
-            subject: '🐴 Legacy Équestre — Your Package Has Expired',
+            subject: '🐴 Legacy Equestrian — Your Package Has Expired',
             emailHtml: buildStatusUpdateEmailHtml({
               name: pkg.name, title: pkg.title,
               statusBadge: { bg: '#efe9db', color: '#6b6560', text: '⌛ Package Expired' },

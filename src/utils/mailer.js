@@ -10,7 +10,7 @@ async function sendEmail(to, subject, html) {
       'content-type': 'application/json'
     },
     body: JSON.stringify({
-      sender: { name: 'Legacy Équestre', email: process.env.EMAIL_USER },
+      sender: { name: 'Legacy Equestrian', email: process.env.EMAIL_USER || 'legacyequestrian2026@gmail.com' },
       to: [{ email: to }],
       subject,
       htmlContent: html
@@ -27,8 +27,7 @@ async function sendEmail(to, subject, html) {
 
 async function sendReminderEmail(booking) {
   const html = buildReminderEmailHtml(booking);
-  const recipient = process.env.ADMIN_TEST_EMAIL || booking.email;
-  await sendEmail(recipient, '🐴 Reminder: Your booking is tomorrow!', html);
+  await sendEmail(booking.email, '🐴 Reminder: Your booking is tomorrow!', html);
 }
 
 module.exports = { sendEmail, sendReminderEmail };

@@ -31,7 +31,7 @@ function notifyLivery(booking, { statusBadge, bodyText, statusLine, ctaLabel, in
   const trackingUrl = includeLink ? `${process.env.PUBLIC_BASE_URL || ''}/livery-track.html?token=${booking.token}` : null;
   notifyAll({
     customer: { name: booking.name, email: booking.email, phone: booking.phone },
-    subject: '🐴 Legacy Équestre — Update on Your Livery',
+    subject: '🐴 Legacy Equestrian — Update on Your Livery',
     emailHtml: buildLiveryStatusEmailHtml({ name: booking.name, horseName: booking.horseName, statusBadge, bodyText, trackingUrl, ctaLabel }),
     waText: buildLiveryStatusWhatsAppText({ name: booking.name, horseName: booking.horseName, statusLine, bodyText, trackingUrl })
   });
@@ -58,7 +58,7 @@ router.post('/', async (req, res) => {
     const trackingUrl = `${process.env.PUBLIC_BASE_URL || ''}/livery-track.html?token=${booking.token}`;
     notifyAll({
       customer: { name: booking.name, email: booking.email, phone: booking.phone },
-      subject: '🐴 Your Legacy Équestre Livery Request',
+      subject: '🐴 Your Legacy Equestrian Livery Request',
       emailHtml: buildLiveryRequestEmailHtml({ name: booking.name, horseName: booking.horseName, trackingUrl }),
       waText: buildLiveryRequestWhatsAppText({ name: booking.name, horseName: booking.horseName, trackingUrl })
     });
