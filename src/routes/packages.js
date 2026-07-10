@@ -487,6 +487,50 @@ router.get('/:id/reject', async (req, res) => {
   }
 });
 
+// ===== Admin removes a single requested session date =====
+router.post('/:id/remove-session', async (req, res) => {
+  try {
+    const { sessionIndex } = req.body;
+    const pkg = await PackagePurchase.findById(req.params.id);
+    if (!pkg) return res.status(404).json({ message: 'Package not found' });
+    if (!pkg.requestedSessions || sessionIndex < 0 || sessionIndex >= pkg.requestedSessions.length) {
+      return res.status(400).json({ message: 'Invalid session index' });
+    }
+
+    const removed = pkg.requestedSessions[sessionIndex];
+    pkg.requestedSessions.splice(sessionIndex, 1);
+    await pkg.save();
+
+    // Notify customer: this date was not approved, pick another
+    const trackingUrl = `${process.env.PUBLIC_BASE_URL || ''}/track.html?token=${pkg.token}`;
+    notifyAll({
+      customer: { name: pkg.name, email: pkg.email, phone: pkg.phone },
+      subject: '🐴 Session Date Update — Legacy Equestrian',
+      emailHtml: buildStatusUpdateEmailHtml({
+        name: pkg.name, title: pkg.title,
+        statusBadge: { bg: '#fff3cd', color: '#8a6d00', text: '📅 Date Not Available' },
+        bodyText: `Your requested session on <strong>${removed.date} at ${removed.startTime}</strong> could not be approved. Please select a replacement date using the link below.`,
+        trackingUrl,
+        ctaLabel: 'Choose Another Date'
+      }),
+      waText: `📅 Session update: Your requested time on ${removed.date} at ${removed.startTime} is not available. Please pick another date:\n${trackingUrl}`,
+      adminInfo: {
+        subject: '📋 Session Date Removed',
+        headline: 'Session Date Removed',
+        rows: [
+          ['Customer', pkg.name],
+          ['Removed', `${removed.date} at ${removed.startTime}`],
+          ['Remaining', `${pkg.requestedSessions.length} sessions`]
+        ]
+      }
+    });
+
+    res.json({ message: '✅ Session removed. Customer notified.', package: pkg });
+  } catch (err) {
+    res.status(500).json({ message: '❌ Error removing session' });
+  }
+});
+
 router.post('/:id/reject', async (req, res) => {
   if (req.query.key !== ADMIN_ACTION_KEY) return res.status(403).send(actionPage({ ok: false, title: 'Unauthorized', message: 'Invalid or missing security key.' }));
   try {

@@ -948,7 +948,17 @@ function packageCardHtml(p) {
             <div class="package-card-title">${escapeHtml(p.name)}</div>
             <div class="package-card-sub">${escapeHtml(p.packageType)} — ${escapeHtml(p.tierLabel)}</div>
             <div class="package-card-contact">${escapeHtml(p.email)} • ${escapeHtml(p.phone)}</div>
-            ${p.requestedSessions && p.requestedSessions.length ? `<div class="package-card-sub" style="color:#6b7a5a; margin-top:4px;">📅 Requested: ${p.requestedSessions.map((s,i) => `#${i+1} ${s.date} ${s.startTime}`).join(' · ')}</div>` : ''}
+            ${p.requestedSessions && p.requestedSessions.length ? `
+              <div class="requested-sessions-list">
+                <div class="requested-sessions-title">📅 Requested Sessions (${p.requestedSessions.length})</div>
+                ${p.requestedSessions.map((s, i) => `
+                  <div class="requested-session-row">
+                    <span class="requested-session-num">#${i + 1}</span>
+                    <span class="requested-session-info">${escapeHtml(s.date)} — ${escapeHtml(s.startTime)}</span>
+                    ${p.approvalStatus === 'Pending' ? `<button class="btn-small btn-remove-date" onclick="removeRequestedDate('${p._id}', ${i})">✕ Remove</button>` : ''}
+                  </div>
+                `).join('')}
+              </div>` : ''}
           </div>
           <div>
             <span class="approval-badge approval-${approvalClass}">${p.approvalStatus}</span>
@@ -1473,4 +1483,26 @@ function updateTabBadges() {
     l.approvalStatus === 'Pending'
   ).length;
   setTabBadge('tabLivery', liveryCount);
+}
+
+// ===== Remove a requested session date (admin rejects individual date) =====
+async function removeRequestedDate(packageId, sessionIndex) {
+  const pkg = allPackagesCache.find(p => p._id === packageId);
+  if (!pkg || !pkg.requestedSessions || !pkg.requestedSessions[sessionIndex]) return;
+  const sess = pkg.requestedSessions[sessionIndex];
+  if (!confirm(`Remove session #${sessionIndex + 1} (${sess.date} at ${sess.startTime}) from ${pkg.name}'s request?\n\nThe customer will be notified to pick a replacement date.`)) return;
+
+  try {
+    const res = await fetch(`/api/packages/${packageId}/remove-session`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ sessionIndex })
+    });
+    const result = await res.json();
+    if (!res.ok) { alert(result.message || 'Error'); return; }
+    alert(`✅ Session removed. ${pkg.name} has been notified to pick another date.`);
+    loadPackages();
+  } catch (err) {
+    alert('Could not remove session.');
+  }
 }

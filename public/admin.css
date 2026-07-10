@@ -558,3 +558,27 @@ tr:hover { background: #fef9f3; }
 @media (max-width: 600px) {
   .tab-badge { top: -4px; right: -4px; min-width: 16px; height: 16px; font-size: 0.55rem; }
 }
+
+/* ===== Requested sessions list in package card ===== */
+.requested-sessions-list { margin-top: 10px; }
+.requested-sessions-title {
+  font-size: 0.78rem; font-weight: 600; color: #6b7a5a;
+  letter-spacing: 0.5px; margin-bottom: 8px;
+}
+.requested-session-row {
+  display: flex; align-items: center; gap: 10px;
+  padding: 7px 10px; border-radius: 8px;
+  background: #f9f7f0; border: 1px solid #ece4d6;
+  margin-bottom: 5px; font-size: 0.82rem;
+}
+.requested-session-num {
+  color: #6b7a5a; font-weight: 700; font-size: 0.75rem; min-width: 26px;
+}
+.requested-session-info { flex: 1; color: #2c2420; }
+.btn-remove-date {
+  background: #f8d7da !important; color: #a71d2a !important;
+  border: 1px solid #f1aeb5 !important; font-size: 0.7rem !important;
+  padding: 4px 10px !important; border-radius: 6px !important;
+  cursor: pointer;
+}
+.btn-remove-date:hover { background: #f1aeb5 !important; }
