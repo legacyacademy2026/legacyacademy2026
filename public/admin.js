@@ -1,4 +1,4 @@
-const ADMIN_PASSWORD = "mervat2026"; // ⚠️ Change this!
+const ADMIN_PASSWORD = "Legacy2026"; // ⚠️ Change this!
 
 const CATEGORIES = ['Riding Packages','Livery Horse','Horse Selling','Horse Training','Party Renting','Equipment for Sale'];
 const CATEGORY_ICONS = {
