@@ -8,9 +8,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    .equip-cta { text-align: center; padding: 60px 20px; background: var(--white); }
-    .equip-cta h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 400; color: var(--brown); margin-bottom: 16px; }
-    .equip-cta p { color: var(--brown-light); max-width: 560px; margin: 0 auto 28px; line-height: 1.8; }
+    .course-list { max-width: 720px; margin: 0 auto; padding-inline-start: 20px; }
+    .course-list > li { margin-bottom: 18px; color: var(--brown); line-height: 1.7; }
+    .course-list > li > strong { font-family: 'Inter', sans-serif; font-weight: 600; color: var(--brown); font-size: 1.05rem; }
+    .course-list ul { margin: 8px 0 0; padding-inline-start: 22px; }
+    .course-list ul li { color: var(--brown-light); margin-bottom: 6px; line-height: 1.75; list-style: disc; }
   </style>
 </head>
 <body>
@@ -50,12 +52,69 @@
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="equip-cta">
-    <p class="section-eyebrow" style="margin-bottom:14px;"><span class="lang-en">Get In Touch</span><span class="lang-ar" style="display:none">تواصل معنا</span></p>
-    <h2><span class="lang-en">Want to Join the Course?</span><span class="lang-ar" style="display:none">هل ترغب في الانضمام إلى الدورة؟</span></h2>
-    <p><span class="lang-en">Message us on WhatsApp for upcoming dates, group sizes, and pricing — we'll help you get started.</span><span class="lang-ar" style="display:none">راسلنا عبر واتساب لمعرفة المواعيد القادمة وأحجام المجموعات والأسعار — وسنساعدك على البدء.</span></p>
-    <a href="https://wa.me/971561681156" class="btn-whatsapp" style="font-size:1rem; padding:16px 36px;"><i class="fab fa-whatsapp"></i> <span class="lang-en">Enquire on WhatsApp</span><span class="lang-ar" style="display:none">استفسر عبر واتساب</span></a>
+  <!-- Choose Your Package -->
+  <section class="pkg-pricing" style="background: var(--cream);">
+    <div class="container">
+      <h2><span class="lang-en">Choose Your Package</span><span class="lang-ar" style="display:none; font-size:0.85em;">اختر باقتك</span></h2>
+      <div class="single-price-wrap">
+        <div class="single-price-card">
+          <p class="sp-label"><span class="lang-en">Full Course</span><span class="lang-ar" style="display:none">الدورة الكاملة</span></p>
+          <p class="sp-amount">700<span><span class="lang-en">AED</span><span class="lang-ar" style="display:none">درهم</span></span></p>
+          <div class="pricing-divider"></div>
+          <a href="booking.html?service=Horse+Care+%26+Handling+Course" class="btn-book"><span class="lang-en">Book Now</span><span class="lang-ar" style="display:none">احجز الآن</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Course Details -->
+  <section style="background:var(--white);padding:64px 32px;">
+    <div style="max-width:780px;margin:0 auto;">
+      <p class="section-eyebrow" style="margin-bottom:14px;text-align:center;"><span class="lang-en">About This Course</span><span class="lang-ar" style="display:none">عن هذه الدورة</span></p>
+      <h2 class="about-heading" style="text-align:center;">
+        <span class="lang-en">Horse Care &amp; Handling Course</span><span class="lang-ar" style="display:none">دورة العناية بالخيل والتعامل معها</span>
+      </h2>
+      <p class="about-desc" style="text-align:center;">
+        <span class="lang-en">Build confidence and develop essential horsemanship skills through our hands-on Horse Care &amp; Handling Course. This course is designed for beginners and anyone who wants to learn how to safely and confidently interact with horses.</span>
+        <span class="lang-ar" style="display:none">طوّر ثقتك واكتسب مهارات أساسية في التعامل مع الخيل من خلال دورة العناية بالخيل والتعامل معها العملية. صُممت هذه الدورة للمبتدئين ولكل من يرغب في تعلّم كيفية التعامل مع الخيول بأمان وثقة.</span>
+      </p>
+
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;color:var(--brown);margin:40px 0 18px;text-align:center;">
+        <span class="lang-en">Course Includes</span><span class="lang-ar" style="display:none">تشمل الدورة</span>
+      </h3>
+      <ul class="terms-list course-list">
+        <li>
+          <strong><span class="lang-en">3 Horse Swimming Training Sessions</span><span class="lang-ar" style="display:none">٣ جلسات تدريب على سباحة الخيل</span></strong>
+          <ul>
+            <li><span class="lang-en">Learn the fundamentals of horse swimming, including safety procedures, proper handling, and how to assist horses during swimming sessions.</span><span class="lang-ar" style="display:none">تعلّم أساسيات سباحة الخيل، بما في ذلك إجراءات السلامة والتعامل الصحيح وكيفية مساعدة الخيول أثناء جلسات السباحة.</span></li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="lang-en">4 Saddle Fitting &amp; Saddling Sessions</span><span class="lang-ar" style="display:none">٤ جلسات لتركيب السرج ووضعه</span></strong>
+          <ul>
+            <li><span class="lang-en">Learn how to correctly fit, place, and secure a saddle, ensuring both the horse's comfort and the rider's safety.</span><span class="lang-ar" style="display:none">تعلّم كيفية تركيب السرج ووضعه وتثبيته بشكل صحيح، بما يضمن راحة الحصان وسلامة الفارس.</span></li>
+          </ul>
+        </li>
+        <li>
+          <strong><span class="lang-en">Horse Care &amp; Handling Fundamentals</span><span class="lang-ar" style="display:none">أساسيات العناية بالخيل والتعامل معها</span></strong>
+          <ul>
+            <li><span class="lang-en">Understand the basics of horse behavior and body language.</span><span class="lang-ar" style="display:none">فهم أساسيات سلوك الخيل ولغة الجسد.</span></li>
+            <li><span class="lang-en">Learn safe handling techniques and proper grooming practices.</span><span class="lang-ar" style="display:none">تعلّم تقنيات التعامل الآمن وممارسات العناية الصحيحة.</span></li>
+            <li><span class="lang-en">Build confidence in leading, approaching, and caring for horses.</span><span class="lang-ar" style="display:none">بناء الثقة في قيادة الخيول والاقتراب منها والعناية بها.</span></li>
+            <li><span class="lang-en">Gain essential knowledge of stable safety and daily horse care.</span><span class="lang-ar" style="display:none">اكتساب المعرفة الأساسية بسلامة الإسطبل والعناية اليومية بالخيل.</span></li>
+          </ul>
+        </li>
+      </ul>
+
+      <p class="about-desc" style="margin-top:30px;text-align:center;">
+        <span class="lang-en">Whether you're new to horses or looking to strengthen your foundation, this course provides practical, hands-on experience in a safe and supportive environment.</span>
+        <span class="lang-ar" style="display:none">سواء كنت جديداً على عالم الخيل أو تتطلع إلى تعزيز أساسياتك، توفّر هذه الدورة خبرة عملية تطبيقية في بيئة آمنة وداعمة.</span>
+      </p>
+
+      <div style="text-align:center; margin-top:36px;">
+        <a href="booking.html?service=Horse+Care+%26+Handling+Course" class="btn-book" style="display:inline-block; min-width:220px;"><span class="lang-en">Book This Course</span><span class="lang-ar" style="display:none">احجز هذه الدورة</span></a>
+      </div>
+    </div>
   </section>
 
 <footer class="footer">
