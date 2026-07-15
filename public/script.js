@@ -88,13 +88,14 @@ function showSubPackage() {
   const isTraining = category === 'Riding Packages';
   const isLivery   = category === 'Livery Horse';
   const isHorseTraining = category === 'Horse Training';
+  const isCourse   = category === 'Horse Care & Handling Course';
 
   document.getElementById('subPackageGroup').style.display = isTraining ? 'flex' : 'none';
   document.getElementById('paymentMethodRow').style.display = isTraining ? 'flex' : 'none';
   // Show date for all EXCEPT when no category selected
   document.getElementById('dateFieldGroup').style.display = category ? 'flex' : 'none';
   // Show scheduling (time picker) for packages + generic bookings, hide for date-only categories
-  document.getElementById('schedulingRow').style.display = (isLivery || isHorseTraining || !category) ? 'none' : 'flex';
+  document.getElementById('schedulingRow').style.display = (isLivery || isHorseTraining || isCourse || !category) ? 'none' : 'flex';
   const horseRow = document.getElementById('horseNameRow');
   if (horseRow) horseRow.style.display = isLivery ? 'flex' : 'none';
 
@@ -434,7 +435,7 @@ if (bookingFormEl) {
     const duration  = document.getElementById('duration').value;
     const startTime = document.getElementById('startTime').value;
 
-    const isDateOnly = (category === 'Horse Training');
+    const isDateOnly = (category === 'Horse Training' || category === 'Horse Care & Handling Course');
 
     if (!date) {
       timeStatus.textContent = '⚠️ Please choose a date.';
@@ -458,7 +459,7 @@ if (bookingFormEl) {
     }
 
     const bookingData = isDateOnly
-      ? { name, email, phone, category, subPackage: '', date, price: 0, message: document.getElementById('message').value }
+      ? { name, email, phone, category, subPackage: '', date, price: (category === 'Horse Care & Handling Course' ? 700 : 0), message: document.getElementById('message').value }
       : {
           name, email, phone, category,
           subPackage: '',
