@@ -8,11 +8,13 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <style>
-    .course-list { max-width: 720px; margin: 0 auto; padding-inline-start: 20px; }
-    .course-list > li { margin-bottom: 18px; color: var(--brown); line-height: 1.7; }
-    .course-list > li > strong { font-family: 'Inter', sans-serif; font-weight: 600; color: var(--brown); font-size: 1.05rem; }
-    .course-list ul { margin: 8px 0 0; padding-inline-start: 22px; }
-    .course-list ul li { color: var(--brown-light); margin-bottom: 6px; line-height: 1.75; list-style: disc; }
+    .course-list { list-style: none; max-width: 640px; margin: 0 auto; padding: 0; text-align: left; }
+    .course-list > li { position: relative; padding-inline-start: 24px; margin-bottom: 26px; }
+    .course-list > li::before { content: "•"; position: absolute; inset-inline-start: 0; top: 0; color: var(--olive); font-size: 1.15rem; }
+    .course-list > li > strong { display: block; font-family: 'Inter', sans-serif; font-weight: 600; color: var(--brown); font-size: 1.08rem; line-height: 1.5; margin-bottom: 10px; }
+    .course-list ul { list-style: none; margin: 0; padding: 0; }
+    .course-list ul li { position: relative; padding-inline-start: 20px; color: var(--brown-light); line-height: 1.7; margin-bottom: 7px; }
+    .course-list ul li::before { content: "–"; position: absolute; inset-inline-start: 0; top: 0; color: var(--olive); }
   </style>
 </head>
 <body>
@@ -82,7 +84,7 @@
       <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.7rem;font-weight:400;color:var(--brown);margin:40px 0 18px;text-align:center;">
         <span class="lang-en">Course Includes</span><span class="lang-ar" style="display:none">تشمل الدورة</span>
       </h3>
-      <ul class="terms-list course-list">
+      <ul class="course-list">
         <li>
           <strong><span class="lang-en">3 Horse Swimming Training Sessions</span><span class="lang-ar" style="display:none">٣ جلسات تدريب على سباحة الخيل</span></strong>
           <ul>
