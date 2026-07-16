@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { requireAdmin } = require('../middleware/auth');
 const PackagePurchase = require('../models/PackagePurchase');
 const Customer = require('../models/Customer');
 const Booking = require('../models/Booking');
@@ -318,7 +319,7 @@ router.post('/:id/freeze', async (req, res) => {
   }
 });
 
-router.post('/:id/unfreeze', async (req, res) => {
+router.post('/:id/unfreeze', requireAdmin, async (req, res) => {
   try {
     const pkg = await PackagePurchase.findById(req.params.id);
     if (!pkg) return res.status(404).json({ message: 'Package not found' });
@@ -345,7 +346,7 @@ router.post('/:id/request-refund', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', requireAdmin, async (req, res) => {
   try {
     const packages = await PackagePurchase.find().sort({ createdAt: -1 });
     res.json(packages);
@@ -488,7 +489,7 @@ router.get('/:id/reject', async (req, res) => {
 });
 
 // ===== Admin removes a single requested session date =====
-router.post('/:id/remove-session', async (req, res) => {
+router.post('/:id/remove-session', requireAdmin, async (req, res) => {
   try {
     const { sessionIndex } = req.body;
     const pkg = await PackagePurchase.findById(req.params.id);
@@ -544,7 +545,7 @@ router.post('/:id/reject', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', requireAdmin, async (req, res) => {
   try {
     const before = await PackagePurchase.findById(req.params.id);
     if (!before) return res.status(404).json({ message: 'Package not found' });
@@ -577,7 +578,7 @@ router.patch('/:id', async (req, res) => {
 });
 
 // ===== Admin permanently deletes a package (keeps the customer profile) =====
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     const pkg = await PackagePurchase.findById(req.params.id);
     if (!pkg) return res.status(404).json({ message: 'Package not found' });

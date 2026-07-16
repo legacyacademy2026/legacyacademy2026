@@ -1,5 +1,7 @@
 const express = require('express');
 const router = express.Router();
+const { requireAdmin } = require('../middleware/auth');
+router.use(requireAdmin); // entire customers API is admin-only
 const Customer = require('../models/Customer');
 const Booking = require('../models/Booking');
 const PackagePurchase = require('../models/PackagePurchase');

@@ -1,4 +1,26 @@
-const ADMIN_PASSWORD = "Legacy2026"; // ⚠️ Change this!
+// ===== Admin auth =====
+// The password is verified on the SERVER (POST /api/admin/login). On success the
+// server returns a token which we store for the session and attach to every /api/
+// call via the wrapper below. If the server ever rejects us (401), we bounce back
+// to the login screen. No password lives in this file anymore.
+(function () {
+  const _fetch = window.fetch.bind(window);
+  window.fetch = async function (url, opts = {}) {
+    const isApi = typeof url === 'string' && url.startsWith('/api/');
+    const isLogin = typeof url === 'string' && url.startsWith('/api/admin/login');
+    if (isApi && !isLogin) {
+      const token = sessionStorage.getItem('adminToken') || '';
+      opts.headers = Object.assign({}, opts.headers, { 'x-admin-key': token });
+    }
+    const res = await _fetch(url, opts);
+    if (res.status === 401 && isApi && !isLogin) {
+      sessionStorage.removeItem('adminAuth');
+      sessionStorage.removeItem('adminToken');
+      location.reload();
+    }
+    return res;
+  };
+})();
 
 const CATEGORIES = ['Riding Packages','Livery Horse','Horse Selling','Horse Training','Party Renting','Equipment for Sale'];
 const CATEGORY_ICONS = {
@@ -13,15 +35,26 @@ let currentCalendarDate = new Date();
 let selectedDay = todayStr();
 
 window.addEventListener('DOMContentLoaded', () => {
-  if (sessionStorage.getItem('adminAuth') === 'true') showDashboard();
+  if (sessionStorage.getItem('adminToken')) showDashboard();
 });
 
-function checkPassword() {
+async function checkPassword() {
   const entered = document.getElementById('passwordInput').value;
-  if (entered === ADMIN_PASSWORD) {
-    sessionStorage.setItem('adminAuth', 'true');
-    showDashboard();
-  } else {
+  try {
+    const res = await fetch('/api/admin/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: entered })
+    });
+    if (res.ok) {
+      const data = await res.json();
+      sessionStorage.setItem('adminToken', data.token);
+      sessionStorage.setItem('adminAuth', 'true');
+      showDashboard();
+    } else {
+      document.getElementById('errorText').style.display = 'block';
+    }
+  } catch (e) {
     document.getElementById('errorText').style.display = 'block';
   }
 }
@@ -40,6 +73,7 @@ function showDashboard() {
 
 function logout() {
   sessionStorage.removeItem('adminAuth');
+  sessionStorage.removeItem('adminToken');
   location.reload();
 }
 

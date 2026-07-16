@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { requireAdmin } = require('../middleware/auth');
 const Booking = require('../models/Booking');
 const Customer = require('../models/Customer');
 const ClosedDay = require('../models/ClosedDay');
@@ -120,7 +121,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.get('/', async (req, res) => {
+router.get('/', requireAdmin, async (req, res) => {
   try {
     // Lazily complete past sessions so the dashboard is always up to date,
     // even right after the server wakes from sleep (throttled inside).
@@ -158,7 +159,7 @@ router.post('/:id/request-cancellation', async (req, res) => {
 });
 
 // Admin approves or rejects a cancellation request
-router.patch('/:id/cancellation', async (req, res) => {
+router.patch('/:id/cancellation', requireAdmin, async (req, res) => {
   try {
     const { decision } = req.body; // 'Approved' or 'Rejected'
     const booking = await Booking.findById(req.params.id);
@@ -184,7 +185,7 @@ router.patch('/:id/cancellation', async (req, res) => {
   }
 });
 
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', requireAdmin, async (req, res) => {
   try {
     const { date, startTime, duration } = req.body;
 
@@ -214,7 +215,7 @@ router.patch('/:id', async (req, res) => {
   }
 });
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', requireAdmin, async (req, res) => {
   try {
     await Booking.findByIdAndDelete(req.params.id);
     res.json({ message: '✅ Booking deleted' });
@@ -320,7 +321,7 @@ router.post('/:id/decline', (req, res) => execBookingAction(req, res, 'decline')
 router.get('/:id/complete',  (req, res) => showBookingConfirm(req, res, 'complete'));
 router.post('/:id/complete', (req, res) => execBookingAction(req, res, 'complete'));
 
-router.patch('/:id/status', async (req, res) => {
+router.patch('/:id/status', requireAdmin, async (req, res) => {
   try {
     const { status, reason } = req.body;
     const booking = await Booking.findById(req.params.id);
@@ -332,7 +333,7 @@ router.patch('/:id/status', async (req, res) => {
   }
 });
 
-router.patch('/:id/payment', async (req, res) => {
+router.patch('/:id/payment', requireAdmin, async (req, res) => {
   try {
     const { paymentStatus } = req.body;
     const booking = await Booking.findByIdAndUpdate(req.params.id, { paymentStatus }, { new: true });
@@ -342,7 +343,7 @@ router.patch('/:id/payment', async (req, res) => {
   }
 });
 
-router.post('/:id/send-reminder', async (req, res) => {
+router.post('/:id/send-reminder', requireAdmin, async (req, res) => {
   try {
     const booking = await Booking.findById(req.params.id);
     if (!booking) return res.status(404).json({ message: 'Booking not found' });

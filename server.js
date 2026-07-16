@@ -13,6 +13,21 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static('public'));
 
+// ===== Admin login (server-side password check) =====
+// Verifies the admin password against the ADMIN_PASSWORD env var and, on success,
+// returns the admin token the dashboard sends on every protected API call.
+// Set ADMIN_PASSWORD in your environment to a strong value (the default below is a
+// fallback only and should NOT be relied on in production).
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || 'Legacy2026';
+const ADMIN_TOKEN = process.env.ADMIN_ACTION_KEY || 'legacy-secret-2026';
+app.post('/api/admin/login', (req, res) => {
+  const password = req.body && req.body.password;
+  if (password && password === ADMIN_PASSWORD) {
+    return res.json({ token: ADMIN_TOKEN });
+  }
+  return res.status(401).json({ message: 'Invalid password' });
+});
+
 // Routes
 const bookingRoutes = require('./src/routes/booking');
 app.use('/api/bookings', bookingRoutes);

@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { requireAdmin } = require('../middleware/auth');
 const LiveryBooking = require('../models/LiveryBooking');
 const { sendEmail } = require('../utils/mailer');
 const { sendWhatsApp } = require('../utils/whatsapp');
@@ -99,7 +100,7 @@ router.post('/:id/request-renewal', async (req, res) => {
 });
 
 // ===== Admin: list all livery bookings (for the 10-slot dashboard) =====
-router.get('/', async (req, res) => {
+router.get('/', requireAdmin, async (req, res) => {
   try {
     const bookings = await LiveryBooking.find().sort({ slotNumber: 1 });
     res.json(bookings);
@@ -112,7 +113,7 @@ router.get('/', async (req, res) => {
 // This is also the general-purpose "edit anything" endpoint — admin can PATCH
 // any field (name, email, phone, horseName, price, startDate, endDate, etc.)
 // at any time to fix mistakes.
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', requireAdmin, async (req, res) => {
   try {
     const before = await LiveryBooking.findById(req.params.id);
     if (!before) return res.status(404).json({ message: 'Livery booking not found' });
@@ -150,7 +151,7 @@ router.patch('/:id', async (req, res) => {
 });
 
 // ===== Admin: confirm horse has physically arrived — this starts the 30-day clock =====
-router.post('/:id/confirm-arrival', async (req, res) => {
+router.post('/:id/confirm-arrival', requireAdmin, async (req, res) => {
   try {
     const booking = await LiveryBooking.findById(req.params.id);
     if (!booking) return res.status(404).json({ message: 'Livery booking not found' });
@@ -187,7 +188,7 @@ router.post('/:id/confirm-arrival', async (req, res) => {
 });
 
 // ===== Admin: mark payment as received =====
-router.post('/:id/mark-paid', async (req, res) => {
+router.post('/:id/mark-paid', requireAdmin, async (req, res) => {
   try {
     const booking = await LiveryBooking.findByIdAndUpdate(req.params.id, { paymentStatus: 'Paid' }, { new: true });
     if (!booking) return res.status(404).json({ message: 'Livery booking not found' });
@@ -198,7 +199,7 @@ router.post('/:id/mark-paid', async (req, res) => {
 });
 
 // ===== Admin: renew livery for another month =====
-router.post('/:id/renew', async (req, res) => {
+router.post('/:id/renew', requireAdmin, async (req, res) => {
   try {
     const booking = await LiveryBooking.findById(req.params.id);
     if (!booking) return res.status(404).json({ message: 'Livery booking not found' });
@@ -242,7 +243,7 @@ router.post('/:id/renew', async (req, res) => {
 });
 
 // ===== Admin: free up a slot (end booking, mark inactive) =====
-router.post('/:id/end', async (req, res) => {
+router.post('/:id/end', requireAdmin, async (req, res) => {
   try {
     const booking = await LiveryBooking.findByIdAndUpdate(req.params.id, { active: false }, { new: true });
     if (!booking) return res.status(404).json({ message: 'Livery booking not found' });
@@ -253,7 +254,7 @@ router.post('/:id/end', async (req, res) => {
 });
 
 // ===== Admin: update a single day's care log note =====
-router.patch('/:id/log/:dayNumber', async (req, res) => {
+router.patch('/:id/log/:dayNumber', requireAdmin, async (req, res) => {
   try {
     const { note } = req.body;
     const booking = await LiveryBooking.findById(req.params.id);

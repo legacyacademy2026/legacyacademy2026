@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const { requireAdmin } = require('../middleware/auth');
 const ClosedDay = require('../models/ClosedDay');
 
 router.get('/', async (req, res) => {
@@ -20,7 +21,7 @@ router.get('/:date', async (req, res) => {
   }
 });
 
-router.post('/', async (req, res) => {
+router.post('/', requireAdmin, async (req, res) => {
   try {
     const { date, type, closeTime, reason } = req.body;
     const day = await ClosedDay.findOneAndUpdate(
@@ -34,7 +35,7 @@ router.post('/', async (req, res) => {
   }
 });
 
-router.delete('/:date', async (req, res) => {
+router.delete('/:date', requireAdmin, async (req, res) => {
   try {
     await ClosedDay.deleteOne({ date: req.params.date });
     res.json({ message: '✅ Removed' });
