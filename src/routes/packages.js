@@ -36,6 +36,9 @@ function notifyPackage(pkg, { statusBadge, bodyText, detailsHtml, ctaLabel, stat
 
 router.post('/', async (req, res) => {
   try {
+    // Prevent clients from forging server-managed fields — notably approvalStatus
+    // and paymentStatus (which would let someone skip admin approval / mark as paid).
+    ['approvalStatus','paymentStatus','sessionsBooked','sessionsCompleted','finished','approvedAt','expiresAt','expired','frozen','freezeRequested','freezeStartedAt','freezeDaysUsed','refundRequested','refundStatus','token','createdAt'].forEach(k => delete req.body[k]);
     const pkg = new PackagePurchase(req.body);
     await pkg.save();
 
@@ -97,6 +100,10 @@ router.get('/track/:token', async (req, res) => {
 
 router.get('/:id/sessions', async (req, res) => {
   try {
+    const pkg = await PackagePurchase.findById(req.params.id);
+    if (!pkg) return res.status(404).json({ message: 'Package not found' });
+    const isAdmin = (req.headers['x-admin-key'] || req.query.key) === ADMIN_ACTION_KEY;
+    if (!isAdmin && (req.query.token || '') !== pkg.token) return res.status(403).json({ message: 'Unauthorized' });
     const sessions = await Booking.find({ packagePurchaseId: req.params.id }).sort({ date: 1 });
     res.json(sessions);
   } catch (err) {
@@ -108,6 +115,8 @@ router.post('/:id/book-session', async (req, res) => {
   try {
     const pkg = await PackagePurchase.findById(req.params.id);
     if (!pkg) return res.status(404).json({ message: 'Package not found' });
+    const isAdmin = (req.headers['x-admin-key'] || req.query.key) === ADMIN_ACTION_KEY;
+    if (!isAdmin && (req.body.token || '') !== pkg.token) return res.status(403).json({ message: 'Unauthorized' });
     if (pkg.approvalStatus !== 'Approved') {
       return res.status(403).json({ message: '❌ This package is not yet approved.' });
     }

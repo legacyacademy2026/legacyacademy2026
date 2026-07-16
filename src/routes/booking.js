@@ -75,6 +75,8 @@ router.post('/', async (req, res) => {
       }
     }
 
+    // Prevent clients from forging server-managed fields (e.g. status, paymentStatus).
+    ['status','paymentStatus','cancellationStatus','packagePurchaseId','reminderSent','createdAt'].forEach(k => delete req.body[k]);
     const booking = new Booking(req.body);
     await booking.save();
 

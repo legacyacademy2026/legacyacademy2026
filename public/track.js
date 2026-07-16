@@ -321,7 +321,7 @@ async function bookSession() {
     const res = await fetch(`/api/packages/${currentPackage._id}/book-session`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ date, startTime })
+      body: JSON.stringify({ date, startTime, token: getToken() })
     });
     const result = await res.json();
 
@@ -345,7 +345,7 @@ async function bookSession() {
 
 async function loadSessions() {
   try {
-    const res = await fetch(`/api/packages/${currentPackage._id}/sessions`);
+    const res = await fetch(`/api/packages/${currentPackage._id}/sessions?token=${encodeURIComponent(getToken())}`);
     const sessions = await res.json();
     const card = document.getElementById('sessionsCard');
     const list = document.getElementById('sessionsList');

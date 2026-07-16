@@ -9,7 +9,19 @@ require('dotenv').config();
 const app = express();
 
 // Middleware
-app.use(cors());
+// CORS restricted to the site's own domain (blocks other websites' browser JS from
+// calling the API). Same-origin requests from the site itself are unaffected.
+const allowedOrigins = [
+  'https://legacyequestrian-uae.com',
+  'https://www.legacyequestrian-uae.com'
+];
+app.use(cors({
+  origin: (origin, cb) => {
+    // no origin = same-origin request, curl, or mobile app -> allow
+    if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
+    return cb(null, false);
+  }
+}));
 app.use(express.json());
 app.use(express.static('public'));
 
