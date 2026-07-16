@@ -23,7 +23,15 @@ app.use(cors({
   }
 }));
 app.use(express.json());
-app.use(express.static('public'));
+// Serve static files. HTML/JS/CSS are set to always revalidate so browsers pick up
+// new code immediately after a deploy (no hard-refresh needed); other assets cache normally.
+app.use(express.static('public', {
+  setHeaders: (res, filePath) => {
+    if (/\.(html|js|css)$/i.test(filePath)) {
+      res.setHeader('Cache-Control', 'no-cache');
+    }
+  }
+}));
 
 // ===== Admin login (server-side password check) =====
 // Verifies the admin password against the ADMIN_PASSWORD env var and, on success,
