@@ -42,7 +42,7 @@ const TRAINING_PACKAGES = {
   "Group Lessons": {
     tiers: [
       { label: "Single Session", price: 80, sessions: 1, duration: 45, validity: "-", freeze: "-" },
-      { label: "10 Sessions Package", price: 800, sessions: 10, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
+      { label: "8 Sessions Package", price: 800, sessions: 8, duration: 45, validity: "Valid for 2 months", freeze: "Freeze up to 2 weeks" }
     ]
   },
   "Outdoor Lessons": {

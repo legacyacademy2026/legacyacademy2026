@@ -920,7 +920,7 @@ function switchPackageTab(tab) {
 function renderPackages() {
   // Frozen packages live in the Frozen tab, not here
   let packages = allPackagesCache.filter(p => !p.frozen);
-  if (packageSubTab === 'Pending')       packages = packages.filter(p => p.approvalStatus === 'Pending');
+  if (packageSubTab === 'Pending')       packages = packages.filter(p => p.approvalStatus === 'Pending' && !p.expired);
   else if (packageSubTab === 'Approved') packages = packages.filter(p => p.approvalStatus === 'Approved' && !p.finished && !p.expired);
   else if (packageSubTab === 'Archive')  packages = packages.filter(p => p.finished || p.expired || p.approvalStatus === 'Rejected');
   renderPackageList(packages, 'packagesContainer', 'packageCountText');

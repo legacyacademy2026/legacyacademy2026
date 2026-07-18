@@ -47,6 +47,28 @@ async function sweepPastSessions(force = false) {
   }
 }
 
+// Auto-archive Pending package requests whose requested session dates have ALL passed.
+// The customer asked for specific dates; once those dates are gone with no admin action,
+// the request is stale. We flag it expired (kept in records, shows under the dashboard's
+// Archive tab) so the approval queue only ever shows actionable, still-relevant requests.
+async function sweepStalePendingPackages() {
+  const dubaiTodayStr = new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString().slice(0, 10);
+  const pendings = await PackagePurchase.find({ approvalStatus: 'Pending', expired: { $ne: true } });
+  let archived = 0;
+  for (const pkg of pendings) {
+    const dates = (pkg.requestedSessions || []).map(s => s.date).filter(Boolean);
+    if (dates.length && dates.every(d => d < dubaiTodayStr)) {
+      pkg.expired = true;
+      pkg.finished = true;
+      await pkg.save();
+      archived++;
+      console.log(`⌛ Stale pending package ${pkg._id} auto-archived (requested dates all passed).`);
+    }
+  }
+  if (archived) console.log(`🧹 Auto-archived ${archived} stale pending package request(s).`);
+  return archived;
+}
+
 function startReminderJob() {
   cron.schedule('*/30 * * * *', async () => {
     try {
@@ -171,6 +193,9 @@ function startReminderJob() {
     try {
       const now = new Date();
 
+      // Auto-archive stale Pending requests (all requested dates have passed)
+      await sweepStalePendingPackages();
+
       // Backfill: approved packages missing an expiresAt get one (approvedAt or createdAt + 2 months)
       const missing = await PackagePurchase.find({ approvalStatus: 'Approved', expiresAt: { $exists: false } });
       for (const p of missing) {
@@ -248,7 +273,7 @@ function startReminderJob() {
 
   // Catch-up sweep immediately on boot (Render free tier sleeps — this makes
   // past sessions complete the moment the server wakes, not an hour later)
-  setTimeout(() => sweepPastSessions(true), 5000);
+  setTimeout(() => { sweepPastSessions(true); sweepStalePendingPackages(); }, 5000);
 }
 
-module.exports = { startReminderJob, parseBookingDateTime, sweepPastSessions };
+module.exports = { startReminderJob, parseBookingDateTime, sweepPastSessions, sweepStalePendingPackages };
